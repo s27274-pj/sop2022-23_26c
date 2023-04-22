@@ -1,28 +1,28 @@
 #!/bin/bash
 fib() {
-local x=$1
-if (( $x <= 0 )); then
-return 0
-elif (( $x == 1 )); then
-return 1
-else
-local x1=$((x-1))
-local x2=$((x-2))
+  local x=$1
+  if (( $x <= 0 )); then
+    return 0
+  elif (( $x == 1 )); then
+    return 1
+  else
+    local x1=$((x-1))
+    local x2=$((x-2))
 
-fib $x1
-local wynik1=$?
+  fib $x1
+  local wynik1=$?
 
-fib $x2
-local wynik2=$?
+  fib $x2
+  local wynik2=$?
 
-WYNIK=$((wynik1+wynik2))
-return $WYNIK
-fi
-}
+  WYNIK=$((wynik1+wynik2))
+  return $WYNIK
+  fi
+  }
 
-if (( $# == 1 )); then
-fib $1
-echo "$?"
-else
-echo "BLAD"
-fi
+  if (( $# == 1 )); then
+    fib $1
+    echo "$?"
+  else
+    echo "BLAD"
+  fi

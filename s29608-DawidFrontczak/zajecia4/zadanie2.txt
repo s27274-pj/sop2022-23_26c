@@ -1,0 +1,94 @@
+zad.1 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]){
+
+  FILE *plik;
+  int liczba_elementow; 
+  int liczba;
+  int i;
+
+  plik = fopen(argv[1], "r");
+  if (plik == NULL){
+     printf("BLAD\n");
+     return 1;
+  }
+  
+  fscanf(plik, "%d", &liczba_elementow);
+  printf("Liczba elementow: %d\n", liczba_elementow);
+
+   for (i = 0; i < liczba_elementow; i++) {
+    fscanf(plik, "%d", &liczba);
+    printf("%d\n", liczba);
+   }
+   
+    fclose(plik);
+    
+    return 0;
+}
+
+==============================================================
+zad.2
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+    FILE *plik;
+    int liczba_elementow;
+    int *liczby;
+    int i;
+
+    // Otwieramy plik lub standardowe wejście
+    if (argc == 1) {
+        plik = stdin;
+    } else if (argc == 2) {
+        plik = fopen(argv[1], "r");
+        if (plik == NULL) {
+            printf("BLAD: Nie udalo sie otworzyc pliku.\n");
+            return 1;
+        }
+    } else {
+        printf("BLAD: Niepoprawna liczba argumentow.\n");
+        return 1;
+    }
+
+    // Wczytujemy liczbę elementów ciągu
+    if (fscanf(plik, "%d", &liczba_elementow) != 1) {
+        printf("BLAD: Nie udalo sie wczytac liczby elementow.\n");
+        return 1;
+    }
+
+    // Alokujemy pamięć na tablicę liczb
+    liczby = (int *) malloc(liczba_elementow * sizeof(int));
+    if (liczby == NULL) {
+        printf("BLAD: Nie udalo sie zaalokowac pamieci.\n");
+        return 1;
+    }
+
+    // Wczytujemy kolejne liczby do tablicy
+    for (i = 0; i < liczba_elementow; i++) {
+        if (fscanf(plik, "%d", &liczby[i]) != 1) {
+            printf("BLAD: Nie udalo sie wczytac liczby.\n");
+            free(liczby);
+            return 1;
+        }
+    }
+
+    // Zamykamy plik, jeśli został otwarty
+    if (argc == 2) {
+        fclose(plik);
+    }
+
+    // Wypisujemy liczby w odwrotnej kolejności
+    for (i = liczba_elementow - 1; i >= 0; i--) {
+        printf("%d\n", liczby[i]);
+    }
+
+    // Zwalniamy pamięć
+    free(liczby);
+
+    return 0;
+}

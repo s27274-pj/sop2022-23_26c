@@ -1,0 +1,53 @@
+#include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main(int argc, char const *argv[]) {
+    FILE *file;
+    unsigned char bytes[16];
+    int i, offset = 0, read_chars = 0;
+
+    if (argc < 2) {
+        printf("Reading from stdin\n");
+        file = stdin;
+    } else {
+        printf("Loading file: %s\n", argv[1]);
+        file = fopen(argv[1], "rb");
+        if (file == NULL) {
+            printf("BLAD\n");
+            return 1;
+        }
+    }
+
+    while ((read_chars = fread(&bytes, sizeof(char), 16, file)) > 0) {
+        printf("%08X  ", offset);
+        for (i = 0; i < read_chars; i++) {
+            printf("%02X ", bytes[i]);
+        }
+        for (i = 0; i < 16 - read_chars; i++) {
+            printf("   ");
+        }
+
+        for (i = 0; i < read_chars; i++) {
+            if (isprint(bytes[i])) {
+                putchar(bytes[i]);
+            } else if (bytes[i] == '\n') {
+                putchar(' ');
+            } else {
+                printf("▒");
+            }
+        }
+
+        putchar('\n');
+        offset += 16;
+        memset(bytes, 0, 16);
+    }
+
+    if (file != stdin) {
+        printf("Closing file: %s\n", argv[1]);
+        fclose(file);
+    }
+
+    return 0;
+}

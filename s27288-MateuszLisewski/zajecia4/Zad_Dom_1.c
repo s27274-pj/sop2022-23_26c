@@ -13,7 +13,16 @@ void insert(struct Node** head, int value) {
     *head = new_node;
 }
 
-void delete(struct Node** head, int value) {
+void delete(struct Node **head) {
+    if (*head == NULL) {
+        return;
+    }
+    delete(&(*head)->next);
+    free(*head);
+    *head = NULL;
+}
+
+void deleteOne(struct Node** head, int value) {
     struct Node* temp = *head;
     struct Node* prev = NULL;
 
@@ -47,12 +56,13 @@ int main() {
     insert(&head, 9);
     insert(&head, 4);
     insert(&head, 0);
-
     print(head);
 
-    delete(&head, 4);
-
+    deleteOne(&head, 4);
     print(head);
-
-    return 0;
+	
+	delete(&head);
+	print(head);
+    
+	return 0;
 }

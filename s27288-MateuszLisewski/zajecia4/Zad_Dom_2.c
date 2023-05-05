@@ -91,6 +91,9 @@ int main() {
     insertAtBeginning(10);
     display();
     deleteAtEnd();
+	deleteAtBeginning();
+	display();
+	deleteAtEnd();
     deleteAtBeginning();
     display();
     return 0;

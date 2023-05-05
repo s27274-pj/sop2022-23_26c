@@ -17,12 +17,6 @@ void delete(struct Node** head, int value) {
     struct Node* temp = *head;
     struct Node* prev = NULL;
 
-    if (temp != NULL && temp->data == value) {
-        *head = temp->next;
-        free(temp);
-        return;
-    }
-
     while (temp != NULL && temp->data != value) {
         prev = temp;
         temp = temp->next;

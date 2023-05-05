@@ -8,7 +8,12 @@ int main() {
     int n, i, num;
     int arr[MAX_NUMBERS];
 
-    file = fopen("Zad_OI_data.txt", "r");
+    file = fopen("Zad_2_OI_data.txt", "r");
+
+	if (file == NULL) {
+        printf("Unable to open file.\n");
+        exit(EXIT_FAILURE);
+    }
 
     fscanf(file, "%d", &n);
 

@@ -12,6 +12,7 @@
 #include <strings.h>
 #include <netdb.h>
 #include <stdbool.h>
+#include <arpa/inet.h>
 
 #define SV_SOCK_PATH "/tmp/chatFile"
 #define BUF_SIZE 1023
@@ -21,7 +22,7 @@ char* buffer;
 
 int sprawdzNumerPortu(int numer){
     if(numer > 65535 || numer < 1){
-        printf("Niepoprawny numer portu. Zamykanie programu.\n");
+        printf("Port number out of boundaries - aborting\n");
         exit(1);
     }
     return numer;
@@ -29,64 +30,69 @@ int sprawdzNumerPortu(int numer){
 
 void checkArgumentNumber(int expectedNumber, int providedNumber){
     if(providedNumber != expectedNumber){
-        printf("Nieodpowiednia ilość argumentów. Zamykanie.\n");
+        printf("Insufficient number of parameters given - aborting\n");
         exit(1);
     }
 }
 
 void assignSocket(int *socketToAssign){
     if((*socketToAssign = socket(AF_INET, SOCK_STREAM, 0)) == -1){
+        close(*socketToAssign);
         switch(errno){
             case ENOMEM:
-                printf("Brak pamięci systemowej na stworzenie deskryptora socketu. Zamykanie.\n");
+                printf("Insufficient memory space to create socket - aborting\n");
                 exit(1);
             case ENFILE:
-                printf("Osiągnięto limit otwartych plików w sytemie. Zamykanie\n");
+                printf("Limit of open files in system reached - aborting\n");
                 exit(1);
             default:
-                printf("Błąd tworzenia socketu. Zamykanie\n");
+                printf("Socket creation error errno: %d\n", errno);
                 exit(1);
         }
     }
 }
-bool writeToFD(int socket, char* content, size_t contentSize) {
-    printf("WRITING Sending size: %ld\n", contentSize);
+bool writeToFD(int socket, char* content, int contentSize) {
+    printf("WRITING Sending size: %d\n", contentSize);
     fflush(stdout);
-    if(write(socket, (void *)&contentSize, sizeof(size_t)) == -1){
-        printf("WRITING Couldnt send data size\n");
+    if(write(socket, (void *)&contentSize, sizeof(int)) == -1){
+        printf("WRITING Couldn't send data size\n");
+        return false;
+    }
+    if(contentSize == -1 || contentSize == -2){
         return false;
     }
     printf("WRITING Sending data\n");
     fflush(stdout);
     if(write(socket, content, contentSize) == -1){
-        printf("WRITING Couldnt send data\n");
+        printf("WRITING Couldn't send data\n");
         return false;
     }
     printf("WRITING Data sent successfully\n");
     return true;
 }
-bool readFromFD(int socket){
-    size_t size = 0L;
-    printf("READING Receiving size:\n");
-    fflush(stdout);
-    if(read(socket, &size, sizeof(size_t)) == -1){
-        printf("READING Couldnt read data size:\n");
-        return false;
+int readFromFD(int socket){
+    int size = 0;
+    if(read(socket, &size, sizeof(int)) == -1){
+        printf("READING Couldn't read data size\n");
+        return -2;
     }
-    printf("READING Received data size:%ld\n", size);
+    printf("READING Received data size: %d\n", size);
+    if(size == -1){
+        return -1;
+    }
     printf("READING Allocating space for data\n");
     fflush(stdout);
     if((buffer = malloc(size+1)) == NULL){
-        printf("READING Couldnt allocate buffer");
-        exit(1);
+        printf("READING Couldn't allocate buffer");
+        return -2;
     }
     bzero(buffer, size+1);
-    printf("READING Receiving data:\n");
+    printf("READING Receiving data\n");
     fflush(stdout);
     if(read(socket, buffer, size) == -1){
-        printf("READING Couldnt receive data");
-        exit(1);
+        printf("READING Couldn't receive data");
+        return -2;
     }
     printf("READING Data received successfully\n");
-    return true;
+    return size;
 }

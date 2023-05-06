@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+#sposób 1 - regex
+if [[ $0 = *.sh ]]; then
+  echo "Rozszerzenie to .sh"
+else
+  mv "$0" "$0".sh
+fi
+
+#sposób 2 - porównanie 3 ostatnich liter
+nazwaRozszerzenia=${1: -3}
+if [[ $nazwaRozszerzenia == ".sh" ]]; then
+  echo "Rozszerzenie to .sh"
+else
+  mv "$0" "$0".sh
+fi
+
+#sposób 3 - parameter expansion
+#https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+
+nazwaRozszerzenia=${0##*.}
+if [[ $nazwaRozszerzenia == "sh" ]]; then
+  echo "Rozszerzenie to .sh"
+else
+  mv "$0" "$0".sh
+fi

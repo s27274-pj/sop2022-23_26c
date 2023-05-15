@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(){
+  if (fork() == 0){
+    printf("Proces rodzic\n");
+  }else {
+    printf("Proces dziecko\n");
+  }
+  printf("PID= %d\n", getpid());
+  printf("PPID= %d\n", getppid());
+  return 0;
+}

@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(){
+  int i;
+  pid_t pid_dziecka;
+  
+  printf("PID glownego procesu: %d\n", getpid());
+  
+  for (i=1; i<=100; i++){
+    pid_dziecka = fork();
+    if (pid_dziecka<0){
+      fprintf(stderr, "BLAD\n");
+      return 1;
+    }else if (pid_dziecka==0){
+      printf("Proces potomek %d o pid %d utworzony przez proces %d\n", i, getpid(), getppid());
+    }else{
+      wait(NULL);
+      break;
+    }
+  }
+  return 0;
+}

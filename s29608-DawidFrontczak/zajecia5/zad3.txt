@@ -9,10 +9,11 @@ int main(int argc, char* argv[]){
   int i;
   
   if (fork() > 0){
-    wait(0);
     for(i=0; i<atoi(argv[1]); i++){
       suma += i;
     }
+    wait(0);
+   
     printf("Wynik: %d\n", suma);
   }
   else{

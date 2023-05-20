@@ -1,7 +1,8 @@
-zad. 1
+zad.1
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <malloc.h>
 
 typedef struct Node{
 	int data;
@@ -21,7 +22,7 @@ void usun(Node** head, int data){
 	Node* temp = *head;
 	Node* prev = NULL;
 	
-	while (temp!=NULL && temp->data!=value) {
+	while (temp!=NULL && temp->data!=data) {
       		prev = temp;
         	temp = temp->next;
 	}
@@ -40,17 +41,28 @@ void print(Node* node) {
     printf("\n");
 }
 
+void freeAll(Node* node) {
+    Node* new = node;
+    while (node!=NULL) {
+        new = node->next;
+        free(node);
+        node = new;
+    }
+}
+
 int main() {
     Node* head = NULL;
     dodaj(&head, 5);
     dodaj(&head, 7);
     dodaj(&head, 3);
-    dodaj(&head, 9);
     print(head);
     usun(&head, 3);
     print(head);
+    usun(&head, 7);
+    print(head);
     usun(&head, 5);
     print(head);
+    freeAll(head);
     return 0;
 }
 
@@ -113,9 +125,10 @@ int main() {
     dodaj(&head, 5);
     dodaj(&head, 7);
     dodaj(&head, 3);
-    dodaj(&head, 9);
     print(head);
     usun(&head, 3);
+    print(head);
+    usun(&head, 7);
     print(head);
     usun(&head, 5);
     print(head);

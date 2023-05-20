@@ -3,10 +3,11 @@
 #include <unistd.h>
 
 int main(){
-  if (fork() == 0){
-    printf("Proces rodzic\n");
-  }else {
+  pid_t pid = fork();
+  if (pid == 0){
     printf("Proces dziecko\n");
+  }else {
+    printf("Proces rodzic\n");
   }
   printf("PID= %d\n", getpid());
   printf("PPID= %d\n", getppid());

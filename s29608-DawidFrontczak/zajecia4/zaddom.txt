@@ -9,10 +9,12 @@ typedef struct Node{
 } Node;
 
 void dodaj(Node** head, int data){
-	Node* n = malloc(sizeof(Node));
-	n->data = data;
-    n->next = (*head);
-    (*head) = n;
+	Node* new = malloc(sizeof(Node));
+	Node* last = *head;
+	if(new==NULL){
+		printf("BLAD");
+		return;
+	}
 }
 
 void usun(Node** head, int data){

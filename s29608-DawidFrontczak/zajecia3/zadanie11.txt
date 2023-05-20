@@ -1,5 +1,6 @@
 #!/bin/bash
-fib() {
+fib() 
+{
   local x=$1
   if (( $x <= 0 )); then
     return 0
@@ -18,7 +19,7 @@ fib() {
   WYNIK=$((wynik1+wynik2))
   return $WYNIK
   fi
-  }
+}
 
   if (( $# == 1 )); then
     fib $1

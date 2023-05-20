@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
     liczby = (int *) malloc(liczba_elementow * sizeof(int));
     if (liczby == NULL) {
         printf("BLAD: Nie udalo sie zaalokowac pamieci.\n");
+        fclose(plik);
         return 1;
     }
 

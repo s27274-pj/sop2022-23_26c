@@ -119,6 +119,7 @@ int main() {
     print(head);
     usun(&head, 5);
     print(head);
+    freeList(head);
     return 0;
 }
 

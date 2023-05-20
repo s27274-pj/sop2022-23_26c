@@ -4,7 +4,7 @@ Skrypt zad1.sh:
 echo "Witamy w terminalu"
 "
 
-Daje prawa do wykonywania:
+Daje uprawnienia do wykonywania:
 chmod u+x zad1.sh
 
 I uruchamiam

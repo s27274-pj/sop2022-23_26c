@@ -12,6 +12,11 @@ Node *tail = NULL;
 
 void insertAtBeginning(int value) {
     Node *newNode = (Node*) malloc(sizeof(Node));
+    if (newNode == NULL) {
+        printf("Błąd alokacji pamięci.");
+        return;
+    }
+
     newNode->data = value;
     newNode->prev = NULL;
     newNode->next = head;
@@ -25,6 +30,11 @@ void insertAtBeginning(int value) {
 
 void insertAtEnd(int value) {
     Node *newNode = (Node*) malloc(sizeof(Node));
+    if (newNode == NULL) {
+        printf("Błąd alokacji pamięci.");
+        return;
+    }
+    
     newNode->data = value;
     newNode->prev = tail;
     newNode->next = NULL;

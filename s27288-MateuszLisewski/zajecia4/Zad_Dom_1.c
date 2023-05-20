@@ -8,6 +8,10 @@ struct Node {
 
 void insert(struct Node** head, int value) {
     struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    if (newNode == NULL) {
+        printf("Błąd alokacji pamięci.");
+        return;
+    }
     new_node->data = value;
     new_node->next = *head;
     *head = new_node;

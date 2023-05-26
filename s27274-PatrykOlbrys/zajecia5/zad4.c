@@ -3,7 +3,7 @@
 #include <unistd.h>
 
 int main() {
-    int processes_to_spawn = 10, status;
+    int processes_to_spawn = 10, status, data;
     /* ^ Liczba procesów do stworzenia
     i deklaracja statusu */
 
@@ -11,7 +11,7 @@ while (processes_to_spawn) {
     /* ^ Kiedy proces się stworzy 
         wracamy do tej linijki
         i tworzymy nowy proces,
-        który jest jego dzieckiem */
+        który jest dzieckiem tego dziecka */
         switch (fork()) {
         case -1:
             fprintf(stderr, "Błąd przy forku\n");
@@ -30,8 +30,10 @@ while (processes_to_spawn) {
             /* Rodzic */
             printf("Procesów do stworzenia: %d\n", processes_to_spawn - 1);
             waitpid(0, &status, 0);
+            /* ^ Po co jest status? */
             return 0;
     }
 }
+    scanf("%d", &data);
     return 0;
 }

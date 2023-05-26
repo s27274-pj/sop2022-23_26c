@@ -11,6 +11,13 @@ int main(int argc, char** argv) {
     bo kompilacja mnie nie przepuści */
 
     int* ciagLiczb = (int*) malloc(liczba_elementow * sizeof(int));
+    
+    if (ciagLiczb == NULL) {
+        printf("Nie udalo sie zarezerwowac pamieci.");
+        exit(0);
+    }
+    /* ^ Sprawdzamy czy udało się poprawnie zaalokować pamięć */
+    
     FILE *plik;
     /* ^ Pointer pointing to a file */
 

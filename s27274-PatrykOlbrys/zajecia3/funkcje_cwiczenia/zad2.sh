@@ -7,9 +7,9 @@ function fibonacci {
   
   # Warunek kończący rekurencję
   if (($1 <= 0)); then
-    echo "Błąd: argument musi być dodatni."
+    return "Błąd: argument musi być dodatni."
   elif (($1 == 1 || $1 == 2)); then
-    echo "1"
+    return "1"
   else
   # Obliczenie wartości rekurencyjnie
   local a=$(fibonacci $((n - 1)))
@@ -17,7 +17,7 @@ function fibonacci {
   local result=$((a + b))
   
   # Zwrócenie wyniku
-  echo "$result"
+  return "$result"
   fi
 }
 

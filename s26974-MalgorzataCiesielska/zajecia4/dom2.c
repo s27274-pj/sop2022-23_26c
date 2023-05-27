@@ -40,6 +40,10 @@ void print(struct element * head) {
 void append(struct element * head, int newValue) {
     struct element * last = head;
     struct element * new = (struct element*)malloc(sizeof(struct element));
+    if (new == NULL) {
+        printf("Memory allocation failed");
+        return;
+    }
     new->value = newValue;
     new->next = NULL;
     if (head == NULL) {
@@ -56,6 +60,10 @@ void append(struct element * head, int newValue) {
 void insertAt(struct element * head, int position, int newValue) {
     struct element *toInsertAfter = head;
     struct element *new = (struct element*)malloc(sizeof(struct element));
+    if (new == NULL) {
+        printf("Memory allocation failed");
+        return;
+    }
     new->value = newValue;
     if (position < 0 || position > length(head)) {  /*making sure that the position is within list boundaries*/
         free(new);
@@ -107,6 +115,10 @@ void removeLast(struct element * head) {
 
 int main() {
     struct element * head = (struct element*)malloc(sizeof(struct element));
+    if (head == NULL) {
+        printf("Memory allocation failed");
+        return 1;
+    }
     head->value = 3;
     append(head, 1);
     append(head, 4);

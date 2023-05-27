@@ -34,6 +34,10 @@ int main() {
     scanf("%d", &numberOfElements);
 
     elements = (int*)calloc(numberOfElements, sizeof(int));
+    if (elements == NULL) {
+        printf("Memory allocation failed");
+        return 1;
+    }
     for(i = 0; i < numberOfElements; i++) {
         printf("Input number: ");
         scanf("%d", &element);

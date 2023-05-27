@@ -22,8 +22,12 @@ int countOfLines(FILE *filePtr) {
 
 int * getNumbers(FILE *filePtr, int count) {
 	int i;
-	int * numbers = (int*)calloc(count, sizeof(int)); /*allocating memory for count*sizeof(int) bytes (will be freed later when
-															no longer needed)*/
+	int * numbers = (int*)calloc(count, sizeof(int)); /*allocating memory for count*sizeof(int) bytes 
+	                                                  (will be freed later when no longer needed)*/
+	if (numbers == NULL) {   /*checking if memory was successfully allocated*/
+		printf("Memory allocation failed");
+		return 1;
+	}
 	fseek(filePtr, 0, SEEK_SET);								  
 	for (i = 0; i < count; i++) {
 		fscanf(filePtr, "%d\r\n", &numbers[i]);   /*reads integers from file and assigns each to a position in numbers array*/

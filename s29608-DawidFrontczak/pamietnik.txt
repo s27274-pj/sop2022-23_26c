@@ -1,4 +1,43 @@
 yyyy-mm-dd
 Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem/lam sie:
 
-...
+2023-03-04
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Jak poprawnie zainstalowac VirtualBoxa, oraz Debiana, z dużym naciskiem na wszystkie mozliwe opcje i metody. Myslalem, ze proces bedzie latwy jak przy ponownej instalacji Windowsa - wszystko graficznie, pare klikniec, i koniec. Ale zaskoczylem sie pozytywnie, fajnie miec wplyw na kazdy element instalacji, choc trzeba sie troche poduczyc i uwazac zeby nic nie zepsuc. Dodatkowo dowiedzialem sie jak zrobic forka repo na githubie, sklonowalem swoje repozytorium na swoj komputer, no i stworzylem katalog z wlasnym numerem studenta. Co do Debiana, troche za duzo informacji na raz, ale temat fajny. Fajnie ze jest pokazywane jak uzytkowac githuba, na pewno przyda sie to w przyszlosci, w pracy albo prywatnie tworzac wlasne rzeczy.
+
+
+2023-03-18
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Pisania skryptow w BASH-u. Bylo to troche powtorki z UKOS-ów, a zarazem troche nowych rzeczy. Ciekawy jest wyglad petli, bylo to na UKOS ale troche wypadlo z glowy. Petle wszedzie sa podobne, ale zawsze sie czyms roznia. Była tez powtorka z regexa, tez troche juz o tym bylo, ale jest to fajna sprawa, no i zawsze mozna sie wspomoc regex101. Na koncu bylo troche sprostowania co do githuba, commitow i pullrequestow. Dobrze, bo w pozniejszym etapie studiow bedzie to uzywane ciagle. Zapamietac: learngitbranching.js.org/?locale=en
+
+
+2023-04-01
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Funkcjonowania petli, ifow, tablic i funkcji w BASH. Zadziwil mnie fakt, ze if musi byc zakonczony przez uzycie 'fi', a petla przez 'done' na jej końcu.
+
+
+2023-04-22
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Czym rozni sie jezyk ansi C od C++, kompilacji przy uzyciu gcc, obslugi parametrow w funkcji main (int argc, char *argv[]).
+Dziwi mnie fakt, ze kod na zajeciach pokazywany jest w C++, z ktorym mialem juz do czynienia, a zadania mamy wykonywac w C.
+
+
+2023-05-06
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+O tym czym sa procesy, i jak dziala w C. Sa procesy rodzica, dziecka, dziecko czasami samo sie zabija,
+czasami rodzic zabije dziecko, ciekawe sprawy. Dowiedzialem sie tez jak dzialac na procesach, i wymieniac dane miedzy nimi.
+getpid(), getppid(). pid_t pid.
+Kompletnie nie wiem co zrobie z zadaniem polegajacym na stworzeniu czatu. Sie zobaczy.
+
+
+2023-05-20
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Na czym polegaja sygnaly i sockety. Ma to polaczenie z procesami, bo sygnał to liczba wysyłana do procesu. Dzieki deklaracji proces wie, co robic z liczbą.
+Zadania sa dla mnie na nieosiagalnym poziomie, pewnie dlugo bede nad tym glowil i sie zalamywal. Zrobienie serwera i klienta jakos nie laczy mi sie z tym, 
+na jakim poziomie jest to wszystko prowadzone. Dla osoby nie pracujacej juz w tym zawodzie, i zaczynajacej od zera, jest to abstrakcja. 

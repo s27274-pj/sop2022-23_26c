@@ -35,3 +35,11 @@ Na dzisiejszych zajęciach nauczyłem się:
 - o wczytywaniu danych z stdin,
 - o listach wiązanych,
 - o wczytywaniu plików (w tym z stdin).
+
+
+20.05.2023 Zajęcia nr 5
+Na zajęciach nauczyłem się:
+- o poleceniu fork, wait,
+- o organizacji procesów SO,
+- o pid'ach i ppid'ach,
+- o obsłudze rozgałęziających się procesów.

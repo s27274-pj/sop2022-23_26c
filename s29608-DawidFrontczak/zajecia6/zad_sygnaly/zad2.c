@@ -16,8 +16,22 @@ void handle_ctrlc(int signal){
 int main(){
 	FILE* plik_blokady;
 	printf("PID - %d \n", getpid());
+	pid_t pid_odczyt;
+	
 	if (access("/tmp/lock", F_OK)==0){
 		printf("Inna instancja jest juz uruchomiona.\n");
+		plik_blokady = fopen("/tmp/lock", "r");
+		if (plik_blokady==NULL){
+			printf("Blad odczytu pliku blokady.\n");
+			return 1;
+		}	
+		
+		fscanf(plik_blokady, "%d", &pid_odczyt);
+		fclose(plik_blokady);
+		
+		kill(pid_odczyt, SIGUSR1);
+		
+		printf("Inna instancja programu jest juz uruchomiona (PID: %d). \n", pid_odczyt);
 		return 0;
 	}
  

@@ -30,6 +30,10 @@ void refreshChat() { /*method that prints out entire chat history*/
             printf("Chat history:\n");
         }
         filePtr = fopen("/tmp/chat", "r");
+        if (filePtr == NULL) {
+            printf("Could not open file");
+            return;
+        }
         while ((c = getc(filePtr)) != EOF) {
             printf("%c", c);   
         }
@@ -48,6 +52,10 @@ void *readThread(void *vargp) {
     fd = inotify_init(); /*inotify allows us to react to changes in files*/
     wd = inotify_add_watch(fd, "/tmp/chat", IN_MODIFY); /*we add watch to the chat file*/
     event = (struct inotify_event*) malloc(sizeof(struct inotify_event));
+    if (event == NULL) {
+        printf("Memory allocation failed");
+        return;
+    }
     signal(SIGTERM, signalHandler); /*handles interrupt signal from main thread (the one with the write loop)*/
     while (!shouldExit) {
         read(fd, event, 1000); /*waits for changes to file (if we don't send interrupt signal it will wait indefinitely)*/
@@ -68,6 +76,10 @@ void writeLoop() {
             continue;
         }
         filePtr = fopen("/tmp/chat", "a");
+        if (filePtr == NULL) {
+            printf("Could not open file");
+            return;
+        }
         fprintf(filePtr, "%s:%s\n", username, input);
         fclose(filePtr);
         refreshInProgress = 1;

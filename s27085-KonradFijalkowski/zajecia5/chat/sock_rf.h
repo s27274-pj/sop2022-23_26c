@@ -27,6 +27,7 @@ void receiveMessage(int portNo){
     while ((msgLength = read(portNo, buffer, BUF_SIZE)) > 0) {
         printf("odebrano: %d bajt\n", msgLength);
         fflush(stdout);
+        /*jeżeli nie odebrano żadnego znaku przełącz na wysyłanie*/
         if(buffer[0] == '\n'){
             return;
         }
@@ -41,8 +42,7 @@ void sendMessage(int portNo){
     fflush(stdout);
     while ((msgLength = read(STDIN_FILENO, buffer, BUF_SIZE)) > 0){
         write(portNo, buffer, msgLength);
-        printf("Bufor: %s", buffer);
-        fflush(stdout);
+        /*jeżeli nie wysłano żadnego znaku przełącz na odbieranie*/
         if(buffer[0] == '\n'){
             return;
         }

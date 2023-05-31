@@ -21,8 +21,10 @@ int main(int argc, char** argv){
         error("bind");
     }
     printf("SERVER Socket z sukcesem otrzymał nazwę\n");
-    if (listen(listenSocket, BACKLOG) == -1)
+    if (listen(listenSocket, BACKLOG) == -1) {
+        /*socket jest zajęty albo niepoprawnie skonfigurowany*/
         error("listen");
+    }
     printf("SERVER Socket rozpoczął nasłuchiwanie\n");
     while(1) {
         newSock = accept(listenSocket, NULL, NULL);
@@ -32,4 +34,6 @@ int main(int argc, char** argv){
             sendMessage(newSock);
         }
     }
+    /*usuń plik socketu teraz, a jeżeli jest używany to po zamknięciu ostatniego połączenia*/
+    unlink(listenSocket);
 }

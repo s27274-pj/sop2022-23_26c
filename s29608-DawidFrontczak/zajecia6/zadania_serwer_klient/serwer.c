@@ -9,7 +9,26 @@
 #include <sys/socket.h>
 #include <wait.h>
 
-#define MESS 256
+#define SIZE 1024
+
+void write_file(int socket_serv){
+  int m;
+  FILE *plik;
+  char *nazwa_pliku = "plikx.txt";
+  char buffer[SIZE];
+  plik = fopen(nazwa_pliku, "w");
+	
+  while (1) {
+    m = recv(socket_serv, buffer, SIZE, 0);
+    if (m <= 0){
+      break;
+      return;
+    }
+    fprintf(plik, "%s", buffer);
+    bzero(buffer, SIZE);
+  }
+  return;
+}
 
 void handle_ctrlc(int signal){
 	printf("Przerwano prace serwera przez uzycie CTRL+C.\n"); 
@@ -22,12 +41,13 @@ int main(){
   int port=8080;
   pid_t pid;
   int n;
-  char wiadomosc[MESS];
   int socket_serv;
   int socket_client;
-  
-  struct sockaddr_in server_addr;
+  int new_socket;
 
+  
+  struct sockaddr_in server_addr, new_addr;
+  socklen_t addr_size;
   
   signal (SIGINT, handle_ctrlc);
   
@@ -71,17 +91,10 @@ int main(){
     pid = fork();
     if(pid == 0){
         printf("Nawiazano polaczenie z klientem.\n");
-        printf("Odbieranie wiadomosci...\n");
-        bzero(wiadomosc, MESS);
-        n = read(socket_client, wiadomosc, MESS - 1);
-	
-        if(n > 0){
-            printf("Odebrano wiadomosc o dlugosci %d znakow.\n", n);
-        }else{
-	    printf("BLAD - nie odebrano wiadomosci.\n");
-        }
-			
-        printf("Wiadomosc: %s\n", wiadomosc);
+        addr_size = sizeof(new_addr);
+ 	new_socket = accept(socket_serv, (struct sockaddr*)&new_addr, &addr_size);
+  	write_file(new_socket);
+  	printf("Pomyslnie zapisano plik.\n");
 	
         if(close(socket_client) == 0){
             printf("Polaczenie z klientem zakonczono.\n");

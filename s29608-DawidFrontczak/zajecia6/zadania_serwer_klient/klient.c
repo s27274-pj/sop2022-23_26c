@@ -10,14 +10,14 @@
 #include <wait.h>
 
 #define SIZE 1024
-#define MESS 256
 
 void send_file(FILE *plik, int socket_serv){
   char data[SIZE] = {0};
+  size_t bytesRead;
 
-  while(fgets(data, SIZE, plik) != NULL) {
-    if (send(socket_serv, data, sizeof(data), 0) == -1) {
-      perror("BLAD wysylania pliku.\n");
+  while((bytesRead = fread(data, 1, sizeof(data), plik)) > 0) {
+    if (send(socket_serv, data, bytesRead, 0) == -1) {
+      printf("BLAD wysylania pliku.\n");
       exit(1);
     }
     bzero(data, SIZE);

@@ -48,10 +48,14 @@ int main(){
   int port=8080;
   pid_t pid;
   int n;
+  int i;
+  int is_blocked=0;
   int socket_serv;
   int socket_client;
+  char *blocked_addresses[] = {"192.168.0.1", "10.0.0.1"};
   FILE *plik_log;
   struct sockaddr_in server_addr, new_addr;
+  char *client_ip= inet_ntoa(new_addr.sin_addr);
   socklen_t addr_size;
   plik_log = fopen("plik_log.txt", "a");
   
@@ -103,7 +107,19 @@ int main(){
     pid = fork();
 
     if(pid == 0){
-        printf("Nawiazano polaczenie z klientem.\n");
+    printf("Nawiazano polaczenie z klientem.\n");
+    
+    for (i=0;i<sizeof(blocked_addresses)/sizeof(blocked_addresses[0]);i++){
+    	if (strcmp(client_ip, blocked_addresses[i])==0){
+    		is_blocked = 1;
+    		break;
+    	}
+    }
+    if (is_blocked){
+    	printf("Polaczenie klienta odrzucone, zabroniony adres.\n");
+    	close(socket_client);
+    	exit(0);
+    }
         
         fprintf(plik_log, "Polaczony klient: IP=%s, Port=%d, Plik:%s\n", ip, port, "write.txt");
         

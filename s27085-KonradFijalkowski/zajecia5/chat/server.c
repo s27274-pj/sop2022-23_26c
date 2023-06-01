@@ -1,7 +1,5 @@
 #include "sock_rf.h"
 
-
-
 int main(int argc, char** argv){
     int listenSocket, newSock;
     struct sockaddr_un addr;

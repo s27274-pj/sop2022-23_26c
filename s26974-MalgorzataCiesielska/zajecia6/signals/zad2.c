@@ -1,4 +1,4 @@
-#define _POSIX_SOURCE
+#define _POSIX_SOURCE /*necessary to be able to use kill() function that sends singals to processes*/
 #include <stdio.h>
 #include <signal.h>
 #include <unistd.h>

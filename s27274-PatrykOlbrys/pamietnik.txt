@@ -24,4 +24,9 @@ parenta, chociaż pisze się że jego parent ma ID 0 ciekawe... Procesy mogą si
 skomplikowany temat i napewno zajmie mi parę dni zrozumienie go.
 
 2023-05-20
-To be continued...
+Dzisiaj zetknąłem się pierwszy raz z sygnałami i socketami. Sygnały to komunikaty wysyłane do programu
+i można je przechwytywać i robić z nimi różne rzeczy (sprawiać, żeby program na nie reagował
+w określony sposób).
+
+2023-06-03
+KOLOKWIUM...

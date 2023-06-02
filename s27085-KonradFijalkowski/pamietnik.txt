@@ -1,4 +1,4 @@
-5.03.2023
+5.03.2023 Zajęcia nr 1
 Moj kochany pamiętniczku, na dzisiejszych zajeciach nauczyłem sie:
 Na zajęciach zobaczyłem jak zainstalować system Debian na maszynie wirtualnej VirtualBox. Proces był bardzo szczegółowy, zostały przestawione wszystkie ustawienia które w przyszłości mogę potrzebować do skonfigurowania kolejnych maszyn. Z kwestii organizacyjnych dowiedziałem się jakie są zasady zdawania przedmiotu oraz jak wygląda współpraca w systemie GIT.
 
@@ -8,7 +8,7 @@ Chciałbym lepiej poznać systemy plików w systemach Linux, wydaje mi sie to te
 Zaskoczyło mnie istnienie swaparea, nigdy bym na to nie wpadł.
 Zajęcia mi się podobały, wolałbym jednak aby nie było to tylko siedzenie i słuchanie, a zrobienie czegoś praktycznego.
 
-18.03.2023
+18.03.2023 Zajęcia nr 2
 Moj kochany pamiętniczku, na dzisiejszych zajeciach nauczyłem sie:
 - czym sa skrypty, jakie maja rozszerzenia w roznych systemach,
 - czym sa powloki systemowe, w jaki sposob wybrac powloke ktora wykona skrypt,
@@ -18,7 +18,7 @@ Moj kochany pamiętniczku, na dzisiejszych zajeciach nauczyłem sie:
 - o tym jak operowac na ciagach znakow, o tym jak zmieniac tekst, uzyskiwac jego dlugosc i wykonywac wyrazenia algebraiczne
 - czym sa wyrazenia regularne, komenda "sed"
 
-01.04.2023
+01.04.2023 Zajęcia nr 3
 Na dzisiejszych zajeciach nauczyłem się:
 - o funkcjach w skryptach
 - o importowaniu innych plików do skryptu
@@ -27,7 +27,7 @@ Na dzisiejszych zajeciach nauczyłem się:
 - o tablicach
 - o regular expressions
 
-22.04.2023
+22.04.2023 Zajęcia nr 4
 Na dzisiejszych zajęciach nauczyłem się:
 - odczytywania argumentów programu,
 - o kompilacji programó napisanych w języku C,
@@ -37,9 +37,20 @@ Na dzisiejszych zajęciach nauczyłem się:
 - o wczytywaniu plików (w tym z stdin).
 
 
-20.05.2023 Zajęcia nr 5
+6.05.2023 Zajęcia nr 5
 Na zajęciach nauczyłem się:
 - o poleceniu fork, wait,
 - o organizacji procesów SO,
 - o pid'ach i ppid'ach,
 - o obsłudze rozgałęziających się procesów.
+
+20.05.2023 Zajęcia nr 6
+Na zajęciach nauczyłem się:
+- jak sockety mają się do procesów,
+- czym jest lockowanie pliku,
+- jak obsługiwać procesy,
+- jak tworzyć obslugę wielu petentów jednocześnie,
+- jak przsyłać pliku,
+- jak efektywnie działa pamięć i jej leaki,
+- jak określać rozmiar pliku (przypomniałem sobie w sumie)
+- jak sprawdzić czy plik jest w filesystemie.

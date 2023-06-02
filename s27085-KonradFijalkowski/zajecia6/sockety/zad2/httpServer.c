@@ -10,6 +10,7 @@ void cleanup();
 void blokujIP(char* ip);
 size_t loadFileToBuffer(char* path);
 bool checkIfBlocked(char* ip);
+void handleConnection(char * ip, int numerPortu);
 volatile sig_atomic_t wait = true;
 char** blacklist;
 FILE* plikLogow;
@@ -18,20 +19,14 @@ int liczbaIP = 0;
 
 int main(int argc, char** argv){
     int numerPortu;
-    struct sockaddr_in serverAddr, clientAddr;
-    size_t rozmiarPliku;
-    socklen_t addrLen = 0;
     char* ipKlienta;
+    struct sockaddr_in serverAddr;
     if((ipKlienta = malloc(INET_ADDRSTRLEN)) == NULL){
         printf("SERVER Couldn't allocate space for client's ip\n");
         exit(1);
     }
     if((blacklist = malloc(20*sizeof(char *))) == NULL){
         printf("SERVER Couldn't allocate space for blacklist\n");
-        exit(1);
-    }
-    if((buffer = malloc(BUF_SIZE)) == NULL){
-        printf("SERVER Couldn't allocate space for buffer");
         exit(1);
     }
     createHandleINT();
@@ -44,42 +39,69 @@ int main(int argc, char** argv){
     printf("SERVER Socket been assigned a name\n");
     startListening(listenSocket);
     printf("SERVER Socket is listening\n");
-    plikLogow = fopen("logsFile.txt", "w");
-    if(plikLogow == NULL){
-        printf("ERROR Couldn't open log file - aborting");
-        exit(1);
-    }
+
     blokujIP("127.0.0.2");
+
     while(wait){
-        addrLen = sizeof(clientAddr);
+        struct sockaddr_in clientAddr;
+        socklen_t addrLen = sizeof(clientAddr);
+        /*sprawdzam, czy ip nie znajduje się na wykluczonej liście*/
         newSock = accept(listenSocket, (struct sockaddr *) &clientAddr, &addrLen);
-        inet_ntop(AF_INET, &clientAddr.sin_addr, ipKlienta, INET_ADDRSTRLEN);
-        if(checkIfBlocked(ipKlienta)){
-            printf("SERVER Blacklisted IP address refused: %s\n", ipKlienta);
-            close(newSock);
+        if(newSock == -1){
+            printf("SERVER Failed to accept connection\n");
             continue;
         }
-        printf("\nSERVER Channel is open with %s\nSERVER Waiting for file name\n", ipKlienta);
-        /*odczytuje nazwe pliku od klienta */
-        readFromFD(newSock);
-        if(wait == false) break;
-        printf("SERVER Read file name: %s\n", buffer);
-        fprintf(plikLogow, "Połączenie: %s:%d %s\n", ipKlienta, numerPortu, buffer);
-        /*sprawdzam, czy ten plik istnieje*/
-        if (checkFile(buffer)) {
-            rozmiarPliku = loadFileToBuffer(buffer);
-            writeToFD(newSock, buffer, rozmiarPliku);
-        } else {
-            writeToFD(newSock, NULL, -1);
-            printf("SERVER File doesn't exist - closing connection\n");
+        switch(fork()){
+            case 0:
+                close(listenSocket);
+                inet_ntop(AF_INET, &clientAddr.sin_addr, ipKlienta, INET_ADDRSTRLEN);
+                if(checkIfBlocked(ipKlienta)){
+                    printf("SERVER Blacklisted IP address refused: %s\n", ipKlienta);
+                    close(newSock);
+                    exit(0);
+                }
+                handleConnection(ipKlienta, numerPortu);
+                close(newSock);
+                exit(0);
+            case -1:
+                printf("SERVER Couldn't create child process\n");
+                close(newSock);
+            default:
+                close(newSock);
         }
-        memset(buffer, 0, BUF_SIZE);
-        close(newSock);
     }
     cleanup();
     printf("SERVER Shutdown\n");
     return 0;
 }
+
+void handleConnection(char * ip, int numerPortu){
+    size_t rozmiarPliku;
+    if((buffer = malloc(BUF_SIZE)) == NULL){
+        printf("SERVER Couldn't allocate space for buffer");
+        exit(1);
+    }
+    plikLogow = fopen("logsFile.txt", "a");
+    if(plikLogow == NULL){
+        printf("ERROR Couldn't open log file - aborting");
+        exit(1);
+    }
+    printf("\nSERVER Channel is open with %s\nSERVER Waiting for file name\n", ip);
+    readFromFD(newSock);
+    printf("SERVER Read file name: %s\n", buffer);
+    fprintf(plikLogow, "Połączenie: %s:%d %s\n", ip, numerPortu, buffer);
+    /*sprawdzam, czy ten plik istnieje*/
+    if (checkFile(buffer)) {
+        rozmiarPliku = loadFileToBuffer(buffer);
+        writeToFD(newSock, buffer, rozmiarPliku);
+    } else {
+        writeToFD(newSock, NULL, -1);
+        printf("SERVER File doesn't exist - closing connection\n");
+    }
+    free(buffer);
+    return;
+}
+
 bool checkIfBlocked(char* ip){
     int i;
     for (i = 0; i < liczbaIP; i++) {

@@ -22,3 +22,7 @@ oraz korzystania z systemów budowania (w tym wypadku meson i make).
 2023-05-06
 Mój kochany pamiętniczku na dzisiejszych zajęciach nauczyłem się:
 Tworzenia nowych procesów w C, wchodzenia z nimi w interakcje, wymieniania danych między nimi.
+
+2023-05-20
+Mój kochany pamiętniczku na dzisiejszych zajęciach nauczyłem się:
+Obsługi sygnałów i procesów w C, oraz jak bolesne jest pisanie serwera HTTP, od zera, w C.

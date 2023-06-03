@@ -20,7 +20,9 @@
         pkgs,
         ...
       }: {
-        devShells.default = with pkgs; mkShell {
+        devShells.default = with pkgs; (mkShell.override {
+          stdenv = gccStdenv;
+        }) {
           packages = [ clang-tools ];
           nativeBuildInputs = [ meson ninja ];
         };

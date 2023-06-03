@@ -20,7 +20,7 @@ const char *path = "/tmp/zadanie6.sock";
 char buf[BUFSZ + 1];
 
 int read_msg(int fd) {
-  int len; 
+  int len;
   printf("Them: ");
   fflush(stdout);
 
@@ -95,19 +95,20 @@ int client(const struct sockaddr_un *addr) {
 
   printf("[INFO] Trying to connect to the server\n");
 
-  if(connect(sock, (const struct sockaddr *)addr, sizeof(struct sockaddr_un))) {
+  if (connect(sock, (const struct sockaddr *)addr,
+              sizeof(struct sockaddr_un))) {
     switch (errno) {
-      /* File does not exist. */
-      case ENOENT:
-      /* Connection refused means no server is listening. */
-      case ECONNREFUSED:
-        printf("[INFO] Server doesn't exist\n");
-        /* Return -1 to signal that the server should be started instead. */
-        close(sock);
-        unlink(path);
-        return -1;
-      default:
-        return errno;
+    /* File does not exist. */
+    case ENOENT:
+    /* Connection refused means no server is listening. */
+    case ECONNREFUSED:
+      printf("[INFO] Server doesn't exist\n");
+      /* Return -1 to signal that the server should be started instead. */
+      close(sock);
+      unlink(path);
+      return -1;
+    default:
+      return errno;
     }
   }
 

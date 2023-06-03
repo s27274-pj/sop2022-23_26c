@@ -23,6 +23,12 @@ int main() {
     Nie zdefiniowałem typu zmiennych w tym przykładzie.
     Jest to dobra praktyka ale tutaj nie jest to niezbędne
     Wartość tego pointera teraz to adres pierwszego node'a */
+    
+    if (current == NULL || head == NULL) {
+        printf("Nie udalo sie zarezerwowac pamieci.");
+        exit(0);
+    }
+    /* ^ Sprawdzamy czy udało się poprawnie zaalokować pamięć */
 
     head->data = 45;
 
@@ -60,6 +66,12 @@ int main() {
     W ten sposób ta lista teraz jest jednostronnie wiązana.*/
 
     current = malloc(sizeof(struct node));
+    
+    if (current == NULL) {
+        printf("Nie udalo sie zarezerwowac pamieci.");
+        exit(0);
+    }
+    
     current->data = 3;
     current->link = NULL;
 

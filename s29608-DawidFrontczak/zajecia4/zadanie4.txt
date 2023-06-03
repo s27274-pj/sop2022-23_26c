@@ -1,0 +1,114 @@
+zad.1
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int max(int a, int b){
+	return a>b ? a:b;
+}
+
+int min (int a, int b){
+	return a<b ? a:b;
+}
+
+int suma (int a, int b) {
+	return a+b;
+}
+
+int main (int argc, char *argv[]){
+	int (*functions[3])(int, int) = {max, min, suma}; // tablica wskaźników do funkcji
+    int functionId; 
+	int elementCount;
+	int v;
+	int i;
+
+	if (argc < 3) {
+		printf("BLAD");
+		return 1;
+	}
+	
+	functionId = atoi(argv[1]);
+	elementCount = atoi(argv[2]);
+	
+	if (functionId<0 || functionId>2){
+		printf("BLAD - Niepoprawna funkcja");
+		return 1;
+	}
+	
+	if (elementCount<1){
+		printf("BLAD-Niepoprawna ilosc elementow");
+	}
+	
+	v = atoi(argv[3]);
+	for (i=1; i<elementCount; i++){
+		v= functions[functionId](v, atoi(argv[3+i]));
+	}
+	
+	printf("%d\n", v);
+
+	return 0;
+}
+
+===============================================================
+zad. 2
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int max(int a, int b){
+	return a>b ? a:b;
+}
+
+int min (int a, int b){
+	return a<b ? a:b;
+}
+
+int suma (int a, int b) {
+	return a+b;
+}
+
+int forAll(int *tab, int n, int (*f)(int, int)){
+    int v = tab[0];
+	int i;
+    for(i=1; i<n; i++){
+        v = f(v, tab[i]); 
+    }
+    return v;
+}
+
+
+int main (int argc, char *argv[]){
+	int (*functions[3])(int, int) = {max, min, suma}; // tablica wskaźników do funkcji
+    int functionId; 
+	int elementCount;
+	int v;
+	int i;
+	int* tab;
+
+	if (argc < 3) {
+		printf("BLAD");
+		return 1;
+	}
+	
+	functionId = atoi(argv[1]);
+	elementCount = atoi(argv[2]);
+	
+	if (functionId<0 || functionId>2){
+		printf("BLAD - Niepoprawna funkcja");
+		return 1;
+	}
+	
+	if (elementCount<1){
+		printf("BLAD-Niepoprawna ilosc elementow");
+	}
+	
+	tab = malloc(elementCount * sizeof(int));
+
+	for (i=0; i<elementCount; i++){
+		tab[i] = atoi(argv[3+i]);
+	}
+	
+	printf("%d\n", forAll(tab, elementCount, functions[functionId]));
+	free(tab);
+	return 0;
+}

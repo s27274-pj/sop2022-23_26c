@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $(ls | wc -l) -gt 5 ]; then
+if [ $(ls -p | grep -v / | wc -l) -gt 5 ]; then
 echo "W tym katalogu jest wiecej niz 5 plikow"
 else
 echo "W tym katalogu jest mniej niz 5 plikow"

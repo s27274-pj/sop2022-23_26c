@@ -1,0 +1,18 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+int main() {
+	FILE *plik;
+	char wiadomosc[128];
+ 
+	while (1) {
+		file = fopen("/tmp/chat", "a");
+ 
+		printf("Write a message: ");
+		fgets(wiadomosc, sizeof(wiadomosc), stdin);
+		fputs(wiadomosc, plik);
+		fclose(plik);
+	}
+ 
+	return 0;
+}

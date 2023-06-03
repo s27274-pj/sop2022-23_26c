@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+ 
+int main() {
+  int odleglosc = 0; 
+  int procesy = 0;
+ 
+  while (odleglosc < 2 && procesy < 2) {
+  	  pid_t pid = fork();
+	  if (pid == -1){
+		printf("BLAD");
+		return 1;
+	  }
+	  if (pid == 0){
+	  	procesy = 0;
+	  	odleglosc += 1;
+	  }
+	  if (pid > 0){
+		  procesy += 1;
+	  }
+  }
+ 
+  while (1)
+    pause();
+ 
+  return 0;
+}

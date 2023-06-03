@@ -1,0 +1,74 @@
+zad.1
+
+#include <stdio.h>
+
+int main() {
+	
+	int liczba = 0;
+	int suma = 0;
+
+	printf("Podaj swoje liczby\n");
+    printf("0 aby przerwac\n");
+	do {
+		scanf("%d", &liczba);
+		suma += liczba;
+    	} while(liczba != 0);
+ 	
+	printf("Suma = %d\n", suma);
+  
+	return 0;
+}
+
+===========================================
+zad.2 
+
+#include <stdio.h>
+
+int main() {
+	
+	int liczba = 0;
+	int suma = 0;
+
+	printf("Podaj swoje liczby\n");
+    printf("0 aby przerwac\n");
+	do {
+		scanf("%d", &liczba);
+		suma += liczba;
+    	} while(liczba != 0);
+ 	
+	printf("Suma = %d\n", suma);
+  
+  printf("Aby wyswietlic wartosc z linii komend, uzyj echo $?\n");
+  
+	return suma;
+}
+==================================================
+zad.3
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[]) {
+  int n=0;
+  int i;
+  int j;
+  
+  if (argc <= 1){
+    printf("Podaj wysokosc choinki (n)\n");
+    return 1;
+  }
+  
+  n = atoi(argv[1]);
+  
+  for (int i = 1; i <= n; i++) {
+    for (int j = 1; j <= (n - i); j++){
+      printf(" ");
+    }
+    for (int j = 1; j <= (i * 2 - 1); j++){
+      printf("*");
+    }
+    printf("\n");
+  }
+  return 0;
+}
+==================================================

@@ -1,0 +1,180 @@
+zad.1
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+
+typedef struct Node{
+	int data;
+	struct Node* next;
+} Node;
+
+void dodaj(Node** head, int data){
+	Node* new = malloc(sizeof(Node));
+	Node* last = *head;
+	if(new==NULL){
+		printf("BLAD");
+		return;
+	}
+}
+
+void usun(Node** head, int data){
+	Node* temp = *head;
+	Node* prev = NULL;
+	
+	while (temp!=NULL && temp->data!=data) {
+      		prev = temp;
+        	temp = temp->next;
+	}
+	if (temp==NULL) {
+		return;
+   	}
+	prev->next = temp->next;
+	free(temp);
+}
+
+void print(Node* node) {
+    while (node != NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+}
+
+void freeAll(Node* node) {
+    Node* new = node;
+    while (node!=NULL) {
+        new = node->next;
+        free(node);
+        node = new;
+    }
+}
+
+int main() {
+    Node* head = NULL;
+    dodaj(&head, 5);
+    dodaj(&head, 7);
+    dodaj(&head, 3);
+    print(head);
+    usun(&head, 3);
+    print(head);
+    usun(&head, 7);
+    print(head);
+    usun(&head, 5);
+    print(head);
+    freeAll(head);
+    return 0;
+}
+
+======================================================
+zad.2 
+
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node{
+    int data;
+    struct Node* next;
+    struct Node* prev; 
+} Node;
+
+void dodaj(Node** head, int data){
+    Node* n = malloc(sizeof(Node));
+    n->data = data;
+    n->next = (*head);
+    n->prev = NULL; 
+    if ((*head) != NULL) {
+        (*head)->prev = n; 
+    }
+    (*head) = n;
+}
+
+void usun(Node** head, int data){
+    Node* temp = *head;
+    if (temp != NULL && temp->data == data){
+        *head = temp->next;
+        if (*head != NULL) {
+            (*head)->prev = NULL;
+        }
+        free(temp);
+        return;
+    }
+    while (temp != NULL && temp->data != data){
+        temp = temp->next;
+    }
+    if (temp == NULL) return;
+    if (temp->prev != NULL) {
+        temp->prev->next = temp->next;
+    }
+    if (temp->next != NULL) {
+        temp->next->prev = temp->prev;
+    }
+    free(temp);
+}
+
+void print(Node* node) {
+    while (node != NULL) {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    Node* head = NULL;
+    dodaj(&head, 5);
+    dodaj(&head, 7);
+    dodaj(&head, 3);
+    print(head);
+    usun(&head, 3);
+    print(head);
+    usun(&head, 7);
+    print(head);
+    usun(&head, 5);
+    print(head);
+    freeList(head);
+    return 0;
+}
+
+======================================================
+zad.3 
+
+#include <stdio.h>
+
+int fib(int l) {
+    if (l == 0) 
+	    return 0;
+    if (l == 1) 
+	    return 1;
+    return (fib(l - 1) + fib(l - 2));
+}
+
+int main() {
+    int n; 
+	int i;
+	int next = 1;
+	int l = 0;
+
+    printf("Podaj liczbe elementow ciagu Fibonacciego: ");
+    scanf("%d", &n);
+
+    printf("Rekurencja:\n");
+    for (i = 0; i < n; i++) {
+        printf("%d = %d\n", i+1, fib(i));
+    }
+    
+    printf("Iteracja:\n");
+    for (i = 0; i < n; i++) {
+        if (i == 0)  {
+            printf("%d = %d\n", i+1, 0);
+        } else {
+            printf("%d = %d\n", i+1, next);
+            next += l;
+            l = next - l;
+        }
+    }
+
+    return 0;
+}
+
+======================================================

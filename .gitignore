@@ -8,7 +8,7 @@
 *.exe
 *.bin
 *.dat
-
+*.html
 #ignore text sample files
 *.txt
 

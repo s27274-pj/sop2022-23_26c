@@ -1,0 +1,4 @@
+Cześć, jestem Stefan
+Ten plik został napisany przez Stefana
+Stefan stworzył ten plik
+Plik ten został utworzony przez Stefana

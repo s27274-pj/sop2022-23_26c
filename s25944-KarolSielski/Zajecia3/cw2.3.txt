@@ -1,0 +1,11 @@
+Treść: Napisz skrypt, który wypisze listę plików i katalogów bieżącego katalogu poprzedzając każdą nazwę pliku tekstem "Patrzcie Państwo, oto plik: ".
+
+#!/bin/bash
+
+for i in *; do echo "Patrzcie panstwo, oto plik: $i"; done
+
+
+Rezultat:
+Skrypt robi to co powinien.
+"*" oznacza dla skryptu to że ma on iterować po wszystkich plikach i katalogach w danym katalogu, kazdy z plików/katalogów
+jest przypisywany do zmiennej $file

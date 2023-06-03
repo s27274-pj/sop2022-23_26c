@@ -1,0 +1,30 @@
+Treść: W przypadku bardzo podobnych rozwiazań nie będę ich uznawał.
+
+Przygotuj wyrażenie regularne, które będzie sprawdzało, czy tekst jest poprawnie napisanym polskim imieniem (od wielkiej litery, może mieć tylko litery i zawierać polskie znaki).
+
+Przygotuj wyrażenie regularne sprawdzające czy tekst jest kodem pocztowym (cały tekst, czyli zaczyna się od cyfry i kończy się cyfrą).
+
+Przygotuj wyrażenie regularne sprawdzające e-mail.
+
+#!/bin/bash
+
+if [[ $1 =~ ^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$ ]]; then
+	# "^" -> jest poczatkiem tekstu, nastepnie [A-ZĄĆĘŁŃÓŚŹŻ](wątpie że jest polskie imie zaczynające się na litere specjalną 	ale warto to uwzględnić) czyli jedna duza wielka litera + polskie znaki
+	# [a-ząćęłńóśźż]+ -> jedna lub wiecej liter od a do z + polskie znaki '$' -> koniec tekstu
+echo "Polskie Imie"
+elif [[ $1 =~ ^[0-9]{2}-[0-9]{3}$ ]]; then
+	# [0-9]{2} -> dwie cyfry od 0-9, nastepnie myslnik i trzy cyfry od 0-9
+echo "kod pocztowy"
+elif [[ $1 =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+	#[a-zA-Z0-9._%+-]+ litery duze male od a-z liczby od 0-9 i znaki takie jak ._%+-
+	# @ -> malpa, [a-zA-Z0-9.-] to samo co wczesniej tylko ze kropka i myslnik tylko dozwolone(nie widzialem innych domen)
+	# \. -> kropka
+	# [a-zA-Z]{2,}$ domena po kropce skladajaca sie z 2 lub wiecej liter od a-z i A-Z, '$' -> koniec testu
+echo "email"
+else
+echo "no match"
+fi
+
+Rezultat: Regexy działają przynajmniej na tych imputach które sprawdzałem. Jeżeli chodzi o zadanie to w samej zasadzie jest 
+łatwe ale żeby napisać regexa bez pomocy internetu i o niczym nie zapomnieć graniczy z cudem. Dla tego pożytkowałem się 
+internetem :D

@@ -1,0 +1,44 @@
+# 2023-03-04
+
+https://sites.google.com/pjwstk.edu.pl/t0meck-sop/1-instalacja-debiana
+
+Na dzisiejszych zajęciach nauczyłem się:
+
+- Jak stworzyć maszynę wirtualną w VirtualBox
+- Jakie są formaty dysków do maszyn wirtualnych
+- Jak zainstalować system operacyjny Debian
+- Jak działają partycje logiczne
+- Czym jest parawirtualizacja
+
+
+# 2023-03-18
+
+https://sites.google.com/pjwstk.edu.pl/t0meck-sop/2-bash-podstawy-skryptowania
+
+Na dzisiejszych zajęciach nauczyłem się:
+
+- Jak w bashu odwoływać się do zmiennych przy konkatenowaniu ich ze zwykłymi znakami
+- Jak używać specjalnych zmiennych z argumentami skryptu
+- Czym różni się zmienna $* od $@
+  - Jeśli zrobimy pętlę po "$@", każdy argument będzie oddzielą itercją oraz będą odpowiednio interpretowane cudzysłowy
+  - https://stackoverflow.com/questions/3008695/what-is-the-difference-between-and-in-bash
+- O istnieniu kilku specjalnych zmiennych środowiskowych, jak RANDOM, HOSTNAME i OSTYPE
+- O przydatnej stronie do generowania bashowych PS1 - https://bashrcgenerator.com/
+- O operacjach na tekście w zmiennych w bashu (np. ${Hello, World!/World/Universe})
+
+
+# 2023-04-01
+
+https://sites.google.com/pjwstk.edu.pl/t0meck-sop/3-bash-if-y-p%C4%99tle-tablice-funkcje
+
+Na dzisiejszych zajęciach nauczyłem się:
+
+
+- Odświeżyłem informacje na temat wyrażeń warunkowych
+- Jak używać wyrażeń arytmetycznych
+- O istnieniu ${%}, ${%%}, ${#} i ${##}
+- Przypomniałem sobie jak działają pętle
+- O zapisie zakresów w pętlach
+- Jak korzystać z tablic w bashu
+- Jak napisać funkcję z argumentami i zwracanymi wartościami
+- Jak działa `return` w funkcjach

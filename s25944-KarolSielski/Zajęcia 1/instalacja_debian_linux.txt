@@ -1,0 +1,296 @@
+Zadanie: Instalacja systemu Debian(Linux) na maszynie wirtualnej
+
+1. W przypadku nie posiadania na swoim komputerze programu Virtualbox:
+	1.1. Wchodzimy na stronę https://www.virtualbox.org
+	1.2. Kierujemy się do zakładki downloads
+	1.3. Wybieramy wersje która nas interesuje(Na prywatnym komputerze najnowsza wersja)
+	1.4. instalujemy aplikacje
+	1.5. Wracamy do zakładki downloads i pobieramy zestaw rozszerzeń(O tej samej wersji której mamy virtualbox'a)
+	1.6. Po pobraniu, wchodzimy w virtual boxie w zakładkę "rozszerzenia"
+	1.7. Podajemy scieżkę do pobranego pliku
+
+2. Pobranie obrazu dysku(plik typu .iso) 
+	2.1 Wchodzimy na stronę https://www.debian.org
+	2.2 Kierujemy się do zakładki downlads(pobieranie)
+	2.3 Na samej górze strony znajduje się plik .iso do pobrania.
+	    2.3.1 Jest to plik zawierajacy, wiekszość pakietów potrzebnych systemowi do instalacji. Działa on bez dostępu
+			do internetu. Jest to wygodna opcja z racji tego ze można go pobrać na większości nośników danych. 	
+	    2.3.2 Można z niego wywnioskować, że:
+			- Aktualna wersja oprogramowania to 11-6.0
+			- Jest to wersja na procersory 64-bitowe
+		  	  obsługujące architektóre intela i amd.
+	2.4 Dodatkowo na stronie są podane inne instalacje takie jak:
+		2.4.1 Zamiast obrazu dysku można pobrać cloud image - Pozwala to na przetrzymywanie plików systemowych w chmurze.
+		2.4.2 Wersje na inne architektury procesorów np. takie jak AArch64 czy armel.
+
+3. Przygotowanie pod stowrzenie maszyny wirtualnej w VirtualBoxie
+	3.1 W wirtual boxie wchodzimy w pliki -> ogólne -> Domyślny folder maszyn wirtualnych
+		Tutaj możemy wybrać folder w którym będziemy przetrzymywać nasze maszyny wirtualne.
+
+4. Utworzenie nowej VM
+	4.1 W Virtual boxie klikamy na "Nowa".
+		4.1.1 Mamy także inne opcje utworzenia maszyny wirutalnej takie jak:
+			- Dodanie już istniejącej.
+			
+	4.2 Otwiera nam się okno w którym:
+		4.2.1 Nadajemy wybraną nazwę VM
+		4.2.2 Folder w którym ma się znajdować(Domyślnie jest to domyślny folder)
+		4.2.3 Wybór obrazu dysku z którego chcemy korzystać
+		4.2.4 W przypadku nie tworzenia z obrazu dysku:
+			- Edycje
+			- Rodzine systemu (Windows, MacOS itd)
+			- Wersje danej rodziny systemu
+	4.3 Wypełniamy okno nadając nazwę i wybierając wcześniej pobrany obraz dysku.
+	4.4 Nadajemy nazwę profilu jak i hasło które będzie używane na naszej VM
+	4.5 Przydzielamy ilość pamięci RAM dostępnej dla maszyny jak i ilość rdzeni naszego procesora(Ja dałem 2).
+		4.5.1 Należy rozwarznie wybrać ilość RAM'u tak aby nie obciążyć naszego głownego komputera
+			ja dałem(4096 MB)
+	4.6 Tworzymy wirtualny dysk twardy, tutaj mamy pare opcji:
+		4.6.1 Utworzenie nowego dysku wirtualnego, w którym trzeba:
+			- Ręcznie przypisać wielkość dysku która nas interesuje
+			- Mamy też opcje która pozwala nam wstępnie przydzielić całą wielkość która nas interesuje
+		4.6.2 Użycie wcześniej stworzonego dysku wirualnego
+		4.6.3 Nie dodawać wirtualnego dysku
+	4.7 Wyskoczy nam okno z podsumowaniem wybranych opcji. Po przeanalizowaniu klikamy na "Zakończ"
+	4.8 Po wciśnięciu zakończ rozpocznie się przypisywanie pamięci dla VM jak i folder na nią przeznaczony
+
+5. Po zakończeniu przypisywania zasobów VM, w moim przypadku odpaliła się automatycznie i zaczęła się instalacja
+podstawowego systemu.
+
+6. Konfigurowanie VM.
+	6.1 Po kliknięciu naszej VM w wirutal Boxie pojawi nam się opcja ustawień po wejściu w nią będziemy mieli 
+	    takie opcje jak:
+		6.1.1 Ogólne, znajdują się tu takie rzeczy jak:
+			- Podstawowe czyli:
+				-Nazwa
+				-Typ systemu
+				-Wersja
+			- Zaawanoswane czyli:
+				-Folder do snapshotów(czyli takich backupów dla naszego systemu)
+				-Współdzielony schowek dla naszego głównego systemu i VM
+				-Opcje Drag'n drop pomiędzy naszym systemem a VM
+			- Opis
+			- Opcje pozwalającą nam na szyfrowanie dysku naszej VM
+		6.1.2 System, Znajdują się tu takie rzeczy jak:
+			- Płyta głowna w której możemy:
+				-Przypisać RAM na nowo
+				-Ustwić kolejność bootowania systemu
+				-Chpiset
+				-TPM (Czyli standard układu scalonego)
+				-Urządzenie wskazujące(czyli coś co kieruje naszym kursorem)
+				-I/O APIC(czyli kontroler przerwań systemowych)
+				-Hardware Clock in UTC Time(Ustawianie godziny przez system)
+				-EFI(czyli interfejs odpowiadający za komunikacje pomięczy OS a firmware)
+				-Secure Boot
+			- Procesor w którym możemy:
+				-Przypisać ilość rdzeni na nowo
+				-Pozwolić na dany procent wykorzystania procesora
+				-PAE/NX(Opcja pozwalająca używania więcej niż 4gb przy systemie 32bit)
+				-VT-x/AMD-V(Pozwala to na runowanie wielu OS na jednym komputerze, 
+				 umożliwia to nam VM w VM)
+			- Akceleracja w którym możemy:
+				-Zmienić interfejs parawirutalizacji
+				-Włączyć i wyłączyć Wirtalizacje Sprzętową
+		6.1.3 Ekran, Znajdują się tu takie rzeczy jak:
+			- Ekran w którym możemy:
+				-Przypisać pamięc wideo
+				-Zmienić ilość monitorów
+				-Skalowanie się obrazu na naszym ekranie
+				-Kontroler graficzny
+				-Akceleracje 3D
+			- Zdalny Pulpit który nam pozwala na podłączenie się do 
+			  zdalnego pulpitu(w nim są opcje które nam to umożliwią)
+			- Nagrywanie w którym możemy:
+				-Ustawić tryb nagrywania
+				-Ścieżkę do pliku
+				-Wielkość jednej klatki
+				-Frame rate
+				-Jakość obrazu
+				-Jakość dźwięku
+				-Wybranie ekranu
+		6.1.4 Pamięć, Znajdują się tu takie rzeczy jak:
+			-Wybranie skąd odpala się system
+			-Jak i kontroler(dysk)
+				+Ich nazwy i typy i buforowaanie przy wejsciu/wyjściu
+		6.1.5 Dźwięk, Znajdują się tu takie rzeczy jak:
+			-Sterownik dźwięku
+			-Kontroler audio
+			-Włączenie i wyłączenie dźiwęku
+		6.1.6 Śieć, Znajdują się tu takie rzeczy jak:
+			-Wybór karty sieciowej a w niej
+				-Typ sieci do której jest ona podłączona
+				-Jej nazwa
+			-Zaawansowane opcje karty sieciowej takie jak:
+				- Typ Karty
+				- Tryb nasłuchiwania
+				- Adress MAC
+				- Opcje do zaznaczenia czy kabel jest podłączony
+				- Opcja przekierowywania portów
+		6.1.7 Porty szeregowe, Znajdują się tu takie rzeczy jak:
+			-Wybór portu i ich konfiguracja
+		6.1.8 USB, Znajdują się tu takie rzeczy jak:
+			-Wybór kontrolera USB jak i emulowania podłączenia USB pod nasz "prot"
+		6.1.9 Udostępnione foldery, Znajdują się tu takie rzeczy jak:
+			-Wybór i dodanie folderów ogólnodostępnych dla wielu systemów
+		6.1.10 Interfejs Użytkownika, Znajdują się tu takie rzeczy jak:
+			-Różne opcje pozwalające dostosować interfejs Virtualboxa do naszych preferencji.
+
+7. Instalacja Systemu
+	7.1 Uruchomienie maszyny przyciskiem Uruchom
+	7.2 Otwiera nam się okno instalera w (BIOS mode) mamy w nim opcje:
+		7.2.1 'Graphical install' - Intalacja graficzna czyli opcja w której widzimy środowisko graficzne
+		7.2.2 'Install' - Instalacja tekstowa w której system jest widoczny tylko przez konsolę
+		7.2.3 'Advanced options' - Opcje zaawansowane takie jak:
+			-'Graphical Expert Install' - czyli Instalacja eksperta opcji 'Graphical install' 
+			daje nam ona więcej opcji przy instalacji graficznej
+			-'Graphical Rescue Mode' - czyli tryb awaryjny
+			-'Graphical Automated Install' - instlacja automatyczna
+			-'Expert Install' 'Rescue Mode' 'Automated Install' - Te same opcje dla instalacji tekstowej
+			-'Speech-enabled advanced options' - Opcja dla ludzi którzy są w jakiś sposób niepełnosprawni
+		7.2.4 'Accessible dark contrast installer menu' - opcja ze zwiększonym kontrastem dla osób
+			niedowidzących
+		7.2.5 'Help' - czyli pomoc
+		7.2.6	'Install with speech synthesis' - czyli opcja z sytezatorem mowy
+	7.3 Wybieramy opcje 'Graphical install'
+	7.4 Wybieramy język w którym ma być przeprowadzona Instalacja(w naszym przypadku angielski)
+	7.5 Wybieramy naszą lokalizacje (Czyli strefa czasowa oraz lokalizacja pobierania pakietów).
+	    Wybieramy polskę ale z racji, że jest niedostępna w naszym oknie wybieramy other->Europe->Poland
+	7.6 Wybieramy tzw. locale czyli ustawienia klawiatury, języka itp. (w naszym przypadku United States)
+	7.7 Wybieramy mapowanie klawiatury odpowadające naszemu(w naszym przypadku Polish)
+	*Konfiguracja sieci*
+	7.8 Nadajemy Hostname dla naszej sieci(ja nazwałem debianTestKarol)
+	7.9 Nazwa Domeny - zostawiamy puste ponieważ nie korzystamy z żadnej domeny w naszym przypadku
+	*Ustawienia użytkownika i hasła*
+	7.10 Podajemy Hasło i powtórzenie Hasła dla roota czyli dla konta administratora
+	7.11 Nadajemy nazwę użytkownika
+	7.12 Nadajemy Hasło dla użytkownika
+	*Partycjonowanie Dysku*
+	7.13 Wybieramy jedną z opcji u mnie to będzie (Guided - use entire disk)
+		-Guided - use entire disk - wpomagane przez defaultowe ustawienia praktycznie że automatyczne
+		-Guided - use entire disk and set up LVM - LVM czyli Linux Volume Menager pozwala na używanie partycji 										 zlokalizowaych się na różnych urządzeniach
+		-Guided - use entire disk and set up encrypted LVM - to co wyżej tylko pozwala na enkrypcje dysku
+		-Manual - Czyli manualne tworzenie partycji(punkt 7.13.2)
+	7.13.2
+		-Otwiera nam się okno w którym mamy do wyboru:
+			-Guided Partitioning(przenosi nas do wspomaganego partycjonowania)
+			-Configure iSCSI volumes(pozwala na konfiguracje dysku przez internet dzięki protokołowi TCP/IP)
+			-Nasz dysk wirutalny(w moim przypdaku opcja ta nazywa się SCSI (0,0,0)(sda) - 21.5GB(...) <- to wybieramy
+		-Klikamy w opcje która pojawia się pod naszym dyskiem oznaczoną "Free Space"
+		-Mamy do wyboru opcje
+			-Create a new partition <- to wybieramy
+			-Automatically partition the free space
+			-Show Cylinder/Head/Sector information
+		-Wpisujemy wielkość naszej pierwszej podstawowej partycji(niech będzie 50%, instalator pozwala
+		 na wielkości procentowe)
+		-Wybieramy opcje "Primary"
+		-Decydujemy czy partycja ma być stworzona "na początku" lub "na końcu" dysku, wybieramy początek
+		-Następnie otwiera nam się okno konfiguracji partycji w którym mamy takie rzeczy jak:
+			-Use as: (czyli przeznaczenie dysku)
+				-Ext4 journaling file system, czyli system księgowania plików. Jest to jeden z najpopularniejszych 
+				systemów tego przeznaczenia. Ext4 jest także najnowszym i najbardziej rozbudowanym wydaniem tego systemu.
+				Pozwala na obsługę większych woluminów nawet do 1 eksbibajta, czy brak limitu obsługiwanych podfolderów.
+				więcej można się dowiedzieć pod linkiem: https://pl.wikipedia.org/wiki/Ext4
+				-Ext3 journaling file system, starsza i bardziej ograniczona wersja Ext4
+				-Ext2 file system, jeszcze starsza wersja systemu. Warto zaznaczyć że nie używa księgowania, czyli 
+				sposobu zapisu danych dzięki któremu pliki przed zapisem na dysk są najpierw zapisywane do journal'a,
+				który zmniejsza prawdopodobieństwo utraty danych
+				-btrfs journaling file system, system zapisu plików używający techniki 
+				Kopiowanie przy zapisie (ang. copy-on-write, COW), używane w przypdaku wspóldzielenia względnie dużej 
+				ilości danych(między wątkami czy procesami) [wg. Wikipedii, link: https://pl.wikipedia.org/wiki/Kopiowanie_przy_zapisie]
+				Jest to system nowszy od Ext4.(szybki wydajny ale nadal w testowany więc nie jest najbezpieczniejszy)
+				-JFS journaling file system, system plików z księgowaniem stworzony przez IBM 
+				-XSF journaling file system, system opracowany przez Silicon Graphics pozwalający na obsługę dużych dysków twardych.
+				-FAT16 stary system systemu plików(Stosowany do Windows 95) w którym najważnieszym elementem jest tablica
+				 opiera się na technologi File Allocation Table. 
+				-FAT32 następca FAT16
+				-Swap area, czyli pamięć dyskowa działająca jako sztuczna pamięć RAM(o wiele wolniejsze niż zywkły RAM)
+				[CYTAT z https://askubuntu.com/questions/508870/what-is-a-swap-area]
+				The Swap Area is just fake RAM that lives on your hard drive. It is much slower than actual RAM, but is necessary
+				 in many cases to keep a computer running normally. 
+				A good rule of thumb is to have as much swap space as you do normal RAM.
+				[KONIEC CYTATU]
+				-physical volume for encryption, opcja pozwalająca na korzystanie z szyfrowania dysku
+				-physical volume for RAID, opcja do tworzenia jednego wirtualnego dysku z wielu dysków dane są 
+				 zapisywane na kilku fizycznych dyskach.
+				-physical volume for LVM, opcja pozwalająca stworzyć dużą partycje z wielu małych dysków.
+			-Wybieramy Ext4 jako że jest to domyślna opcja
+			-Mount point:
+				-"/" system plików dla root'a <- to wybieramy ponieważ jest to nasza partycja systemowa
+				-"/boot" partycja odpowiadająca za przetrzymywanie plików odpowiedzialnych za startowanie systemu
+				-"/home" czyli partycja domowa "rzeczy w folderze home"
+				-"/tmp" pliki tymczasowe
+				-"/usr" statyczne pliki użytkownika
+				-"/var" partycja przechowująca dane które się często zmieniają takie jak dane aplikacji, czy logi danego oprogramowania
+				-"/srv" partycja która przechowuje dane usług czy serwuisów(nie jest ona wymagana dla systemu)
+				-"/opt" partycja przeznaczona dla pakietów i/lub aplikacji instalowanych na system operacyjny
+				-"/usr/local" partycja przeznaczona do programów i aplikacji zainstalowanych na systemie przez użytkownika(lokalnie)
+			-Mount options: Są to opcje które określają, w jaki sposób jest partycja montowana i jaki daję dostęp, uprawnienia i ograniczenia
+			dla użytownika jeżeli chodzi o pliki na niej się znajdujące.
+			-Label czyli nazwa/etykieta systemu
+			-Typical usage czyli to w jaki sposób będzie system przeznaczony:
+				- opcje są pogrupowane od (najwięcej plików, najmniejsza waga do najmniej plików o dużej wadze)
+			-Bootable flag, jest opcją którą jak włączymy będzie oznaczała dla systemu, że z tej partycji jest bootowany system.
+			Tylko jedna partycja moze mieć to włączone
+			-Reserved blocks, jest to miejsce na dysku przeznaczona dla superużytkownika popularnie zwanym rootem, przestrzeń ta
+			jest potrzebna do wykonania niektórych zadań takich jak np. przywracanie systemu.
+			-Usuń Partycje
+			-Zakończ
+
+		-Po zakończeniu naszej podstawowej partycji dzielimy reszte miejsca na dysku/dyskach według uznania i potrzeb(zawsze warto jest 
+		uwzględnić swap area i )
+		-Jeżeli jesteśmy zadowoleni ze sposobu podziału naszego dysku klikamy Finish partitioning and write changes to disk
+		-Klikamy Yes na zmianach i przechodzimy dalej
+	7.14 Wybieramy dysk do partycjonowania(Mamy tylko jeden przy naszej opcji)
+	7.15 Wybieramy jedą z opcji(W naszym przypadku Separate /home partition)
+		-All files in one partition(Czyli opcja najlepsza dla nowych użytkowników): Wszystkie pliki znajdują się na jednej partycji
+		-Separate /home partition: Jest rozdział między systemem a naszymi przetrzymywanymi plikami
+		-Separate /home, /var and /temp partition - czyli najbardziej zaawansowana partycja pozwalająca nam na trzymanie
+		różnego typu danych na różnych partycjach
+	7.16 Kończymy partycjonowanie dysku jak jesteśmy usatysfakcjonowani(ja jestem)
+	7.17 Zaczyna się instalacja systemu
+	7.18 Konifurujemy packet managera
+		7.18.1 wybieramy z jakiego kraju maja byc pobrane pakiety(w naszym przypadku Poland)
+		7.18.2 wybieramy domene skąd mają być pobrane pakiety(w naszym przypadku zostawiamy defaultową czyli 
+			deb.debian.org)
+		7.18.3 Ustawienie proxy HTTP, nas to nie interesuje więc zostaiwamy puste.
+	7.19 Decydujemy się czy chcemy wysyłać statystyki(w naszym przypadku nie bo jeszcze trafi do chińskiego rządu)
+	7.20 Wybieramy oprogramowania które mają się znaleźć na naszym systemie
+		- Debian desktop environment (Czyli basicowe środowisko): Proste i przejrzyste, posiada standardowo dobrane funkcje jest to dobra
+			opcja dla osoby zaczynającej swoje przygody z debianem. Wymagania systemowe nie są wygórowane
+		- GNOME: Jest to pełene środowisko z wieloma funkcjami i aplikacjami. Przeznaczone dla ludzi którzy oczekują bogatego środowiska. 
+			Wymagania systemowe są duże
+		- Xfce: Jest to lekkie środowisko graficzne z wygodnym i intuicyjnym interfejsem, posiada także łatwe w użyciu narzędzia konfiguracyjne.
+			Wymagania systemowe nie są duże
+		- GNOME flashback to gnome z przypominająca starsze wersje tego środowiska. Idealne oprogramowanie dla osób które chcą korzystać z gnome
+			ale preferują mniej przytłaczający interfejs. Wymagania są mniejsze od podstawowego GNOME
+		- KDE Plasma: Pełne środowisko graficzne bogate w funkcje i narzędzia. Interfejs jest zbliżony do tego co znamy na Windowsie. Aplikacje
+			mają w niektórych przypadkach więcej funkcji niż te na GNOME. Mniej popularny niż gnome. Wymagania są duże
+		- Cinnamon: Oparte na GNOME środowisko z minimalistycznym interfejsem. Oferuje pdostawowe i proste w użyciu 
+			narzędzia konfiguracyjne, łatwe w nawigacji menu i wiele przydatnych funckcij. 
+			Wymagania nie są wysokie (oparte na starszych systemach)
+		- Mate: Kolejne środowisko oparte o GNOME z prostym interfejsem. Posiada wiele narzędzi i funkcji. Nie jest to wymagające środowisko
+			co sprawia że jest ono dobre dla starszych lub gorzej wyposażonych maszyn.
+		- LXDE: Bardzo lekkie środowisko z bardzo niskimi wymaganiami. Posiada minimalistyczny i prosty interfejs oraz ma w zanadrzu podstawowe
+			narzędzia i funkcje.
+		- LXQt: Środowisko zbudowane na bazie bibliotek Qt i powstało z połączenia środowisk LXDE-QT i Razor-qt. Ma niskie 
+			wymagania i ubogi interfejs. Jak wszystkie posiada łatwe w użyciu narzędzia i podstawowe fukcje.
+		- web server
+		- SSH server - opcja pozwala nam na zarządzanie komputerem na odległość
+		- standard system utilities - podstawowe pakiety i narzędzia
+	7.21 Następuje instalacja Software'u
+	7.22 Pojawia się nam opcja instalacji bootloadera
+		W przypadku w którym idziemy drogą domyślenej konfiguracji po kliknięciu tak, instalator zainstaluje bootloader GRUB. Dzięki niemu
+		będziemy w stanie odpalić system po zakończeniu instalacji. (Bezpieczne do użycia w wypadku w którym mamy tylko jeden system na maszynie)
+		GRUB będzie zainstalowany na dysku który wybierzemy (domyślnie jest to /dev/sda ale możemy skonfigurować do wybrania innego 
+		dysku/partycji czy pamięci przenośnej) w imie domyślnej konfiguracji będzie to /dev/sda.
+		Instalacja bezpośrednio na partycji jest przydatne w przypadku posaidania kilku systemów na jednym dysku. W ten sposób mamy kontrole
+		który system uruchomi się bezpośrednio po starcie
+	7.23 Instalacja powinna się kontynować
+
+8. Jeżeli nic nam się nie wydarzyło po drodzę powinniśmy mieć czysty system gotowy do roboty.
+
+Przemyślenia:
+-Dobrze odświerzyć wiedzę z ukosów, szczególnie że byłu już praktycznie 1,5 roku temu 
+-Może kiedyś mi się to przydać do pracy zawsze to jakaś dodatkowa umiejętność(chcoć staram się omijać linuxa szerokim łukiem)
+
+KONIEC

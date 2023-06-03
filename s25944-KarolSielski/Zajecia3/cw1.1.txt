@@ -1,0 +1,14 @@
+Treść: Napisz skrypt, który sprawdzi, czy podano więcej niż jeden parametr. Jeśli tak, to niech wyświetli pierwszy parametr.
+ Jeśli nie, to niech wyświetli komunikat, że nie podano parametrów.
+
+#!/bin/bash
+var=$1
+if [ -z "$var" ]; then
+echo "nie podano parametrow"
+else
+echo "input $var"
+fi
+
+Rezultat:
+Skrypt po wywołaniu robi oczekiwaną od niego rzecz.
+Nauczyłem się podstawowej implementacji "if'a" w bashu

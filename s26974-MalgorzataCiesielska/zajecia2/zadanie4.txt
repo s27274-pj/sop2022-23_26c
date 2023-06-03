@@ -1,0 +1,29 @@
+ZADANIE 4
+
+Polecenie:
+Wykonaj komendę ls -l w podpowłoce i przypisz ją do zmiennej X. Wyświetl zawartość tej zmiennej.
+Spraw, aby nie było różnicy (co najwyżej kolorki) między zwykłym wykonaniem komendy:
+
+ls -l
+
+a wypisaniem zawartości zmiennej X. Nie będzie dobrego rezultatu gdy zrobimy tak:
+
+echo $X
+
+Zastanów się dlaczego.
+
+--------------------------
+
+ls -l zwraca:
+total 8
+-rw-r--r-- 1 gosia gosia 37 Mar 18 13:02 zad1.sh
+-rw-r--r-- 1 gosia gosia 37 Mar 31 14:43 zad2.sh
+
+natomiast echo $X (gdzie X=$(ls -l) zwraca:
+total 8 -rw-r--r-- 1 gosia gosia 37 Mar 18 13:02 zad1.sh -rw-r--r-- 1 gosia gosia 37 Mar 31 14:43 zad2.sh
+czyli wszystko w jednej linii.
+
+Dzieje się tak ponieważ gdy używamy echo $X bez cudzysłowu, powłoka rozbija tekst na pojedyncze słowa
+i przekazuje je jako tablicę argumentów polecenia echo. Kiedy skorzystamy z cudzysłowu (echo "$X")
+wartość zmiennej X zostanie potraktowana jako jeden string i zostanie wyświetlona poprawnie, odpowiednio
+rozbira na wiersze.

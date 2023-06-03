@@ -1,0 +1,60 @@
+#!/bin/bash
+
+## 9. Funkcja wypisująca tekst w kolorze
+
+function colorPrint {
+    local text=$1
+    local color=$2
+
+    case $color in
+        red)
+            echo -e "\e[31m$text\e[0m"
+            ;;
+        green)
+            echo -e "\e[32m$text\e[0m"
+            ;;
+        yellow)
+            echo -e "\e[33m$text\e[0m"
+            ;;
+        blue)
+            echo -e "\e[34m$text\e[0m"
+            ;;
+        purple)
+            echo -e "\e[35m$text\e[0m"
+            ;;
+        cyan)
+            echo -e "\e[36m$text\e[0m"
+            ;;
+        white)
+            echo -e "\e[37m$text\e[0m"
+            ;;
+        *)
+            echo "Invalid color!"
+            ;;
+    esac
+}
+
+# na początku deklarujemy funkcję "colorPrint".
+
+# tworzymy dwie zmienne lokalne, do których przypisujemy wartości argumentów przekazanych
+# do funkcji (kolejno pierwszego do zmiennej "text", drugiego do zmiennej "color".).
+
+# wykorzystując instrukcję "case", w zależności od zmiennej "color", funkcja wybiera 
+# odpowiedni kolor tekstu i wypisuje go. 
+
+# echo "Invalid color!" - to instrukcja wykonująca się dla każdego innego przypadku, który nie pasuje 
+# do ustanowionych kolorów (np. "black", ale też każde inne wyrażenie, jak choćby "color").
+
+	#*# instrukcja ta przypomina mi switch z C++. Różnica polega chyba na tym, że case kończy
+	#*# działanie po wykonaniu danej instrukcji, a switch wykona następne (o ile nie użyjemy "break"). 
+	#*# "*)" jest chyba odpowiednikiem default case w switchu. 
+	#*# zaletą instrukcji case jest możliwość stosowania wyrażeń regularnych do dopasowania wzorców.
+	
+	#!# proszę o poprawienie, jeśli źle rozumiem instrukcję case.
+
+# przykładowe użycie funkcji
+colorPrint "Hello World!" red
+colorPrint "Goodbye World!" green
+
+# default
+colorPrint "Invalid color!" rainbow

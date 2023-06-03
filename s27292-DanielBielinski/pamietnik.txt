@@ -1,0 +1,27 @@
+2023-03-04
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+Opis zajec -na zajęciach uczyliśmy się pobierania oraz instalowania 
+Czego sie nauczylas/es - tego w jaki sposób instaluje się poprawnie debiana na virtualboxie
+Co jest dla Ciebie jeszcze nie jasne i musisz poglebic temat - wszystkie opcje instalacji w virtualboxie i za co są one odpowiedzialne
+Co bylo zaskakujacego - to jak szybko instaluje się linuxa w porównaniu do windowsa
+Twoje przemyslenia o calych zajeciach i zadaniach - zadanie wydaje się być trochę czasochłonne ale przynajmniej dogłębnie nauczymy się wszystkiego :smile: :thumbs_up:
+
+2023-03-17
+Moj kochany pamietniczku na dzisiejszych zajeciach sie niczego nie nauczylem bo w nich nie uczestniczylem :(
+
+2023-04-01
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+Korzystac z if'ów/pętli/talic oraz funkcji w bashu
+Tego w jaki sposób można przeskakiwać poprzez pętle w bashu
+Przypomniałem sobie również troche regexa
+
+2023-04-22
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+Wstepu do pieknego jezyka jakim jest ansi c
+Jak korzystac ze zmiennych oraz struktur w c
+W jaki sposob wczytywac pliki i jak je obslugiwac
+
+2023-05-06
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+Tego w jaki sposob obsluguje sie procesy w c
+Oblslugi pobierania id procesu jak i id procesu z ktorego zostal stworzony

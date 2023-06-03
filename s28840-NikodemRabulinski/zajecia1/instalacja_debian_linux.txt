@@ -1,0 +1,336 @@
+Instalacja systemu Debian na maszynie wirtualnej
+
+
+Zacząłem od instalacji najnowszej wersji VirtualBox na swoim komputerze.
+Jako, że pracuję na Macbooku z procesorem M1 musiałem pobrać wersję Beta 7.0.6 i tą też będę opisywał.
+
+
+Najpierw musimy zdobyć obraz systemu operacyjnego.
+W tym celu udałem się na https://debian.org i wcisnąłem piękny duży przycisk "Download",
+który zabrał mnie na https://www.debian.org/download.
+Na tej stronie, jako że pracuję na systemie ARMowym, jak wspomniałem wcześniej, udałem się do "Getting Debian",
+następnie "small installation image" i na koniec "arm64".
+
+Zacznijmy od tego dlaczego wybrałem "Download an installation image" zamiast "Use a Debian cloud image".
+Otóż, instalujemy Debiana w maszynie wirtualnej, a nie w chmurze,
+a przede wszystkim chcemy system *zainstalować*, a nie gotowe zdjęcie z zainstalowanym systemem.
+
+Następnie "small" vs "complete installation image".
+Jako, że instaluję system w maszynie wirtualnej i wiem, że posiadam stałe i szybkie połączenie z internetem,
+łatwiej jest mi pobrać instalator, który na bieżąco pobiera pakiety z internetu przy instalacji.
+Jeśli nie byłbym pewny czy będę miał połączenie z internetem albo chciał zainstalować ten system na maszynie,
+na której go nie będę miał wtedy wybrałbym complete, ale nie mam takiej potrzeby.
+
+I na koniec - arm64 gdyż to jest architektura maszyny, na której pracuję.
+
+
+Po naciśnięciu przycisku nowa maszyna pojawia się okienko z sześcioma polami. Są to po kolei:
+
+Nazwa - nazwa maszyny wirtualnej w VirtualBoxie.
+Jako, że instaluję system Debian i nie zamierzam mieć innych systemów, które musiałbym rozróżnić od tego,
+nazwę ją po prostu "deb-vm".
+
+Folder - lokalizacja, w której znajdą się dane maszyny.
+Nie mam potrzeby tego zmieniać więc zostawię domyślną wartość.
+
+ISO - Plik obrazu systemu, tu wybieram zdjęcie Debiana, które pobrałem w poprzednim kroku.
+I teraz pojawia się pierwszy problem z korzystaniem z wersji BETA - system został wykryty jako 32-bitowy,
+kiedy wiemy, że jest on 64-bitowy.
+Nie byłoby to ogromnym problemem gdyż wciąż możemy zmienić parametry maszyny po utworzeniu jej,
+ale wolę to zrobić od razu przy tworzeniu więc wszedłem w "tryb eksperta",
+zmieniłem wersję systemu na "Debian (64-bit)" i zaznaczyłem "Skip Unattended Installation"
+ponieważ nie chcę żeby VirtualBox sam instalował mi system bez mojej ingerencji.
+Możemy to zostawić włączone jeśli nie chcemy ręcznie przejść przez proces instalacji (ja chcę),
+oraz gdy wiemy, jak VirtualBox się zachowa w instalatorze. Już wersja BETA pokazała,
+że nie potrafi poprawnie wykryć systemu, jaki będziemy wirtualizować,
+więc nawet gdybym nie chciał siedzieć nad instalacją i jej samemu pilnować,
+to w tym wypadku i tak bym nie chciał tej opcji użyć.
+
+
+Następnie mamy zakładkę "Hardware" w której ustawię ilość pamięci RAM przeznaczonej dla maszyny
+oraz ilość wątków procesora.
+Domyślna wartość, jaką sugeruje VirtualBox to 2GB, którą zostawię z kilku powodów:
+- Moja maszyna posiada 16G RAMu więc 2GB dla maszyny wirtualnej mnie nie zrani
+- Nie zamierzam instalować środowiska graficznego (o tym na końcu), przynajmniej na razie
+- Jednak wciąż chcę, żeby wszystko instalowało się szybko i system miał zapas pamięci na procesy,
+które będę na niej odpalać.
+Ilość procesorów zmienię z 1 na 4 z podobnych powodów:
+- Moja maszyna posiada 20 rdzeni więc jestem w stanie 4 z nich przeznaczyć na maszynę wirtualną
+- Mimo, że nie zamierzam instalować środowiska graficznego ani robić nic wymagającego,
+wciąż chcę aby działała szybko, sprawnie i mogła czerpać korzyści z wielowątkowości.
+
+
+I ostatnia zakładka na pierwszej stronie - "Hard Disk", gdzie tworzymy plik dysku twardego maszyny wirtualnej.
+Format zostawiam na VDI, gdyż będzie to maszyna używana jedynie w VirtualBoxie.
+Nie zaznaczam "Pre-allocate Full Size" gdyż chcę aby rozmiar pliku dysku rósł dynamicznie.
+Sprawia to, że zapis w maszynie jest wolniejszy, lecz nie jest to dla mnie problemem.
+Dlatego też zostawiam domyślną wartość 20GB - jest to zdecydowanie za dużo na ten system,
+ale jeśli pojawi się taka potrzeba, to to miejsce będę miał dostępne,
+a dopóki się nie pojawi to rozmiar dysku i tak tej wielkości nie osiągnie.
+
+
+Jednak skłamałem. VirtualBox na ARMie NIE wirtualizuje tylko emuluje, dziękuję Oracle, że mnie okłamałeś.
+Po pobraniu wersji instalatora amd64 w końcu powituje mnie GRUB, a w nim 6 opcji:
+Instalacja graficzna, instalacja, opcje zaawansowane, instalator w kolorystyce o wysokim kontraście,
+instalacja z narratorem, i pomoc.
+
+
+"Instalacja graficzna" - ta opcja uruchamia instalator systemu z interfejsem graficznym,
+co oznacza, że proces instalacji będzie przebiegał w sposób bardziej przystępny dla użytkownika.
+Wybór tej opcji jest polecany dla początkujących użytkowników lub dla tych,
+którzy woleliby wykonywać kroki instalacji w sposób bardziej wizualny.
+
+"Instalacja" - jest to opcja bardzo podobna do poprzedniej z tą różnicą, że instalator działa w trybie tekstowym.
+Oznacza to, że instalator będzie wyglądał mniej ładnie, lecz pozwala to na uruchomienie instalatora z bardzo słabą kartą graficzną
+lub gdy dostępu graficznego do komputera nie mamy. 
+
+"Opcje zaawansowane" - pozwalają nam na instalację "ekspercką" tudzież włączenie systemu w trybie,
+który pozwala nam "ożywić" istniejącą już instalację Linuxa, z którą mamy problem.
+
+"Pomoc" - ta opcja wyświetla informacje na temat procesu instalacji i rozwiązywania problemów, które mogą wystąpić podczas instalacji.
+
+"Instalacja z syntezatorem mowy" - ta opcja umożliwia instalację systemu z obsługą syntezatora mowy, co ułatwia korzystanie z systemu dla osób z niepełnosprawnościami wzrokowymi lub niewidomymi.
+
+Jak już wspomniałem wcześniej, nie zamierzam instalować środowiska graficznego i nie interesuje mnie ono,
+ani nie potrzebuję trybu eksperta, więc w tym wypadku również wybiorę opcję "Instalacja".
+
+
+Pierwsze co widzimy po włączeniu instalatora to wybór języka.
+Nie wpływa on na samo funkcjonowanie systemu i jest stricte preferencją użytkownika,
+więc ja zostawię domyślną opcję - angielski.
+
+
+Następnie musimy wybrać region systemu.
+To ustawienie służy do konfiguracji w jaki sposób jest wyświetlana data, godzina, liczby, waluty, itd.,
+więc ja wybrałem najpierw "other" aby zobaczyć wszystkie opcje, następnie "Europe" i na koniec "Poland".
+
+Jako, że nie istnieje locale "en_PL", musimy zdecydować, jakie locale chcemy ustawić dla systemu.
+Właśnie ta opcja konkretnie mówi programom w jaki sposób powinny wyświetlać informacje.
+Ja zostawię opcję, którą system mi proponuje, czyli "en_US.UTF-8".
+
+
+Po tym wybieramy układ klawiatury.
+Jako, że jestem przyzwyczajony do układu polskiego i z takiego też korzystam na swoim komputerze,
+to taki też układ wybrałem.
+
+
+Po tym kroku instalator wykrywa automatycznie naszą konfigurację systemu
+i instaluje wszystkie pakiety abyśmy mogli komfortowo z niego korzystać.
+
+
+Kiedy już to zrobi, system prosi nas o podanie nazwy maszyny w sieci.
+Najpierw hostname - jest to nazwa identyfikująca urządzenie w sieci.
+Można to porównać do imienia dla człowieka.
+Nazwa ta jest unikalna w obrębie sieci i służy do identyfikacji urządzenia podczas komunikacji w sieci.
+
+Przykładowo, jeśli w sieci mamy dwa urządzenia o nazwach "komputer1" i "komputer2", 
+to można przekazywać informacje między nimi, odwołując się do tych nazw.
+
+Ja podam taką samą jak nazwałem samą maszynę wirtualną - deb-vm.
+
+A następnie domenę: to adres internetowy, który wskazuje na konkretny serwer lub zasób w sieci.
+Można to porównać do nazwiska dla człowieka.
+Nazwa ta jest używana w celu umożliwienia dostępu do usług i zasobów w sieci.
+
+Przykładowo, jeśli chcemy otworzyć stronę internetową, to wpisujemy adres internetowy,
+który składa się z nazwy domeny i nazwy zasobu.
+Nazwa domeny jest częścią adresu URL i służy do określenia,
+gdzie znajduje się serwer, który udostępnia żądany zasób.
+
+Wartości hostname i domeny służą do ustawienia pełnej nazwy urządzenia w sieci.
+Pełna nazwa składa się z nazwy hostname i nazwy domeny, np. "komputer1.example.com".
+Pełna nazwa jest wykorzystywana do identyfikacji urządzenia w sieci i do nawiązywania połączeń między różnymi urządzeniami.
+
+W tym wypadku zostawię to pole puste, również z uwagi na to,
+że nie planuję tej maszyny włączać do swojej sieci czy też łączyć ją w sieć z innymi maszynami wirtualnymi, 
+ale gdybym instalował ten system bezpośrednio na swoim komputerze
+to użyłbym tu wartości "local" lub innej w zależności od konfiguracji sieci.
+
+
+Następnie proszeni jesteśmy o ustawienie hasła dla użytkownika root czyli głównego administratora systemu,
+który posiada pełen dostęp do systemu i możliwość wykonywania wszelkich operacji na urządzeniu.
+
+Normalnie powinniśmy podać hasło dla użytkownika "root", aby zabezpieczyć konto przed nieautoryzowanym dostępem.
+Hasło powinno być silne, trudne do odgadnięcia i składać się z różnych znaków,
+w tym małych i dużych liter, cyfr i symboli.
+
+Jednakże widzimy komunikat mówiący, że przy pozostawieniu tego pola pustym konto "root" zostanie dezaktywowane,
+a pierwszy użytkownik jakiego utworzymy będzie miał możliwość wykonywania operacji jako administrator przy użyciu narzędzia sudo.
+Jako iż i tak planowałem dać mojemu użytkownikowi pełne prawa administratora, ta opcja jest idealna,
+a zarazem czyni nasz system nieco bezpieczniejszym więc dokładnie to zrobię - pozostawiam to pole puste i idę dalej.
+
+
+Po skonfigurowaniu konta root (czyli w tym przypadku wyłączeniu go)
+proszeni jesteśmy o skonfigurowanie naszego użytkownika.
+
+Pierwszym krokiem jest podanie pełnej nazwy użytkownika.
+Będzie ona pokazywana na ekranie logowania, w mailach, i w innych programach, które wyświetlają imię i nazwisko użytkownika.
+
+Oczywiście ja podałem swoje imię i nazwisko - "Nikodem Rabuliński".
+
+Następnie proszeni jesteśmy o podanie loginu - będzie on używany do identyfikacji naszego użytkownika,
+do logowania, i w innych miejscach, które potrzebują unikalnie zidentyfikować użytkownika komputera.
+
+W moim przypadku użyję tego samego loginu, którego używam na wszystkich swoich maszynach - "niko".
+
+
+Po wybraniu nazwy użytkownika proszeni jesteśmy o hasło, które będzie używane do logowania,
+ale także do uwierzytelnienia, jak będziemy próbowali wykonać jakieś polecenie jako administrator.
+
+Guided - use entire disk: Ta opcja automatycznie tworzy jedną partycję na całym dysku.
+Wszystkie dane na dysku zostaną usunięte, a system zostanie zainstalowany na nowej partycji.
+Ta opcja jest odpowiednia, jeśli chcesz zainstalować system operacyjny na dysku bez istniejących danych
+lub jeśli chcesz usunąć wszystkie istniejące dane z dysku.
+
+Guided - use entire disk and set up LVM: Ta opcja działa tak samo jak poprzednia,
+ale tworzy dodatkowo partycję LVM. Partycje LVM są elastyczne, co umożliwia łatwe dodawanie lub usuwanie partycji,
+a także ich dynamiczną zmianę rozmiaru. Ta opcja jest odpowiednia dla osób,
+które chcą mieć opcję elastycznego ustawienia partycjonowania po zainstalowaniu systemu.
+
+Guided - use entire disk and set up encrypted LVM: Ta opcja działa tak samo jak poprzednia,
+ale partycja LVM jest zaszyfrowana.
+Ta opcja jest odpowiednia dla osób, które wymagają dodatkowego zabezpieczenia danych.
+
+Manual: Ta opcja pozwala na ręczne tworzenie partycji na dysku.
+Użytkownik musi określić rozmiar, punkt montowania i typ partycji.
+Ta opcja jest odpowiednia dla zaawansowanych użytkowników,
+którzy chcą dokładnie określić, jak mają być zorganizowane partycje na dysku.
+
+Która opcja powinna zostać wybrana, zależy od indywidualnych potrzeb i preferencji użytkownika.
+Jeśli nie jesteś pewien, którą opcję wybrać,
+zaleca się skorzystanie z opcji Guided - use entire disk and set up encrypted LVM,
+ponieważ jest ona łatwa w użyciu i zapewnia odpowiednie zabezpieczenie danych.
+
+W moim przypadku nie potrzebuję szyfrowania dysku ani modyfikowania partycji po zainstalowaniu systemu
+więc wybiorę najprostszą - "Guided - use entire disk".
+
+Musimy wybrać dysk, którego użyjemy do instalacji - ja mam tylko jeden.
+
+
+Następnie proszeni jesteśmy o wybranie schematu partycjonowania -
+- czy chcemy mieć cały system na jednej partycji, osobną partycję na /home, czy osobną partycję na /home, /var, i /tmp.
+
+Pierwsza jest zalecana dla nowych użytkowników, oraz dla osób, które nie potrzebują zaawansowanych ustawień partycjonowania.
+Druga i trzecia opcja natomiast tworzy kilka partycji na dysku, w tym oddzielne partycje dla /, /home i /var.
+/ to główna partycja systemowa, /home to partycja, na której będą przechowywane użytkownika pliki użytkowników,
+a /var to partycja, która przechowuje dane tymczasowe i logi systemowe.
+Ta opcja jest odpowiednia dla osób, które chcą mieć bardziej zaawansowane i elastyczne ustawienia partycjonowania.
+
+Ja, jak wspomniałem wyżej, nie mam potrzeby modyfikacji partycji po zainstalowaniu systemu,
+ani też nie mam potrzeby trzymania danych na różnych partycjach, więc wybiorę opcję pierwszą.
+
+
+Następnie mamy opcję przejrzenia ustawień partycjonowania,
+które możemy zatwierdzić lub je zmienić przed zapisaniem ich na dysk.
+
+Jako, że chcę zmienić system plików, na którym zainstaluję to wybiorę partycję główną i zmienię jej przeznaczenie z Ext4 na Btrfs.
+
+Mimo iż ext4 jest stabilniejszym i bardziej przetestowanym systemem plików,
+który nadal jest szeroko stosowany jako standardowy system plików w wielu dystrybucjach Linux,
+to Btrfs oferuje bardziej zaawansowane funkcje i elastyczność,
+które mogą być szczególnie przydatne dla zaawansowanych użytkowników i administratorów systemów.
+
+Funkcje, które mnie najbardziej interesują to:
+Zarządzanie danymi: Btrfs jest zaprojektowany z myślą o łatwym zarządzaniu danymi i może obsługiwać wiele funkcji,
+takich jak kopiowanie migawkowe, kopiowanie w czasie rzeczywistym, deduplikacja i kompresja, co czyni go bardziej elastycznym niż ext4.
+Kopia zapasowa: Btrfs oferuje wbudowaną funkcję kopiowania zapasowego (snapshotting),
+która pozwala na tworzenie kopi zapasowych danych w czasie rzeczywistym bez potrzeby zatrzymywania pracy systemu.
+Dzięki temu można przywrócić system do wcześniejszego stanu w przypadku awarii lub błędów.
+
+Oprócz tego nie wprowadzam żadnych zmian, zatwierdzam tabelę partycji i kontynuuję instalację.
+
+
+Po skonfigurowaniu partycji i sformatowaniu dysku instalator instaluje podstawowe pakiety,
+a następnie dostajemy powiadomienie o skanowaniu zewnętrzych mediów w poszukiwaniu pakietów.
+Ponieważ ja pobrałem małe zdjęcie instalacyjne wszystkie pakiety będę musiał pobrać z internetu.
+Gdybym użył pełnego zdjęcia natomiast,
+w tym momencie instalator by je znalazł i użył go do instalowania dodatkowego oprogramowania zamiast łączyć się z internetem.
+
+Instalator prosi nas o podanie swojej lokalizacji aby znaleźć najlepszy dla nas serwer, z którego będziemy pobierać pakiety.
+Ja zostawię domyślną opcję - deb.debian.org.
+
+Następnie jesteśmy proszeni o podanie danych o naszym Proxy. Ja nie potrzebuję ani nie chcę używać proxy więc pozostawię te pole puste.
+
+HTTP Proxy (lub po prostu Proxy) to serwer pośredniczący między twoim urządzeniem a internetem.
+Kiedy używasz przeglądarki internetowej, komunikujesz się z serwerami internetowymi, aby pobrać informacje lub wysyłać żądania.
+Proxy działa jako pośrednik, który przekierowuje twoje żądania do serwerów internetowych, a następnie przesyła odpowiedzi z powrotem do twojego urządzenia.
+Możesz chcieć lub musieć użyć Proxy w różnych sytuacjach,
+na przykład, gdy chcesz uzyskać dostęp do witryny, która jest zablokowana w twoim kraju lub sieci,
+lub gdy chcesz chronić swoją prywatność i ukryć swoje rzeczywiste IP przed witrynami, którym nie ufasz.
+Proxy może być również przydatny w pracy, gdzie administratorzy sieci mogą używać go do kontroli dostępu do stron internetowych lub do filtrowania treści.
+
+Po wybraniu konfiguracji instalator aktualizuje i instaluje resztę wymaganych pakietów na naszym systemie.
+
+
+Następnie widzimy pytanie czy chcemy wziąć udział w programie Debian Popularity Contest.
+Nie jestem nim zainteresowany i nie będę korzystał z tej maszyny jako z głównego komputera, więc wybieram opcję "nie".
+
+Debian Popularity Contest to system statystycznej analizy popularności pakietów oprogramowania w systemie Debian.
+Głównym celem Debian Popularity Contest jest zbieranie informacji o tym, które pakiety oprogramowania są najczęściej używane przez użytkowników systemu Debian.
+Aby to zrobić, system zbiera anonimowe informacje od użytkowników, którzy zdecydują się wziąć udział w projekcie.
+Użytkownicy, którzy zdecydują się wziąć udział, będą automatycznie wysyłali statystyki dotyczące używanych przez nich pakietów do centralnego serwera projektu.
+
+
+Wspominałem już wcześniej, że nie chcę instalować środowiska graficznego.
+Teraz system prosi nas o wybranie dodatkowych pakietów do zainstalowania, gdyż podstawowy system już został zainstalowany i skonfigurowany,
+więc wyjaśnię dlaczego postanowiłem tego nie robić i kiedy ktoś mógłby chcieć to zrobić.
+
+Użytkownik mógłby chcieć zainstalować środowisko graficzne na swoim systemie, jeśli planuje korzystać z systemu w trybie desktopowym,
+gdzie będzie wykonywać zadania związane z grafiką, multimediów, przeglądaniem internetu, czy graniem w gry.
+Środowisko graficzne może także być przydatne dla użytkowników,
+którzy nie są zaznajomieni z interfejsem wiersza poleceń i wolą korzystać z bardziej intuicyjnego interfejsu graficznego.
+
+Jako, że ja nie planuję robić nic z tych rzeczy, a co więcej, chcę używać tej maszyny łącząc się z nią z terminala,
+nie będę żadnego środowiska graficznego instalował. Instalacja środowiska graficznego może także wprowadzić dodatkowe obciążenia dla systemu,
+a to może prowadzić do spowolnienia jego działania lub zwiększenia zużycia zasobów,
+co może być niepożądane w przypadku starszych lub mniej wydajnych urządzeń.
+
+Instalator daje nam do wyboru siedem środowisk do wyboru. Są to kolejno:
+
+GNOME - Charakteryzuje się nowoczesnym interfejsem użytkownika, łatwością w użyciu i dobrą integracją z aplikacjami GNOME.
+Wymaga jednak dość mocnego sprzętu, co może być problemem dla starszych komputerów.
+
+GNOME (Flashback) - Jest to starsza wersja środowiska GNOME, zanim wprowadzono do niego nową szatę graficzną.
+Nie jest już rozwijane, natomiast jest wciąż wspierane. Jest mniej wymagające niż najnowsza wersja GNOME,
+jednak wciąż może być problemem dla starszych komputerów.
+
+Xfce - Jest to lekkie i wydajne środowisko graficzne, idealne dla starszych lub mniej wydajnych komputerów.
+Charakteryzuje się prostym i przejrzystym interfejsem użytkownika oraz niskim zużyciem zasobów systemowych.
+
+KDE - Jest to zaawansowane i złożone środowisko graficzne, charakteryzujące się bogatymi funkcjami i rozbudowanymi narzędziami.
+Wymaga jednak dużej mocy obliczeniowej, co może być problematyczne dla starszych komputerów.
+
+Cinnamon - Jest to relatywnie nowe środowisko graficzne, które powstało na bazie GNOME 3.
+Charakteryzuje się intuicyjnym i łatwym w użyciu interfejsem użytkownika oraz niskim zużyciem zasobów systemowych.
+
+MATE - Jest to kontynuacja dawnego środowiska GNOME 2,
+które charakteryzuje się prostotą i przejrzystością interfejsu użytkownika oraz niskim zużyciem zasobów systemowych.
+Jest to dobra opcja dla użytkowników, którzy szukają prostego i stabilnego środowiska graficznego.
+
+LXDE - Jest to bardzo lekkie środowisko graficzne, idealne dla starszych lub mniej wydajnych komputerów.
+Charakteryzuje się minimalistycznym interfejsem użytkownika oraz niskim zużyciem zasobów systemowych.
+
+LXQt - Jest to nowoczesne i lekkie środowisko graficzne, które powstało w wyniku połączenia LXDE i Razor-qt.
+Charakteryzuje się minimalistycznym i intuicyjnym interfejsem użytkownika oraz niskim zużyciem zasobów systemowych.
+
+
+Oprócz środowisk graficznych mamy także do wyboru opcje web server, ssh server, i standard system utilities.
+Standard system utilities jest zaznaczone domyślnie i zawiera pakiety jak `file` czy `xz-utils`, więc zostawię tę opcję zaznaczoną.
+
+Web server zainstaluje dla nas oprogramowanie Apache, które pozwala na hostowanie stron interentowych na naszym komputerze.
+Nie jestem zainteresowany stawianiem stron, ani tym bardziej fanem korzystania z Apache więc pozostawię tę opcję odznaczoną.
+
+Zainstaluję natomiast SSH server,
+który pozwoli mi łączyć się z tą maszyną przy użyciu terminala na moim głównym systemie operacyjnym, czy nawet z innej maszyny w tej samej sieci.
+Nie będę tego drugiego robić, ale jest to przydatna opcja jeśli instalowalibyśmy system na serwerze i chcieli mieć do niego dostęp z dowolnego innego komputera.
+
+
+Po zainstalowaniu wybranych przez nas pakietów
+system prosi nas o wyciągnięcie medium instalacyjnego i ponowne uruchomienie systemu.
+Gdy to zrobimy wita nas GRUB z następującymi opcjami:
+- Debian GNU/Linux
+- Advanced options for Debian GNU/Linux
+- UEFI Firmware Settings
+
+Wytłumaczenie ich jest już poza zakresem tego zadania,
+jednak po wybraniu pierwszej opcji po chwili wita nas świeżo zainstalowany system operacyjny Debian.

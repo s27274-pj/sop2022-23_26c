@@ -1,0 +1,64 @@
+Polecenie 1:
+
+Zobacz taką serię poleceń:
+
+X=tekst
+echo $X
+bash
+echo $X
+
+Co się stało? Czy potrafisz wyjaśnić?
+
+Wyjaśnienie:
+
+Najpierw przypisujemy do zmiennej X wartość "tekst" po czym poprzez polecenie echo wyświetlamy zmienną X na ekranie.
+Pokazuje nam się wartość zmiennej X czyli "tekst".
+Następnie uruchamiamy nową powłoke bash poprzez polecenie "bash", która znajduje się hierarchicznie pod naszą aktualną powłoką.
+Teraz gdy próbujemy ponownie wyświetlić wartość zmiennej X poprzez echo nic nam się nie wyświetla ponieważ znajdujemy się w nowej powłoce i w niej nie mamy zainicjalizowanej zmiennej X ani jej wartośći. Jeśli by chcieć ponownie wydrukować "tekst" na terminalu to należy użyć polecenia exit by wyjść z powłoki bash. W ten sposób wracamy się do naszej pierwotnej.
+
+Polecenie 2:
+
+
+Zobacz:
+
+X=Tekst dłuższy
+echo $X
+
+Co jest nie tak? jak to naprawić? Zobacz czy pomoże zastosowanie cudzysłowów i apostrofów.
+
+Wyjaśnienie:
+
+Aby zmiennej móc przypisać wartość w której używamy dwóch słów oddzielonych spacją należy je zamknąć z obu stron cudzysłowami bądź apostrofami.
+W momencie gdy nie żadnych z tych znaków to jesteśmy w stanie przypisać tylko jedno ciągłe słowo. Użycie apostrofów w tym przypadku będzie rozwiązaniem ponieważ cudzysłowów używamy w przypadku gdy chcemy uwzględnić jakieś znaki specjalne bądź zmienne, które będą przetłumaczone na wartości. Tak więc poprawiony kod powinien wyglądać następująco:
+
+X='Tekst dłuższy'
+echo $X
+
+Polecenie 3:
+
+
+Zobacz:
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+Jaka jest różnica między " a ' ?
+
+
+Wyjaśnienie:
+
+Wyjaśniłem to w punkcie wyżej ale w kontekście tego kodu gdy używamy cudzysłowa i w nim zawieramy zmienną to zostanie ona przekonwertowana na wartość tej zmiennej. Z drugiej strony gdy używamy apostrofa to zostanie wyświetlona cała nazwa zmiennej czyli na przykład $X. Tak więc pierwsze echo wyświetli nam:
+(tych cudzysłowów nie wyświetli i są użyte tylko dla prezentacji wyrażenia)
+
+"tekst:Tekst 1"
+
+natomiast drugie echo wyświetli:
+
+"tekst:$X"
+
+trzecie echo wyświetli to samo co drugie ponieważ nasza wartość zmiennej $X została zapisana bez nawiasów ale była zapisana ciągiem bez spacji tak więc wartość Y to jest "tekst:$X" czyli oznacza to, że nieużywanie ani apostrofu ani cudzysłowiu skutkuje w zapisie zmiennej tak jakby było to zrobione za pomocą cudzysłowów z uwzględnieniem tego, że musi to być ciągly tekst.

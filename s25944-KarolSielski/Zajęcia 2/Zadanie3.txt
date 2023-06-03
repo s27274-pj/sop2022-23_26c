@@ -1,0 +1,40 @@
+Zadanie 3:
+Treść Zobacz co przechowują zmienne i opisz jak rozumiesz uzyskany wynik. Do czego on jest i kiedy może się wg Ciebie przydać:
+
+PATH
+RANDOM
+PWD
+PS1
+USER
+HOSTNAME
+OSTYPE
+
+$PATH - Jest to zmienna przechowująca liste katalogów, w których shell szuka plików wykonywalnych odpowiadającej naszej 
+komendzie. Jeżeli znajdzie tam komendę wykona ją jeżeli nie, cóż nie zostanie ona wykonana.
+	Może się nam przydać do odnalezienia pakietów z komendami shellowymi i ewentualej ich modyfikacji
+
+$RANDOM - Wartość pseudolosową która generuje integer pomiędzy 0 a 32767(maksymalna wielkość typu short)
+	Może się nam przydać do wygenerowania pseudolosowej liczby.
+
+$PWD - (Print Working Direcotry) Zmienna przetrzymywująca path name w którym obecnie jest wykonywana operacja 
+	Może się nam przydać do pozyskania informacji w którym miejscu aktualnie się znajdujemy lub wykonuje się nasz plik 
+	skryptowy
+
+$PS1 - Jest to wartość która wyświetla się przed każdą wykonaną komendą, można nadpisać tą wartość jeżeli chcemy.
+Defaultowo jest to nazwaUżytkownika:~/aktualna ścieżka
+	Może się nam przydać do informacji w jakiej lokalizacji i na jakim profilu się aktualnie znajdujemy. Możemy też przypisać
+	do niej wartość jaką chcemy dzięki czemu będziemy mogli pozyskać pożądane informacje.
+
+$USER - Nazwa użytkownika profilu
+	Może się nam przydać do pozyskania informacji na jakim profilu/użytkowniku się aktualnie znajdujemy
+
+$HOSTNAME - Nazwa Hosta
+	Może się nam przydać do pozyskania informacji o nazwie Hosta pod którym się aktualnie znajdujemy
+
+$OSTYPE - Nazwa Systemu
+	Może się przydać jak nie do końca rozpoznajemy system z którego korzystamy i chcemy odnaleźć jak się nazywa.
+
+więdze tą będzie można wykorzystać jak będziemy chcieli poznać specyfikacje danego systemu lub naszą aktualną lokalizacje w 
+systemie w wypadku kiedy nie będzie ona 'podana na tacy'
+		
+

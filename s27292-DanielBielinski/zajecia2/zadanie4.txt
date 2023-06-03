@@ -1,0 +1,38 @@
+Polecenie:
+
+Wykonaj komendę ls -l w podpowłoce i przypisz ją do zmiennej X.
+
+Wyświetl zawartość tej zmiennej.
+
+Spraw, aby nie było różnicy (co najwyżej kolorki) między zwykłym wykonaniem komendy:
+
+ls -l
+
+a wypisaniem zawartości zmiennej X. Nie będzie dobrego rezultatu gdy zrobimy tak:
+
+echo $X
+
+Zastanów się dlaczego.
+
+
+Wyjaśnienie:
+
+Najpierw wykonujemy polecenie:
+
+X=$(ls -l)
+
+Jednak gdy wykonujemy echo $X to na terminalu wyświetla nam się wynik polecenia ls -l ale który nie jest oddzielony znakami spacji tak jak podstawowo robi zwyczajne wywołanie polecenia ls -l. Aby temu zaradzić możemy na przykład użyć polecenia echo z wykorzystaniem wyrażeń regularnych.
+
+echo -e "${X//[\t ]+/ }"
+
+Parametr -e pozwala na wypisywanie specjalnych sekwencji poprzez echo.
+$ wskazuje że będzie to zmienna po czym otwieramy nawiasy {} w których umieszczamy wyrażenie regularne i dzieli się ono na 3 części.
+
+zmienna//wzór/zamiana wzoru, czyli ->
+
+zmiennna -> X
+wzór -> [\t ]+ czyli szukamy każdego znaku tabulatora bądź spacji. + oznacza w że musi się ten wzór pojawić przynajmniej jeden raz
+zamiana wzoru na -> po prostu pojedynczą spacje
+
+i w taki sposób polecenie echo zwraca nam to samo co samo wywołanie polecenia ls -l
+

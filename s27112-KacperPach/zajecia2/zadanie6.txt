@@ -1,0 +1,10 @@
+#!/bin/bash
+# wydaje mi sie ze w tym zadaniu chodzi o wykonie odmiany dla imion meskich i damskich 
+# za pomoca samego bashowego podmienia znaków
+imie=($1a) # dodaje do imienia a na końcu stringa wtedy: 
+           # imie męskie "damian" -> damiana
+           # imie zenskie "ania" -> aniaa
+echo $1 ma kota, a kot ma ${imie/%aa/ę} # jesli na koncu stringa znajduje sie "aa"
+                                        # zamieniam znaki na 'ę' w innm przypadku
+                                        # nie zamieniam nic poniewaz męskie imiona
+                                        # sa juz zapisane poprawnie w zmiennej imie

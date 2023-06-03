@@ -1,0 +1,20 @@
+#!/bin/bash
+
+## 1. Skrypt sprawdzający, czy podano jakiś argument
+
+if [ $# -gt 1 ]; then
+    echo "Pierwszy parametr to: $1"
+elif [ $# -le 1 ]; then
+    echo "Nie podano żadnych parametrów"
+fi
+
+# specjalna zmienna "$#" przechowuje liczbę argumentów podanych do skryptu
+# lub funkcji. Jest to zmienna lokalna, która jest widoczna tylko wewnątrz
+# skryptu lub funkcji. Wydaje się odpowiednia do wykorzystania w zastosowaniu
+# takim jak to z polecenia. Używamy też specjalnej składni do porównywania liczb,
+# tj. "-gt" (większe niż) i "-le" (mniejsze lub równe).
+
+	#*#Ciekawostka: zmienna "$#" przechowuje liczbę argumentów podanych
+	#*#do skryptu, a "$1" to oczywiście pierwszy argument, jednakże
+	#*#tak naprawdę za pierwszy można uznać "$0" - zmienna ta przechowuje
+	#*#nazwę uruchamianego skryptu.

@@ -1,0 +1,26 @@
+2023-03-17
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem/lam sie:
+ - dogłębnej konfiguracji wirtualnych maszyn
+ - nauczyłem się jak szacować ilość zasobów potrzebnych systemowi do funkcjonowania
+ - instalacji debiana bez środowiska graficznego
+ - dowiedziałem się o różnach typach instalacji systemu jak np. network install
+ - pierwsze zajęcia oceniam jako bardzo wartościowe lecz był to bardziej wykład niż ćwiczenia, dla mnie najlepszą metodą nauki jest praca samodzielna i praktyka
+
+2023-04-01
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+ - Składni instrukcji warunkowych
+ - Składni pętli
+ - Pisania własnych funkcji
+ - Operowania na tablicach
+
+2023-04-23
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+- implementacji list wiązanych
+- różnic pomiędzy jezykiem c a cpp
+- kompilowania pliku zrodlowego w terminalu
+- obsługiwanie parametrów w funkcji main
+
+
+2023-05-07
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+- tworzenia nowych procesów oraz zarządzania nimi

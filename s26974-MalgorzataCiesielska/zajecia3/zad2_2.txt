@@ -1,0 +1,5 @@
+#!/bin/bash
+for ARG in "$@"; do # '$@' - gets all arguments as separate strings
+	echo "\"$ARG\""
+done
+

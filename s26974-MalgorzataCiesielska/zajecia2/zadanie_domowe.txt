@@ -1,0 +1,13 @@
+ZADANIE DOMOWE
+
+Skrypt:
+#!/bin/bash
+X=$(cat $1 | sed 's/Gosia/\\e[31mGosia\\e[0m/g')
+echo -e "$X"
+
+Analiza:
+1. cat $1 - wyświetla treść pliku o nazwie przekazanej jako argument
+2. '|' - przekazuje wynik polecenia cat do polecenia sed
+3. sed 's/Gosia/\\e[31mGosia\\e[0m/g' - podmienia wszystkie wystąpienia 'Gosia' na \\e[31mGosia\\e[0m (31m to kod koloru czerwonego)
+4. X=$(cat $1 | sed 's/Gosia/\\e[31mGosia\\e[0m/g') - przypisuje wynik do zmiennej X
+5. echo -e "$X" - wyświetla zawartość zmiennej X, flaga -e zapewnia interpretację znaków oznaczonych '\\'

@@ -1,0 +1,790 @@
+//plik oryginalnie powstał w formacie .docx, zawierał formatowanie, wklejone screeny, komentarze i hiperlinki.
+
+
+
+       Instalacja systemu Debian przy pomocy maszyny wirtualnej
+
+
+1. Zanim przejdzie się do procesu instalacji, należy oczywiście zdobyć instalator. Na
+   potrzeby tej instrukcji posłużymy się obrazem instalacyjnym dostępnym w serwisie
+   https://www.debian.org. W tym celu należy z widoku odpowiedniej podstrony pobrać
+   plik debian-11.6.0-amd64-netinst.iso.
+       a. Powyższy plik przeznaczony jest dla konkretnej, 64-bitowej architektury CPU.
+          Inne instalatory oraz obrazy takie jak system live, instalator offline dla
+          systemów bez dostępu do Internetu, instalatory dla innej architektury CPU lub
+          instancji chmurowych, można znaleźć na stronie Jak zdobyć Debiana.
+       b. Powyższa strona zawiera opcje instalacji/uruchamiania stabilnej wersji
+          Debiana. Należą do nich:
+               •   Instalacja z pliku instalacyjnego, po ówczesnym jego pobraniu.
+                     o Mały plik obrazu – umożliwia szybką instalację i zawiera
+                        podstawowy zestaw oprogramowania, aby móc rozpocząć
+                        instalację i pobrać pozostałe pakiety z Internetu.
+                     o Kompletny plik obrazu – zawiera więcej pakietów, ułatwiając
+                        instalację na maszynie bez połączenia internetowego.
+
+
+                        Często pobranie obrazu małej płyty okaże się lepszym
+                        rozwiązaniem od kompletnego obrazu – ściągane są wyłącznie
+                        pakiety wybrane do instalacji na konkretnej maszynie, co
+                        oszczędza zarówno czas, jak i pasmo sieciowe. Z drugiej strony,
+                        pełne zestawy są bardziej odpowiednie, jeśli instalacja przebiega
+                        na więcej niż jednej maszynie lub bez dostępu do Internetu.         Z komentarzem [ŁO1]: via debian.org
+
+
+
+               •   Instalacja z płyty CD/DVD – umożliwia instalację z odpowiednio
+                   przygotowanej i wcześniej zakupionej płyty CD/DVD. Plusem takiego
+                   rozwiązania jest możliwość instalacji bez połączenia internetowego,
+                   bez ściągania wszystkich pakietów samodzielnie, na dowolnej ilości
+                   maszyn.
+               •   Zakup komputera z preinstalowanym Debianem – rozwiązuje
+                   problem instalacji, rzadko stosowane rozwiązanie ze względu na brak
+                   możliwości konfiguracji (system jest prekonfigurowany podczas
+                   instalacji zgodnie z podzespołami komputera).
+               •   Obraz Debiana dla chmury – możliwość stworzenia maszyny
+                   wirtualnej w chmurze. Nie ma procesu instalacji, system jest po prostu
+                   uruchamiany, po wyborze gotowego systemu.
+
+
+                   Na    potrzeby   niniejszej   instalacji   demonstracyjnej    zostanie
+                   wykorzystany     wspomniany     wcześniej    mały   plik   obrazu    w
+                   odpowiedniej wersji, ze względu na szybkość jego pobrania.
+
+
+2. Drugim krokiem jest zainstalowanie oprogramowania wirtualizacyjnego. Na potrzeby
+   niniejszej instalacji zostanie wykorzystany VirtualBox z pakietami przygotowanymi pod
+   system Windows, jako że taki właśnie pierwotny system operacyjny posiada komputer,
+   na którym będzie instalowany Debian.
+3. Następnie, po zainstalowaniu VirtualBoxa i jego uruchomieniu, należy stworzyć nową
+   maszynę wirtualną. Aby to zrobić, w okienku menadżera należy kliknąć „Nowa” i
+   postępować zgodnie z instrukcjami wyświetlanymi na ekranie:
+       a. Nazwa i system operacyjny – w pierwszym okienku konfiguracji należy wpisać
+          nazwę oraz folder, w którym zostanie utworzona nowa maszyna wirtualna.
+          Dobrym rozwiązaniem jest ustawienie nazwy w taki sposób, by pomagała w
+          zidentyfikowaniu systemu operacyjnego, na którym funkcjonuje tworzona
+          maszyna wirtualna. Na potrzeby tej demonstracyjnej instalacji, nazwę maszyny
+          ustalamy na „TestDebian”.
+       b. Rozmiar pamięci RAM – w następnym okienku należy przydzielić ilość pamięci
+          RAM, z których może korzystać maszyna wirtualna.
+               •   Minimalna ilość pamięci RAM to 4 MB, maksymalna to 16384 MB.
+                   Ilość pamięci należy dostosować do konkretnych potrzeb i celu w
+                   jakim tworzona jest wirtualna maszyna, aby nie marnotrawić
+                   zasobów. Zalecana ilość pamięci RAM według oficjalnej instrukcji
+                   instalacji wynosi 512 MB dla instalacji bez interfejsu graficznego. Dla
+            celów niniejszej instalacji, przydzielimy wirtualnej maszynie 4096 MB,
+            aby przebiegła ona w sprawny sposób oraz żeby na etapie
+            partycjonowania dysku przedstawić pewien mechanizm podczas
+            ustanawiania przestrzeni wymiany.
+c. Wirtualny dysk twardy – w tym miejscu należy podjąć decyzję o utworzeniu
+   (lub nie) wirtualnego dysku twardego i przypisaniu go do maszyny wirtualnej.
+   Można wykorzystać do tego także już istniejący plik dysku. Na potrzeby tej
+   demonstracyjnej instalacji kontynuujemy tworzenie maszyny wirtualnej wraz z
+   wirtualnym dyskiem.
+d. Typ pliku z wirtualnym dyskiem – tu należy wybrać typ pliku, który będzie
+   używany w ramach wirtualnego dysku twardego. VirtualBox proponuje trzy
+   różne:
+        •   VDI (VirtualBox Disk Image) – standardowy format współpracujący z
+            VirtualBoxem.    Zapewnia     maksymalną      kompatybilność     przy
+            współpracy z VirtualBoxem, pozwala na statyczne i dynamiczne
+            alokowanie zasobów. Nieoficjalne testy wskazują, że pliki VDI są
+            mniejsze i funkcjonują sprawniej niż odpowiedniki VHD czy VHDX,
+            choć wolniej od VMDK.
+        •   VHD (Virtual Hard Disk) – w przeszłości był to domyślny format dla
+            oprogramowania wirtualizacyjnego firmy Microsoft. Choć nadal
+            używany i wspierany przez inne oprogramowania, został zastąpiony
+            przez format VHDX w 2012 r. Do zalet tego formatu należy między
+            innymi łatwość w tworzeniu kopii zapasowych. Minusem z kolei jest
+            fakt, że strukturalnie uszkodzone pliki VHD/VHDX mogą nierzadko
+            doprowadzić do crashu Windowsa.
+        •   VMDK (Virtual Machine Disk) – natywny format dla oprogramowania
+            VMware, obecnie na otwartej licencji. Format ten dzieli wiele zalet i
+            wad z formatami wymienionymi wyżej, natomiast jeśli chodzi o
+            unikalne cechy formatu, to pozwala on w przeciwieństwie do VHD czy
+            VDI na cząstkowy backup zmian w danych od momentu utworzenia
+            poprzedniej kopii zapasowej, co sprawia, że sam proces tworzenia
+            tychże kopii zapasowych przebiega bardzo szybko.
+            Na potrzeby tej demonstracyjnej instalacji, wybieramy format VDI, ze
+            względu na to, że jest on domyślnym formatem wykorzystywanego
+            oprogramowania wirtualizacyjnego i zapewne będzie działał w
+            przewidywalny sposób oraz nie ma potrzeby zachowania
+            kompatybilności z oprogramowaniem od innych dostawców usług
+            wirtualizacyjnych.
+e. Pamięć na fizycznym dysku twardym – w tym okienku należy wybrać, czy plik
+   nowego wirtualnego dysku będzie posiadał stały rozmiar (zostanie utworzony
+   z maksymalnym rozmiarem), czy też jego rozmiar będzie rósł wraz z użyciem
+   (rozmiar dynamicznie przydzielany).
+        •   Dynamicznie przydzielany – zostanie utworzony plik dysku
+            wirtualnego z określonym, domyślnym rozmiarem wybranym przez
+            użytkownika, do którego w zależności od użycia plik ten będzie się
+            rozrastał (jednak nigdy go nie przekroczy). Minusem tego rozwiązania
+            jest możliwość wystąpienia sytuacji, w których niemożliwe będzie
+            zastosowanie ciągłego przydziału danych w jednostkach alokacji, co w
+            przypadku częstego wykorzystywania przestrzeni dyskowej powoduje
+            spadek wydajności. Ponadto przy intensywnym użytkowaniu,
+            konieczność   alokowania     nowych    zasobów    przestrzeni   przez
+            oprogramowanie wirtualizacyjne zwiększa się, co również prowadzi
+            do spadku wydajności. Dynamicznego przydzielania używa się często
+            do celów testowych albo w przypadku, gdy przestrzeń na dysku
+            fizycznym jest ograniczona. Na potrzeby niniejszej demonstracyjnej
+            instalacji, wykorzystamy dynamiczną alokację, ponieważ zaoszczędzi
+            to czas podczas samej instalacji oraz miejsce na dysku fizycznym.
+        •   Stały rozmiar pliku – zostanie utworzony plik dysku wirtualnego z
+            początkową prealokacją zasobów. Wymaga to utworzenia przez
+            oprogramowanie wirtualizujące od razu dysku z podaną przez
+            użytkownika maksymalną pamięcią. Pod kątem oszczędności miejsca
+            dysk ten jest nieefektywny, ponieważ blokuje je na dysku fizycznym,
+            nawet jeśli przestrzeń ta pozostaje pusta. Niemniej w przypadku
+                    aplikacji i programów, które działają na maszynach wirtualnych, a
+                    które generują dużą ilość operacji zapisu/odczytu danych, wirtualny
+                    dysk o stałym rozmiarze na pewno się sprawdzi.
+      f. Lokalizacja i rozmiar pliku – w tym miejscu należy wskazać lokalizację dysku
+          wirtualnego i zmienić jego nazwę, jeśli zachodzi taka potrzeba. Dodatkowo
+          należy też wybrać maksymalny rozmiar obrazu wirtualnego dysku twardego,
+          który pełni rolę limitu ilości danych, jakie maszyna wirtualna będzie w stanie na
+          nim zmieścić. Rekomendowanym rozmiarem dla systemu Debian w przypadku
+          instalacji bez środowiska graficznego, są 2 GB. Należy pamiętać, by wartość
+          maksymalnego rozmiaru obrazu wirtualnego dysku ustalać w oparciu o takie
+          informacje, jak przeznaczenie maszyny wirtualnej i jej zapotrzebowanie na
+          przestrzeń dyskową. Dzięki temu w prosty sposób można uniknąć
+          marnotrawienia zasobów. Na potrzeby niniejszej instalacji ustawiamy rozmiar
+          obrazu wirtualnego dysku twardego na 20 GB. Pozwoli to nam przeznaczyć
+          zauważalne w rozmiarze miejsce na partycję systemową, na której w razie
+          potrzeby moglibyśmy w późniejszym czasie doinstalować środowisko graficzne,
+          a także przeznaczyć właściwą ilość miejsca na tzw. przestrzeń wymiany, o której
+          więcej w dalszej części manuala.
+4. Przed przejściem do instalacji systemu Debian, warto sprawdzić, czy wszystkie
+   ustawienia naszej maszyny wirtualnej są zgodne z naszymi założeniami oraz jej
+   przeznaczeniem. Aby to zrobić, należy w głównym oknie menadżera VirtualBox
+   zaznaczyć utworzoną przez nas maszynę wirtualną, a następnie kliknąć „Ustawienia”.
+   Wyświetli to nam nowe okno ustawień maszyny wirtualnej, podzielone na odrębne
+   sekcje i podsekcje.
+      a. Ogólne:
+                •   Ogólne:
+                     o W polu „Nazwa” można zmienić nazwę naszej maszyny
+                         wirtualnej. Virtual Box korzysta z niej również do zapisywania
+                         plików konfiguracyjnych naszej maszyny.
+                     o W polu „Typ” istnieje opcja zmiany typu emulowanego systemu.
+                         Domyślnie ustawiony jest tutaj typ przypisany podczas
+                         tworzenia danej maszyny wirtualnej, późniejsza jego zmiana nie
+                 ma wpływu na jej ustawienia – jest to wartość wyłącznie
+                 informacyjna.                                                    Z komentarzem [ŁO2]: VirtualBox manual
+
+              o W polu „Wersja” można zmienić wersję emulowanego systemu
+                 naszej maszyny wirtualnej.
+          Ponieważ maszyna wirtualna została stworzona zgodnie z naszymi
+          założeniami co do jej przeznaczenia, nie będziemy zmieniać
+          powyższych opcji.
+      •   Zaawansowane:
+              o W polu „Folder migawek” można zmienić folder, w którym
+                 przechowywane będą dane migawek. Domyślnie VirtualBox
+                 zapisuje te dane wraz z innymi danymi konfiguracyjnymi.
+              o W polu „Współdzielony schowek” istnieje opcja włączenia
+                 jednokierunkowego współdzielenia schowka (host → guest albo
+                 guest → host), bądź dwukierunkowego współdzielenia schowka,
+                 co sprawi, że Virtual Box zawsze będzie upewniał się, że oba
+                 schowki zawierają te same dane. Ustawienie to jest domyślnie
+                 wyłączone ze względów bezpieczeństwa.
+              o W polu „Przeciąganie i upuszczanie” można włączyć wsparcie
+                 dla – jak sama nazwa wskazuje – funkcjonalności przeciągania i
+                 upuszczania obiektów takich, jak np. pliki. Podobnie jak w
+                 ustawieniu powyżej, opcja ta może działać jednokierunkowo lub
+                 dwukierunkowo oraz domyślnie jest wyłączona.
+          Pozostawiamy powyższe opcje niezmienione, ponieważ dla tej
+          demonstracyjnej instalacji nie będziemy z nich korzystać.
+      •   Opis – w tej podsekcji można wprowadzić opis naszej wirtualnej
+          maszyny. Nie ma to wpływu na jej funkcjonalność. Przydatne w
+          przypadku, gdy np. korzystamy z wielu maszyn wirtualnych i nie
+          zawsze pamiętamy, na której dokonaliśmy jakiej konfiguracji bądź
+          zainstalowaliśmy dany software.
+Pozostawiamy ten opis pusty, jako że jest to wyłącznie demonstracyjna
+instalacja.
+       •     Szyfrowanie dysku – tutaj można włączyć opcję szyfrowania dysków,
+             które podpięte są do maszyny wirtualnej. VirtualBox pozwala nam na
+             wybranie algorytmów szyfrowania oraz hasła. Ustawienie niezwykle
+             istotne, jeśli na wirtualnych dyskach są przechowywane wrażliwe
+             dane, wymagające ochrony. Pozostawiamy tę opcję wyłączoną, jako
+             że na potrzeby tej demonstracyjnej instalacji nie jest ona konieczna, a
+             dodatkowo spowalniałaby proces zapisu i odczytu.
+b. System:
+       •     Płyta główna – w tej podsekcji możemy zmienić ilość pamięci RAM,
+             która przydzieliliśmy maszynie podczas jej tworzenia, a także rodzaje
+             wirtualnych narzędzi bootowania, z których może korzystać maszyna
+             wirtualna oraz ich kolejność. Istnieje też możliwość zmiany chipsetu
+             (ustawienie istotne ze względu na to, że niektóre emulowane
+             systemy, jak Mac OS X, nie wspierają zbyt dobrze konkretnych
+             chipsetów). Ustawienie modułu TPM można włączyć (w wersji 1.2 lub
+             2.0) lub pozostawić wyłączone – jest ono używane w celu zwiększenia
+             bezpieczeństwa komputera przez usługi związane m.in. z tworzeniem
+             i przechowywaniem kluczy kryptograficznych. Poniżej można zmienić
+             „Urządzenie wskazujące” dla maszyny wirtualnej w przypadku, gdy do
+             jej obsługi używamy czegoś innego niż myszka. Opcja I/O APIC jest
+             niezbędna do działania starszych systemów Windows i odpowiada za
+             kontrolę przerwań sprzętowych (może w niewielkim stopniu
+             zmniejszyć wydajność maszyny wirtualnej). Kategorycznie nie należy
+             jej wyłączać po zainstalowaniu na maszynie wirtualnej systemu
+             Windows. Opcja EFI (Extended Firmware Interface) pozwala zastąpić
+             tzw. legacy BIOS, który jest wykorzystywany przez część systemów
+             operacyjnych. Ustawienie to jest przydatne w przypadku pracy na
+             Mac OS X lub gdy zajmujemy się developmentem i testowaniem
+             aplikacji EFI bez bootowania systemu operacyjnego.
+             Z powyższych ustawień zmieniamy następujące rzeczy: ustawiamy
+             wyłącznie „Dysk twardy” oraz „Napęd optyczny” w opcjach
+             bootowania w dokładnie takiej kolejności (ponieważ chcemy, by nasz
+    system bootował domyślnie z dysku, jednak za pierwszym razem
+    musimy zainstalować system z obrazu płyty, po zainstalowaniu
+    systemu odznaczamy „Napęd optyczny”), w polu „Urządzenie
+    wskazujące” wybieramy Mysz PS/2, ponieważ to z niej korzystamy.
+    Pozostałe opcje pozostawiamy niezmienione.
+•   Procesor – w tej podsekcji za pomocą suwaka można skonfigurować
+    liczbę jednostek procesujących przypisanych do danej maszyny
+    wirtualnej. Ich maksymalna liczba nie może przekraczać liczby
+    dostępnych fizycznych rdzeni. Warto zastanowić się nad zmianą tego
+    ustawienia w przypadku, gdy zamierzamy na maszynie wirtualnej
+    wykonywać zadania, które wyraźnie obciążają procesor lub planujemy
+    uruchamiać aplikacje wykorzystujące multithreading. W polu
+    „Wykorzystanie procesora” możemy dostosować ilość czasu
+    procesora, jaka będzie zarezerwowana dla naszego emulowanego
+    systemu. Ustawienie poniżej 50% może doprowadzić do problemów
+    wydajnościowych. Opcja „PAE/NX” umożliwia przypisanie więcej niż 4
+    GB pamięci nawet w przypadku, gdy emulowany system posiada 32-
+    bitową architekturę. Opcja „VT-x/AMD-V” po włączeniu potencjalnie
+    umożliwia nam tworzenie wirtualnych maszyn na już wcześniej
+    utworzonych maszynach wirtualnych, w zależności od tego, czy nasze
+    podzespoły komputera wspierają taką operację. Takie zagnieżdżanie
+    znacznie spowalnia jednak funkcjonowanie całego ekosystemu.
+    Dla celów tej demonstracyjnej instalacji nie zmieniamy żadnych z
+    powyższych ustawień, ponieważ nie zachodzą ku temu odpowiednie
+    przesłanki.
+•   Akceleracja – w tym miejscu można zmienić ustawienia sprzętowej
+    akceleracji procesów wirtualizacji, które zapewnia procesor fizyczny
+    komputera. Można wybrać taki interfejs parawirtualizacji, który jest
+    lepiej wspierany przez nasz emulowany system – odpowiada on za
+    wydajność i poprawia dokładność pomiarów czasowych. Jeśli nasz
+    fizyczny procesor wspiera zagnieżdżone stronicowanie, włączenie tej
+    funkcji znacznie poprawi wydajność.
+             W tej podsekcji nie zmieniamy żadnych ustawień i pozostawiamy je
+             domyślne (domyślny interfejs parawirtualizacji oraz włączone
+             zagnieżdżanie    stronicowania)       ponieważ     dla   celów    tej
+             demonstracyjnej instalacji nie zachodzi konieczność ich zmiany.
+c. Ekran:
+        •    Ekran – ta podsekcja umożliwia nam na przypisanie większej ilości
+             pamięci wideo w przypadku, gdy np. chcemy korzystać z większych
+             rozdzielczości lub potrzebujemy większej głębi kolorów. Opcja ilości
+             monitorów pozwala VirtualBoxowi przypisać maszynie wirtualnej
+             więcej niż jeden wirtualny monitor, jeśli nasz emulowany system
+             wspiera takie rozwiązanie. Opcja „Kontroler grafiki” pozwala na
+             wybranie typu adaptera grafiki używanego przez naszą maszynę
+             wirtualną. Należy go dostosować do naszego emulowanego systemu.
+             Z kolei „Włącz akcelerację 3D” udostępnia maszynie wirtualnej
+             funkcje grafiki 3D z systemu operacyjnego hosta.
+        •    Zdalny pulpit – po włączeniu tej opcji, maszyna wirtualna będzie
+             funkcjonować jako serwer RDP, pozwalając zna zdalne podłączenie się
+             i pracę z tą maszyną (gdy jest włączona), przy użyciu standardowego
+             klienta RDP.
+        •    Nagrywanie – po włączeniu tej opcji, VirtualBox będzie nagrywał sesję
+             wirtualnej maszyny jako plik video.
+             Na potrzeby niniejszej demonstracyjnej instalacji, pozostawiamy
+             wszystkie powyższe opcje domyślne, ponieważ nie zachodzi żadna
+             potrzeba ich zmian.
+d. Pamięć:
+        •    Urządzenia pamięci masowej – w tym polu można zmienić parametry
+             kontrolera IDE lub SATA (m.in. nazwę oraz typ) oraz dodać nowy
+             napęd optyczny lub dysk twardy. Domyślny napęd optyczny jest w
+             przypadku naszej maszyny wirtualnej jest podłączony do Secondary
+             Device 0. W tym miejscu można też wybrać nasz pobrany wcześniej
+             plik netinst zawierający instalator systemu, co właśnie zrobimy, by
+             później nie wracać do tego punktu przed instalacją systemu.
+e. Dźwięk – po włączeniu tej opcji, do maszyny wirtualnej zostanie podłączona
+   wirtualna karta audio, która będzie komunikowała się z naszym systemem
+   audio systemu hosta poprzez odpowiedni sterownik. Można też ustawić w tym
+   miejscu typ wirtualnej karty dźwiękowej oraz I/O dźwięku emulowanego
+   systemu.
+   Nie będziemy korzystać z dźwięku na potrzeby tej instalacji demonstracyjnej,
+   dlatego możemy bezpiecznie wyłączyć tę opcję.
+f. Sieć – sekcja odpowiedzialna za ustawienia sieciowe naszej maszyny wirtualnej.
+   Po wirtualnej włączeniu karty sieciowej (których maksymalnie może być
+   cztery), możemy zmienić tryb, w jakich będzie ona operować. W
+   zaawansowanych ustawieniach można zmienić także typ karty sieciowej
+   (ustawienie powinno być dostosowane do emulowanego systemu) oraz adres
+   MAC. Dodatkowo można ustawić reguły przekierowania portów – przydatne,
+   gdy chcemy np. połączyć się zdalnie z wirtualną maszyną przez SSH lub korzystać 
+   z innych usług sieciowych działających wewnątrz wirtualnej maszyny.
+   Na potrzeby niniejszej demonstracyjnej instalacji, nie ma potrzeby zmieniania
+   żadnych z powyższych ustawień, dlatego pozostawiamy je domyślne (włączona
+   karta sieciowa).
+g. Porty szeregowe – znajdziemy tu ustawienia dotyczące raczej nieużywanych
+   już w dzisiejszych czasach portów COM, kiedyś stanowiących podstawowy
+   interfejs do podłączania różnych urządzeń. VirtualBox pozwala na ulokowanie
+   czterech takich portów.
+   Nie ma potrzeby włączania tych portów w związku z naszą instalacją, dlatego
+   pozostawiamy je wyłączone.
+h. USB – w tej sekcji możemy włączyć lub wyłączyć dla maszyny wirtualnej
+   wirtualny kontroler USB. Dzięki temu możemy umożliwić maszynie dostęp do
+   naszych urządzeń USB bezpośrednio z systemu hosta. W opcjach można też
+   dostosować w jakich trybach ma pracować kontroler: USB 1.1 (OHCI), USB 2.0
+   (OHCI + EHCI) oraz USB 3.0 (xHCI). W polu „Filtry urządzeń USB” istnieje
+   możliwość zdefiniowania szablonu dane urządzenia będą zawsze dodawane
+   automatycznie do emulowanego systemu, gdy tylko zostaną podłączone.
+            Nie ma potrzeby zmiany powyższych ustawień w związku z naszą
+            demonstracyjną instalacją, dlatego pozostawiamy je domyślne (włączony
+            kontroler USB 2.0).
+       i.   Udostępniane foldery – tu możemy utworzyć katalog widoczny zarówno dla
+            systemu emulowanego, jak i hosta, który funkcjonuje podobnie do dysku
+            sieciowego (chociaż nie potrzebuje żadnej sieci). Opcja bardzo przydatna, kiedy
+            chcemy np. przesłać jakiś plik pomiędzy maszyną wirtualną, a hostem, albo gdy
+            nasza maszyna wirtualna ma korzystać z niezbędnych zasobów, które znajdują
+            się w pamięci hosta.
+            Na potrzeby niniejszej demonstracyjnej instalacji, nie będziemy korzystać z
+            powyższej opcji.
+       j.   Interfejs użytkownika – ostatnia sekcja umożliwia nam dostosowanie
+            widoczności opcji z paska ikonek lub górnego menu. Kwestia wygody i
+            preferencji danego użytkownika.
+            Pozostawiamy ustawienia niezmienione.
+5. Jesteśmy gotowi do instalacji systemu na naszej maszynie wirtualnej. W tym celu po
+   wybraniu naszej maszyny wirtualnej w menadżerze VirtualBox, należy kliknąć
+   „Uruchom”. Rozpocznie to proces włączania naszej maszyny wirtualnej w nowym
+   oknie. Krótko po jej włączeniu powinniśmy zobaczyć menu instalatora systemu Debian.
+       a. Graficzna instalacja/Instalacja – wybranie tej opcji z menu spowoduje
+            kontynuowanie procesu instalacji systemu. Jak sama nazwa wskazuje,
+            instalacja graficzna wykorzystuje podczas instalacji interfejs graficzny. Nie
+            powinna być ona używana w przypadku, gdy nie posiadamy zasobów do
+            wyrenderowania środowiska graficznego. Ponadto instalacja tekstowa
+            przeprowadzona przez profesjonalistę, co do zasady przebiega szybciej, nie
+            wymaga użycia myszki.
+       b. Tryb zwiększonego kontrastu – dla osób, które wolą tryb wysokokontrastowy,
+            instalator umożliwia za pomocą jednego kliknięcia przejście do takiego trybu.
+       c. Pomoc – wyświetla podstawowe informacje na temat wersji systemu oraz daty
+            buildu. Ponadto zapewnia podstawową informację na temat funkcjonalności
+            instalatora, wstępnych wymogów instalacyjnych oraz specjalnych parametrów
+            bootowania.
+d. Instalacja z syntezatorem mowy – ułatwienie instalacyjne dla osób, które do
+   korzystania z komputera potrzebują syntezatora czytającego tekst wyświetlany
+   na ekranie.
+e. Ustawienia zaawansowane – wybranie tej opcji przeniesie nas do nowego
+   menu, z widoku którego będziemy mieli możliwość wybrania tzw. instalacji
+   eksperckiej, instalacji automatycznej oraz uruchomienia trybu rescue.
+   Wszystkie wymienione opcje mają także swoje graficzne odpowiedniki.
+         •   Instalacja ekspercka – pozwala na pełną kontrolę nad instalatorem
+             oraz pozwala skorzystać z największego poziomu konfigurowalności
+             oferowanego przez instalator. Wyświetla jednak mniej tekstów
+             pomocowych na ekranie. Warto z niej skorzystać wtedy, kiedy
+             czujemy się pewnie i posiadamy pewną wiedzę o funkcjonowaniu
+             systemu Linux albo kiedy potrzebujemy wszystkich narzędzi
+             oferowanych przez instalator do konfiguracji systemu.
+         •   Tryb rescue – instalator pozwala ze swojego poziomu wykorzystać go
+             do naprawy systemów z naruszoną integralnością, np. takich, które
+             nie bootują po wprowadzeniu określonych zmian. W tym celu należy
+             wybrać opcję „Rescue mode” z menu „Ustawienia zaawansowane”, a
+             następnie postępować zgodnie z wyświetlanymi informacjami w
+             kolejnych oknach.
+         •   Instalacja automatyczna – instalator wspiera także możliwość
+             instalacji z prekonfigurowanych plików. Taki plik może zostać
+             załadowany z sieci lub nośnika wymiennego, a następnie użyty do
+             „odpowiedzi” na pytania i polecenia instalatora w trakcie instalacji.
+         •   Zaawansowane opcje instalacji z syntezatorem mowy – wszystkie
+             powyższe opcje mogą zostać uruchomione także z syntezatorem.
+   Korzystamy z opcji instalacji tekstowej, jako że dla celów demonstracyjnych
+   niniejszej instalacji nie będziemy wykorzystywać funkcji instalacji eksperckiej,
+   jednakże w celu lepszego zaznajomienia się z samym procesem instalacji
+   niewymagającym użycia myszki, nie będziemy także korzystać z instalacji
+   graficznej.
+6. Po wciśnięciu opcji „Install” wyświetli nam się pierwsze okienku, w którym będziemy
+   mogli wybrać język, w jakim będzie przebiegać instalacja. Będzie to również domyślny
+   język zainstalowanego systemu. Wybieramy język angielski, ponieważ niejako
+   domyślnym językiem samej informatyki jest angielski i pozwoli to nam lepiej
+   zaznajomić się z nowym środowiskiem, a także ułatwi ewentualne zweryfikowanie
+   problemów występujących z działającym systemem i uzyskanie pomocy.
+7. W następnym okienku będziemy musieli wybrać naszą lokalizację, na podstawie której
+   zostanie ustawiona strefa czasowa i ustawienia regionalne systemu. Jak wskazuje
+   instalator, co do zasady powinien być to kraj, w którym obecnie się znajdujemy. Jest to
+   też istotne ze względu na kolejne kroki instalacyjne, w których będziemy musieli
+   wybrać lokalizację, z której pobierzemy odpowiednie pakiety. Wybieramy więc z
+   dostępnej listy „other”, jako że przebywamy w Polsce, następnie „Europe”, a na końcu
+   z rozszerzonej listy „Poland”.
+8. Kolejne okno wymusza na nas ustawienie tzw. informacji locale, czyli m.in. ustawienia
+   klawiatury i języka. W tym miejscu wybieramy język angielski (United States –
+   en_US.UTF-8). Wybranie innego języka stanowi pewne ryzyko w postaci możliwości
+   wprowadzania znaków nieobsługiwanych przez alfabet angielski, które później mogą
+   być niewłaściwie wyświetlane (podczas np. awarii systemu).
+9. Następne okno to wybór układu klawiszy. Jest on bezpośrednio związany z używaną
+   przez nas klawiaturą. Jako że wykorzystujemy klawiaturę z klawiszami w układzie
+   American English, taką też opcję zaznaczamy.
+10. Dalej należy ustawić nazwę hosta naszego systemu, czyli pojedyncze słowo będące
+   swoistym identyfikatorem sieciowym. Dla celów demonstracyjnych tej instalacji,
+   wpiszemy tę samą nazwę, co nazwa naszej maszyny wirtualnej, tj. TestDebian.
+11. W kolejnym oknie musimy ustawić nazwę domeny. Jest to istotne ustawienie w
+   przypadku, gdy pracujemy w środowisku domenowym. Dla celów demonstracyjnych
+   tej instalacji, pozostawimy to pole puste, ponieważ nie będziemy wykorzystywać
+   systemu w takim środowisku.
+12. Następny krok to ustalenie hasła dla konta root, czyli tzw. administratora systemu.
+   Pozostawienie tego pola pustego sprawi, że konto root zostanie wyłączone, a
+   początkowy użytkownik systemu będzie miał możliwość wykorzystania uprawnień root
+   przy pomocy komendy „sudo”. Na potrzeby niniejszej instalacji, ustawiamy hasło
+   powiązane z hasłem do hosta (ze względów bezpieczeństwa nie powinno się stosować
+   tego rozwiązania w innych przypadkach). W kolejnym oknie należy to hasło
+   potwierdzić, wpisując je ponownie.
+13. Dalszy krok to wpisanie pełnego imienia i nazwiska dla konta zwykłego użytkownika.
+   Dla celów niniejszej demonstracji zostanie wpisane imię i nazwisko studenta piszącego
+   niniejszy manual – „LukaszOgorzalek”.
+14. W kolejnym oknie należy podać login nowego użytkownika. Powinien się on zaczynać
+   z małej litery. Dla celów niniejszej demonstracji zostanie wpisany ulubiona postać z
+   mitologii irlandzkiej studenta piszącego niniejszy manual – „dullahan”.
+15. Następnie należy podać hasło do konta nowego użytkownika. Na potrzeby niniejszej
+   demonstracyjnej instalacji, ustawiamy hasło powiązane z hasłem do hosta. Ze
+   względów bezpieczeństwa nie powinno się stosować tego rozwiązania w innych
+   przypadkach. Hasło root oraz hasła do kont użytkowników także powinny się od siebie
+   różnić. W kolejnym oknie należy to hasło potwierdzić, wpisując je ponownie.
+16. Przechodzimy do partycjonowania dysku. Instalator udostępnia nam cztery sposoby
+   partycjonowania:
+       a. Partycjonowanie całego dysku w trybie guided – po wybraniu tej opcji, a
+          następnie wybraniu dysku do partycjonowania, wyświetlone zostaną nam
+          kolejne możliwe do wyboru schematy partycjonowania:
+                •   Pojedyncza partycja – wszystkie pliki zostaną umieszczone na
+                    pojedynczej    partycji.   Schemat     zalecany    dla   nowych    i
+                    niedoświadczonych użytkowników.
+                •   Osobna partycja dla katalogów /home – wybranie tego schematu
+                    spowoduje utworzenie osobnych partycji dla katalogów domowych
+                    użytkowników. Jest to schemat znacznie ułatwiający przyszłe
+                    formatowanie systemu – pliki użytkowników pozostają wtedy
+                    nietknięte. Wskazane jest, by ta partycja była odpowiednio duża, aby
+                    użytkownik mógł z niej dość swobodnie korzystać.
+                •   Osobna partycja dla katalogów /home, /var i /tmp – wybranie tego
+                    schematu spowoduje utworzenie poza osobną partycją /home dla
+                    użytkownika, także dodatkowe partycje na katalogi /var i /tmp. W
+                   ostatnich dwóch katalogach przechowywane są pliki tymczasowe
+                   (krótko i długoterminowe).
+          Partycjonowanie całego dysku w trybie guided można zastosować wtedy, kiedy
+          zależy nam na bardzo szybkiej instalacji systemu lub przeprowadzamy ją w
+          celach testowych.
+      b. Partycjonowanie całego dysku w trybie guided wraz z ustawieniem LVM –
+          podobnie jak wyżej, jednak z dodatkiem LVM (Logical Volume Manager), czyli
+          mechanizmu pozwalającego na wykorzystanie wielu różnych dysków do
+          stworzenia tzw. dysku logicznego, rozszerzalne dynamicznie w trakcie działania
+          systemu (bez jego resetowania).
+      c. Partycjonowanie całego dysku w trybie guided wraz z ustawieniem LVM i
+          szyfrowaniem – schemat jak wyżej, jednak z dodatkiem szyfrowania. Ważne
+          jest, by posiadać świadomość które elementy wymagają szyfrowania, a które
+          nie (np. partycja SWAP powinna być szyfrowana ze względu na to, że
+          potencjalnie może zawierać dane poufne, jak choćby fragmenty danych
+          programów, dokumentów i haseł, które były przechowywane w pamięci RAM).
+      d. Partycjonowanie      manualne      –   ostatni    sposób   partycjonowania   to
+          partycjonowanie manualne. Zaletą tego sposobu jest pełna kontrola nad
+          podziałem dysku. Dzięki temu, jeśli partycjonowanie zostanie przeprowadzone
+          w poprawny sposób, zwiększamy bezpieczeństwo systemu i poprawiamy jego
+          wydajność. Ponadto mamy możliwość zapisania schematu partycjonowania i
+          ponownym jego wykorzystaniu w przyszłości. Ze względu na powyższe
+          argumenty,     przeprowadzimy         manualne     partycjonowanie    podczas
+          demonstracyjnej instalacji.
+17. Wybieramy z dostępnych opcji „Manual”, aby przejść do partycjonowania
+   manualnego. Następnie wybieramy dysk, który chcemy poddać partycjonowaniu. W
+   kolejnym oknie należy wybrać „pri/log <rozmiar wolnej przestrzeni> FREE SPACE”, a
+   następnie kliknąć „Create a new partition”. Przypisujemy rozmiar do tej partycji w
+   wysokości 14 GB oraz określamy jej typ jako „Primary”. Zaznaczamy opcję „Beginning”
+   – partycja zostanie utworzona na początku wolnej przestrzeni. Szczegółowe ustawienia
+   partycji powinny wyglądać następująco:
+
+	https://i.imgur.com/1X0QUvj.png
+
+   Udało się nam ustawić partycję systemową/boot. Ważne jest, by jak na załączonym
+   powyżej screenie, „Bootable flag” została włączona.
+18. W kolejnym kroku ustawimy partycję SWAP. Przypisujemy rozmiar do tej partycji w
+   wysokości pozostałych 6 GB oraz określamy jej typ jako „Logical”. Szczegółowe
+   ustawienia partycji powinny wyglądać następująco:
+
+	https://i.imgur.com/OeKCYEZ.png
+
+   Nie bez powodu rozmiar tej partycji wynosi 6 GB. Jest to półtorakrotność ilości pamięci
+   RAM, jaką udostępniliśmy naszej maszynie wirtualnej. Przyjmuje się, że powinna ona
+   wynosić od 1,5 do ponad 2 razy wielkości pamięci RAM.
+
+
+   Na tym zakończymy partycjonowanie naszego dysku. Na potrzeby tej demonstracyjnej
+   instalacji nie ma konieczności tworzenia osobnych partycji na katalog domowy bądź
+   katalogi tymczasowe, ponieważ po instalacji nie będą one używane.
+
+
+   Co oznaczają poszczególne ustawienia szczegółowe partycji?
+•   Use as – w tym miejscu oznaczamy w jaki sposób partycja ma być
+    wykorzystywana. Dostępne opcje to:
+       o Ext2 file system – rozszerzony system plików dla systemu Linux. Jest
+          stabilny i dobrze przetestowany oraz wydajny dzięki mechanizmom
+          przeciwdziałającym fragmentacji. Do jego minusów należy stosunkowa
+          niska efektywność obsługi katalogów oraz w przypadku zamknięcia
+          systemu w niepoprawny sposób, długie sprawdzanie systemu plików.
+       o Ext3 journaling file system – system plików oparty na powyższym
+          systemie Ext2, domyślny dla większości dystrybucji systemu Linux
+          opartych na jądrze od 2.4 do 2.6. Różni się od Ext2 głównie
+          zaimplementowanym         mechanizmem        księgowania      (sposobu
+          zapisywania danych). Jest kompatybilny z Ext2. Jeśli chodzi o
+          zastosowania, to poleca się go jako system plików dla stacji roboczych i
+          komputerów domowych, rzadziej dla serwerów (ze względu na małą
+          wydajność przy bardzo małych plikach).
+       o Ext4 journaling file system – system plików będący następcą systemu
+          Ext3. Obecnie jeden z najpopularniejszych systemów plików Linuxa.
+          Zapewnia wsteczną kompatybilność, a ponadto zapewnia ciekawe
+          funkcjonalności, takie jak opóźnioną alokację bloków, brak limitu
+          podkatalogów oraz większe limity wydzielonych obszarów pamięci i
+          plików. Nadaje się do zastosowań ogólnych (np. domowych) jako
+          sprawdzony i bezpieczny system.
+       o Btrfs journaling file system – zaawansowany system plików, który
+          został stworzony w celu dostarczenia lepszych funkcjonalności niż
+          tradycyjne systemy plików jak EXT4 czy NTFS. Jego głównymi cechami
+          są łatwe zarządzanie kopiami zapasowymi danych, zastosowanie
+          mechanizmów checksum do sprawdzania integralności danych i
+          dynamiczne rozszerzanie pojemności dysku. Jest dobrym wyborem dla
+          systemów wymagającej dużej skalowalności i dla osób wymagających
+          rozszerzonej funkcjonalności od systemu plików, jednak nie jest
+          zalecany dla systemów wymagających maksymalnej wydajności.
+o JFS (Journaled File System) – system plików typu journaling
+   zapewniający wysoki poziom niezawodności i integralności danych.
+   Pierwszy raz został wprowadzony na rynek na początku lat 90.
+   Charakteryzuje się dużą wydajnością, m.in. dzięki wykorzystaniu
+   technologii buforowania danych i możliwości obsługi dużej liczby plików
+   o różnych rozmiarach i dobrze sprawdza się w systemach, które w pełni
+   wykorzystują ten potencjał.
+o XFS – system plików zaprojektowany z myślą o systemach
+   komputerowych z dużą liczbą procesorów i dużych dyskach. Zapewnia
+   szybki dostęp do danych i wysoką wydajność operacji wejścia/wyjścia,
+   automatycznie naprawia uszkodzone sektory dysku oraz zapewnia
+   wsparcie dla rozproszonych systemów plików czy też przywracania z
+   punktu kontrolnego. Sprawdzi się zwłaszcza do zastosowań takich jak
+   serwery plików, bazy danych i klastry obliczeniowe.
+o FAT16 file system – system plików posługujący się 16-bitowym
+   adresowanie przy dostępie do plików. Stosowany głównie w starszych
+   systemach operacyjnych, jak MS-DOS i Windows 95. Umożliwia
+   organizowanie plików w formie struktury drzewa katalogów i dostęp do
+   nich w sposób hierarchiczny. Jest prosty i łatwy w obsłudze, dlatego
+   pozostaje przydatny do zastosowania w niewielkich dyskach twardych i
+   dyskietek. Niestety ze względu na limity liczby adresów, ma
+   ograniczenia w zakresie wielkości partycji i maksymalnego rozmiaru
+   pliku. Ze względu na to jest rzadko stosowany w nowszych systemach
+   operacyjnych.
+o FAT32 file system – system plików będący następcą systemu FAT16. Jest
+   kompatybilny z systemami operacyjnymi, ale także w szczególności z
+   urządzeniami przenośnymi, takimi jak pendrive'y, karty pamięci, dyski
+   zewnętrzne itp. Jest bardziej niezawodny i szybszy niż jego poprzednik,
+   przy czym zachowuje swoją prostotę w obsłudze. Nie jest jednak
+   wydajny na dużych dyskach oraz nie posiada obsługi uprawnień
+   dostępu. Mimo tego pozostaje popularnym zastosowaniem dla osób
+           potrzebujących łatwego systemu plików do przechowywania i
+           udostępniania plików na urządzeniach przenośnych.
+       o swap area – obszar na dysku, który jest używany jako rozszerzenie
+           pamięci RAM. Kiedy pamięć RAM komputera jest wypełniona, a procesy
+           wymagają więcej pamięci niż jest dostępne, system operacyjny przesyła
+           najstarsze lub najmniej używane dane z pamięci RAM do tego obszaru.
+           W ten sposób zwalnia się miejsce w pamięci RAM, które może być
+           wykorzystane do uruchamiania innych procesów. Używamy tej opcji,
+           kiedy wydzielamy partycję SWAP.
+       o Physical volume for encryption – opcja wykorzystywana wtedy, kiedy
+           chcemy użyć fizycznego woluminu do zaszyfrowania danych.
+       o Physical volume for RAID – opcja wykorzystywana wtedy, kiedy chcemy
+           użyć fizycznego woluminu i wykorzystać go do stworzenia tablicy RAID,
+           na podstawie której można tworzyć woluminy logiczne. Fizyczne
+           woluminy łączone są w zależności od „poziomu” RAID. Technologia ta
+           umożliwia poprawienie niezawodności lub wydajności.
+       o Physical volume for LVM – opcja wykorzystywana wtedy, gdy chcemy
+           wykorzystać fizyczny wolumin jako część wirtualnej partycji.
+•   Mount point – tutaj określamy tzw. punkt montowania. Jest to ścieżka w
+    systemie plików, która służy do łączenia urządzeń lub partycji z drzewem
+    katalogów systemu plików. Innymi słowy, jest to punkt, w którym dane z
+    urządzenia lub partycji są "montowane" do systemu plików, co umożliwia
+    dostęp do tych danych przez użytkownika. Ważne jest, aby odpowiednio
+    wybrać punkt montowania, ponieważ może to wpłynąć na dostępność danych
+    na zamontowanej partycji. Można też ręcznie wprowadzić ścieżkę.
+       o / (root) – punkt montowania będący głównym katalogiem systemu
+           plików. Znajdują się tu podkatalogi zawierające wszystkie pliki i katalogi
+           w systemie plików oraz wszystkie urządzenia systemowe. Używamy
+           tego punktu w przypadku partycji systemowej.
+       o /root     –   punkt    montowania      będący      katalogiem
+		domowym użytkownika root (administratora systemu). W katalogu /root znajdują 
+		się najczęściej pliki konfiguracyjne i prywatne dane administratora systemu, 
+		takie jak np. pliki konfiguracyjne dla programów, prywatne klucze SSH, 
+		pliki dziennika systemowego (logi), itp. Użytkownik root ma pełne uprawnienia 
+		do systemu i ma dostęp do wszystkich plików i katalogów, więc /root jest ważnym 
+		katalogiem dla administracji systemem.
+       o /home – punkt montowania będący katalogiem służącym do
+           przechowywania danych użytkownika w systemie operacyjnym.
+           Zazwyczaj domyślny katalog, w którym użytkownik przechowuje swoje
+           pliki, dokumenty, zdjęcia, muzykę i inne prywatne dane.
+       o /tmp – punkt montowania będący katalogiem służącym do
+           przechowywania plików tymczasowych podczas pracy systemu.
+       o /usr – punkt montowania zawierający większość programów i plików
+           konfiguracyjnych dla użytkowników. Zazwyczaj montowany na
+           oddzielnej partycji lub dysku twardym, co ułatwia administrację
+           systemu plików oraz izoluje pliki systemowe od plików użytkownika.
+       o   /var – punkt montowania będący katalogiem służącym do
+           przechowywania zmiennych danych, dzienników systemowych, innych
+           plików tymczasowych oraz plików konfiguracji aplikacji.
+       o /srv – punkt montowania będący katalogiem przechowującym dane
+           serwisowe systemu.
+       o /opt     –   punkt    montowania       przeznaczony    dla   opcjonalnego
+           oprogramowania      lub   pakietów     aplikacji   niebędących       częścią
+           podstawowej instalacji systemu. Używany często do przechowywania
+           aplikacji firm trzecich lub innych pakietów niedostarczanych
+           bezpośrednio z systemem operacyjnym.
+       o /usr/local – punkt montowania będący katalogiem służącym
+           użytkownikom       do   przechowywania      oprogramowania       z     kodu
+           źródłowego lub innych źródeł innych niż oficjalne repozytoria
+           dystrybucji. Zazwyczaj ta lokalizacja jest wykorzystywana przez
+           administratorów systemów lub programistów, którzy chcą mieć większą
+           kontrolę nad pakietami, które są zainstalowane na ich systemie.
+•   Mount options – opcja umożliwiająca ustawić dodatkowe flagi (parametry)
+    podczas montowania systemu plików, które kontrolują różne aspekty sposobu,
+    w jaki system plików jest montowany i jakie operacje na nim są dozwolone.
+       o discard – ustawienie korzystania z funkcji TRIM, która umożliwia
+              efektywne zarządzanie wolną przestrzenią na dysku (przydatne
+              zwłaszcza dla nośników SSD).
+       o ro – montuje system plików w trybie tylko do odczytu.
+       o noatime – wyłącza aktualizację czasu dostępu do plików.
+       o nodiratime – wyłącza aktualizację czasu dostępu do katalogów.
+       o nodev – wyłącza możliwość uruchomienia urządzeń blokowych z
+              partycji.
+       o nosuid – uniemożliwia działanie bitom set-user-id i set-group-id.
+       o noexec – uniemożliwia uruchomienie pliku wykonywalnego z partycji.
+       o usrquota         –   umożliwia      stosowanie   limitów   dyskowych     dla
+              użytkowników. Opcja jest przydatna w środowiskach, w których wielu
+              użytkowników dzieli zasoby dyskowe.
+       o user_xattr – umożliwia tworzenie i zarządzanie rozszerzonymi
+              atrybutami plików, które mogą być używane np. do przechowywania
+              metadanych.
+•   Label – w tym miejscu można umieścić opcjonalną nazwę dla partycji, która
+    ułatwia użytkownikom jej zidentyfikowanie.
+•   Reserved blocks – istotne ustawienie z punktu widzenia niezawodności i
+    stabilności systemu operacyjnego, ponieważ umożliwia przechowywanie
+    krytycznych informacji systemowych w wydzielonym obszarze, który nie jest
+    dostępny dla użytkowników.
+•   Typical usage – w tym miejscu możemy sprecyzować dodatkowe parametry
+    systemu plików, tj. liczbę węzłów (tzw. i-nodes) będących elementem struktury
+    systemu plików, które opisują pliki w systemie. Należy brać pod uwagę rozmiar
+    partycji oraz ile plików będzie na niech przechowywane, aby odpowiednio
+    alokować węzły na danej partycji. Jeśli partycja jest np. zbyt mała, liczba węzłów
+    może okazać się niewystarczająca do przechowywania bardzo dużej ilości
+    plików.
+•   Bootable flag – ustawienie on/off, pozwalające systemowi maszynie
+    zidentyfikować partycję, z której może bootować. Z tego też powodu co
+           najmniej jedna partycja musi posiadać tę flagę włączoną. W przeciwnym
+           wypadku system operacyjny nie zostanie załadowany z dysku.
+       •   Configure iSCSI volumes – ustawienie umożliwiające konfigurację woluminów
+           sieciowych. Protokół iSCSI umożliwia komunikację między urządzeniami w sieci
+           przy użyciu standardowego protokołu IP. Oznacza to, że dysk iSCSI może być
+           podłączony do sieci tak samo, jak każde inne urządzenie sieciowe, takie jak
+           drukarka lub router. Dyski iSCSI są często stosowane w rozwiązaniach do
+           wirtualizacji serwerów, gdzie wiele maszyn wirtualnych korzysta z jednego
+           zasobu dyskowego. Dzięki temu można oszczędzić koszty sprzętu i zapewnić
+           wyższą dostępność danych.
+19. Po zakończeniu partycjonowania i zainstalowaniu systemu, w kolejnym oknie mamy
+   możliwość podania innego nośnika, który będzie użyty do zainstalowania dodatkowych
+   pakietów. Na potrzeby niniejszej demonstracyjnej instalacji, nie będziemy
+   wykorzystywać tej opcji, ponieważ nie posiadamy dodatkowych pakietów do
+   zainstalowania z innego nośnika.
+20. W kolejnym oknie musimy wybrać lokalizację, z której pobierzemy dodatkowe pakiety,
+   tzw. serwer lustrzany. Należy wybrać lokalizację, która znajduje się najbliżej naszego
+   miejsca pobytu. Wybieramy Polskę, ponieważ właśnie w tym kraju się znajdujemy, a
+   następnie serwer ftp.task.gda.pl, ponieważ znajduje się najbliżej nas. W przypadku
+   przebywania w innej części kraju lub w zupełnie innym miejscu na świecie, należy
+   wybrać opcje najbardziej dla nas odpowiednie.
+21. Następnie możemy wybrać proxy, jeśli z jakiegoś korzystamy. W związku z tym, że nie
+   korzystamy, nie będziemy żadnego podawać.
+22. W następnym oknie możemy zgodzić się na udział w tzw. rankingu pakietów, który
+   pozwala autorom systemu Debian na pozyskanie danych odnośnie popularności
+   pakietów. Często najbardziej potrzebne i użytkowane pakiety trafiają np. na mały obraz
+   płyty, który wykorzystujemy chociażby podczas dzisiejszej instalacji. Na potrzeby
+   niniejszej demonstracyjnej instalacji, nie będziemy korzystać tej opcji, aby nie zaburzać
+   prawidłowości zbieranych danych.
+23. W kolejnym oknie, już po instalacji najistotniejszych elementów systemu, instalator
+   pozwala nam wybrać z listy kilka dostępnych zbiorów software’u, w tym m.in.
+   środowisk graficznych. Wśród nich znajdują się:
+a. Debian desktop environment – przy zaznaczeniu tej opcji, a niewybraniu
+   pozostałych, instalator zainstaluje standardowe środowisko graficzne,
+   zdeterminowane przez tasksel. W zależności od architektury będzie to GNOME
+   bądź XFCE.
+b. GNOME – jedno z najpopularniejszych środowisk graficznych dla systemów
+   operacyjnych opartych na Linuksie. Posiada bardzo intuicyjny interfejs, wiele
+   opcji personalizacji, ponadto jest stabilny i regularnie unowocześniany oraz
+   wspierany przez społeczność. Wymaga jednak dość nowoczesnego sprzętu i
+   znacznie więcej pamięci RAM, niż niektóre inne środowiska. Ponadto jest
+   uważany za mniej przyjazny dla początkujących użytkowników niż np.
+   środowisko KDE czy XFCE.
+c. XFCE – środowisko graficzne wyróżniające się lekkością i szybkością działania.
+   Działa płynnie nawet na starszych lub słabszych komputerach. Umożliwia
+   szybszą pracę na komputerze ze względu na dobry czas ładowania i reakcji, a
+   przy tym pozostaje środowiskiem, które dość łatwo można spersonalizować.
+   Jest też porównywalnie stabilne, jak GNOME. Domyślny wygląd tego
+   środowiska jest jednak dość przestarzały i mało atrakcyjny, a przy tym samo
+   środowisko oferuje mniej funkcji, niż inne, co może być problematyczne dla
+   użytkowników, którzy potrzebują bardziej zaawansowanych narzędzi.
+d. GNOME Flashback – środowisko graficzne oparte na GNOME 2, jednak
+   przeznaczone dla osób, które preferują bardziej tradycyjny styl interfejsu
+   użytkownika. Gnome Flashback oferuje klasyczny wygląd pulpitu, w tym menu
+   aplikacji w górnym lewym rogu i panel z zadaniami na dole ekranu. Oprócz
+   różnic w interfejsie użytkownika, Gnome Flashback oferuje również różne
+   narzędzia i ustawienia, np. konfigurowalne ustawienia panelu. Ze względu na
+   brak wsparcia dla HiDPI, może nie działać dobrze na ekranach o wysokiej
+   rozdzielczości.
+e. KDE Plasma – środowisko graficzne oparte na bibliotece Qt. Podobnie jak
+   powyższe środowiska, oferuje duże możliwości personalizacji i opcji
+   konfiguracji oraz jest uważane za stabilne. Dodatkowym plusem jest istnienie
+   wielu zintegrowanych aplikacji, pozwalających na łatwe zarządzanie danymi.
+     Wymaga jednak więcej zasobów niż niektóre inne środowiska graficzne, a jego
+     interfejs może być uznany przez osoby początkujące za nieintuicyjny.
+f. Cinnamon – kolejny przykład środowiska, które działa szybko i płynnie, nawet
+     na starszych maszynach. Posiada przy tym intuicyjny, łatwy w obsłudze interfejs
+     z dostępem do najważniejszych funkcji. Środowisko to również można w dość
+     prosty sposób spersonalizować. Jest uważane za stabilne. Nie posiada jednak
+     tak dużej ilości aplikacji, jak choćby KDE Plasma, ani nie jest aż tak bardzo
+     konfigurowalne. W porównaniu do innych środowisk nie jest też aż tak
+     popularne, dlatego też można się spotkać z mniejszym wsparciem społeczności
+     w zakresie jego użytkowania.
+g. Mate – środowisko oferujące prosty i łatwy w obsłudze interfejs, przyjazny dla
+     początkujących użytkowników. Podobnie jak inne środowiska wymienione na
+     tej liście, jest także szybkie, stabilne i umożliwia personalizację wyglądu oraz
+     zachowania systemu. Posiada te same minusy, co środowisko Cinnamon.
+h. LXDE – środowisko wyróżniające się niezwykle niskimi wymaganiami
+     dotyczącymi zasobów systemowych. Zajmuje również bardzo mało miejsca na
+     dysku. Pod względem szybkości, personalizacji i stabilności nie odbiega od
+     środowisk Cinnamon i Mate. Dzieli z nimi również wszelkie minusy obsługi, a
+     dodatkowo jego interfejs jest uważany za mało atrakcyjny wizualnie.
+i.   LXQt – następca środowiska LXDE. W porównaniu do poprzednika jest bardziej
+     responsywny i zoptymalizowany pod kątem wydajności, posiada większą liczbę
+     funkcji, chociaż mniej aplikacji wbudowanych. Co istotne, korzysta z bibliotek
+     Qt, znacznie różniących się od wykorzystywanych w LXDE bibliotek GTK+.
+j.   web server – opcja pozwalająca na zainstalowanie i skonfigurowanie serwera
+     WWW. Web server funkcjonuje jako program, który umożliwia przeglądarkom
+     internetowym dostęp do zasobów serwera, takich jak strony internetowe, pliki,
+     aplikacje internetowe i inne usługi internetowe. W przypadku Debiana,
+     domyślnie wykorzystywanym serwerem WWW jest Apache. Po zainstalowaniu
+     i skonfigurowaniu serwera WWW, użytkownik może umieścić na nim swoje
+     strony internetowe lub aplikacje internetowe i udostępnić je publicznie przez
+     Internet.
+      k. SSH server – opcja pozwalająca na zainstalowanie i skonfigurowanie pakietu
+           SSH server, umożliwiającego zdalne zarządzenie komputerem przez terminal
+           oraz wykonywanie na nim różnych operacji. SSH Server jest ważnym
+           narzędziem dla administratorów systemów, którzy muszą zarządzać
+           komputerami z dowolnego miejsca na świecie. Dzięki SSH Server można zdalnie
+           uruchamiać skrypty, kopiować pliki, wykonywać polecenia, itp.
+      l.   Standard system utilities – zbiór pakietów zawierających podstawowe
+           narzędzia systemowe, niezbędne do zarządzania system i wykonywania
+           podstawowych operacji na plikach i katalogach. Do najważniejszych można
+           zaliczyć powłokę Bash, zestaw narzędzi do manipulowania plikami i katalogami
+           Coreutils, zestaw narzędzi systemowych Util-linux, zestaw narzędzi do
+           zarządzania procesami systemowymi Procps, czy wreszcie system inicjalizacji i
+           zarządzania procesami Systemd.
+           Na potrzeby niniejszej instalacji, zaznaczamy wyłącznie „Standard system
+           utilities”, ponieważ nie instalujemy żadnego środowiska graficznego lub
+           pakietów serwerów.
+24. W ostatnim oknie instalator pozwala nam podjąć decyzję w związku z instalacją
+   bootloadera. W przypadku domyślnej konfiguracji, Debian zainstaluje bootloader
+   GRUB w głównym rekordzie rozruchowym urządzenia blokowego (MBR), co pozwoli na uruchomienie 
+   systemu po zakończeniu instalacji. W czasie instalacji systemu Debian, 
+   można skonfigurować bootloader tak, aby uwzględniał inne systemy operacyjne, 
+   które mogą być zainstalowane na komputerze.
+   Na potrzeby niniejszej instalacji, zatwierdzamy instalację bootloadera (wraz ze
+   wskazaniem dysku) – bez niego nie będziemy w stanie prawidłowo uruchomić maszyny
+   wirtualnej.
+
+
+   Po wszystkim, instalator powinien nas powiadomić o pomyślnym zakończeniu
+   instalacji. Nasza maszyna z nowym systemem jest gotowa do pracy. Nie zapomnij o
+   zmianie ustawień bootowania (odłączeniu „Napędu optycznego” z kolejki
+   bootowania), by system bootował wyłącznie z dysku twardego!
+

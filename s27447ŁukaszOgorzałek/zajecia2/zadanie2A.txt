@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Testowanie zmiennych
+
+X=tekst1
+#export X
+echo $X
+bash
+echo $X
+
+# po uruchomieniu skryptu, "tekst1" wyświetli się tylko jeden raz,
+# ponieważ w trzeciej linijce uruchamiamy nową instację powłoki,
+# tzw. podpowłokę, która dziedziczy zmienne środowiskowe powłoki
+# nadrzędnej, ale nie dziedziczy samych zmiennych lokalnych powłoki.
+
+# aby zmienna była widoczna w podpowłokach, należy ją wyeksportować.

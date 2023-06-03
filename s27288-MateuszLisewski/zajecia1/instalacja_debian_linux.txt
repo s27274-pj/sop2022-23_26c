@@ -1,0 +1,352 @@
+1. Instalacja oraz konfiguracja VirtualBox 
+
+Na samym początku musimy wybrać aplikację do stworzenia maszyny wirtualnej. W moim przypadku jest to aplikacja VirtualBox. 
+Można ją pobrać ze strony: https://www.virtualbox.org/ 
+
+Gdy VirtualBox jest już zainstalowany, w samej aplikacji wybieramy opcję “Nowa”. 
+
+Pojawią się następujące opcje do wypełnienia:  
+
+- Nazwa – podajemy nazwę maszyny wirtualnej, która będzie utworzona; 
+
+- Folder - określamy folder, w którym będzie znajdować się dysk systemu; 
+
+- ISO Image – Podajmy wcześniej pobrany plik systemu operacyjnego. W tym przypadku Debian ze strony: https://www.debian.org/distrib/;  
+
+- Typ – Powinien się wybrać samodzielnie na podstawie pliku ISO. W razie, gdyby się nie wybrał musimy wybrać odpowiedni system; 
+
+- Wersja – konkretna wersja systemu operacyjnego, także powinna się wybrać na podstawie pliku ISO. 
+
+
+Następna zakładka to: “Unattended Install”: 
+
+Jest to zakładka automatycznej instalacji bez ingerencji użytkownika. Możemy w niej określić: Nazwę użytkownika, Hasło, Nazwę urządzenia oraz domenę, w której 
+system powinien być widoczny.  
+
+Można także wybrać opcję instalacji w tle. 
+
+
+Kolejna zakładka to "Hardware”: 
+
+Są tutaj 2 opcje: pamięć RAM oraz ilość Procesorów dostępnych dla maszyny wirtualnej. 
+
+Pamięć RAM oraz procesor musimy wybrać zgodnie z dokumentacją minimalnych lub rekomendowanych wymagań systemu.  
+
+W przypadku opcji EFI - można ją wybrać przy niektórych systemach operacyjnych, jest to rozwinięcie BIOS z dodatkowymi funkcjami niedostępnymi w standardowym BIOS. 
+
+
+Następna zakładka to “Hard Disk”: 
+
+Na początku mamy 3 opcje: stworzenie dysku wirtualnego, użycie już istniejącego oraz stworzenie maszyny bez dysku. 
+
+
+Tworzenie dysku: 
+
+Musimy wybrać folder, w którym dysk będzie się znajdować. 
+
+Następnie wybierana jest wielkość dysku. 
+
+Poniżej do wyboru są 2 opcje, które zmieniają się wraz z wyborem wariantu dysku: “Pre-allocate Full Size”, “Split into 2GB Parts”. 
+
+
+Do wyboru są różne warianty dysków: 
+
+- VDI – Standard dysku utworzony przez Oracle. Można go wykorzystywać do większości systemów operacyjnych, takich jak: Windows, DOS, Linux, Solaris and OpenSolaris, 
+OS/2 and OpenBSD; 
+
+- VHD - Standard dysku utworzony przez Microsoft. W tej chwili już przestarzały. Maksymalna wielkość to 2 TB. Został zastąpiony przez VHDX – 64 TB wielkości; 
+
+- VMDK – Standard utworzony dla aplikacji VMware takich jak: VMware Workstation, VMware Player oraz VMware Fusion; 
+
+- HDD – Jest to równoległy dysk twardy. Pojawi się jako dodatkowy dysk wirtualny na komputerze użytkownika. 
+
+
+VDI, VHD oraz VMDK mają możliwość dynamicznej lub stałej alokacji dysku. Dynamiczna będzie się zwiększać wraz z zapisywanymi plikami.  
+
+VMDK ma także możliwość rozdzielenia dysku na części 2 GB, w razie, gdyby system, na którym utworzona jest maszyna, nie wspierał większych plików. 
+
+HDD ma możliwość tylko stałej alokacji miejsca na dysku. 
+
+Dodatkowe informacje o typach dysków są zawarte w dokumentacji: https://www.virtualbox.org/manual/ch05.html 
+
+Po wybraniu odpowiednich opcji wybieramy Zakończ. 
+
+
+Nasza maszyna wirtualna powinna się pojawić na liście dostępnych maszyn. Jest ona teraz gotowa do uruchomienia.  
+
+By w pełni skonfigurować maszynę wejdźmy w ustawienia. Na początku pojawia nam się główna zakładka “Ogólne”.  
+
+Automatycznie otwiera się zakładka “Podstawowe”. Tutaj mamy ustawienia, które zmienialiśmy wcześniej - nazwa maszyny, typ oraz wersja systemu. 
+
+Następnie w zakładce “Zaawansowane” znajduje się opcja folderu migawek, który możemy zmienić. Poniżej znajdują się 2 opcje “Współdzielony schowek” oraz 
+“Przeciąganie i upuszczanie”. Pierwsza z nich powoduję wymianę schowka między hostem a maszyną wirtualną. Druga z nich umożliwia przenoszenie plików 
+poprzez przeciąganie ich między oknami. Każdą z opcji możemy włączyć lub wyłączyć. 
+
+W zakładce “Opis” możemy opisać tekstowo swoją maszynę. 
+
+W kolejnej zakładce “Szyfrowanie Dysku” możemy uruchomić szyfrowanie dla konkretnego dysku. Mamy tu do wyboru typ szyfrowania oraz hasło, którym będzie 
+dysk zaszyfrowany. 
+
+
+Następną główną zakładką jest “System”, po jej wybraniu, automatycznie otwiera się zakładka “Płyta główna”, w której możemy dostosować pamięć RAM. 
+Jest tutaj także możliwość wyboru lub ustalenia kolejności nośnika, z którego jest bootowany system. Dostępne opcje to: dyskietka, napęd optyczny, dysk twardy 
+oraz sieć. 
+
+Jest dostępny wybór emulacji chipsetu pomiędzy PIIX3 a ICH9. Standardowo wybieramy opcję, którą obsługuje system operacyjny, który chcemy zainstalować. 
+Niektóre z systemów operacyjnych np. MacOS obsługują od konkretnej wersji już tylko ICH9. 
+
+Następnie mamy do wyboru opcję “TPM”. Jest to emulacja mikrokontrolera Trusted Platform Module, który służy do autentykacji komputera. 
+Do wyboru są wersje 1.2 albo 2.0. 
+
+W następnym ustawieniu mamy do wyboru urządzenia wskazujące. Wybór ten jest uzależniony od systemu, który będzie zainstalowany na maszynie. 
+Standardowym ustawieniem jest “Tablet USB”, który pozwala na precyzyjną emulację ruchów urządzenia hosta. 
+
+Poniżej znajdują się rozszerzone właściwości: 
+
+- I/O APIC - jest to system do wykrywania sprzętu, konfiguracji oraz zarządzania mocą; 
+
+- Ustawienie sprzętowego czasu w formacie UTC; 
+
+- Ponownie jest opcja do wyłączania EFI; 
+
+- Następnym jest opcja do uruchomienia Secure Boot. Dostępna jest dopiero po włączeniu EFI. 
+
+
+W następnej zakładce “Procesor” mamy możliwość ponownego przypisania rdzeni procesora. Dostępne jest także ustawienie maksymalnego wykorzystania procesorów. 
+
+Z rozszerzonych właściwości do wyboru są PAE/NX oraz VT-x/AMD-V. 
+
+- PAE/NX jest to umożliwienie systemom 32-bitowym dostępu do pamięci RAM większej niż 4 GB; 
+
+- VT-x/AMD-V jest to wirtualizacja na procesorze, którą możemy uruchomić tylko wtedy, jeżeli ten procesor posiada i ma uruchomioną taką funkcję. 
+
+
+Następną zakładką jest “Akceleracja”. Jest tutaj do wyboru interfejs parawirtualizacji - https://www.virtualbox.org/manual/ch10.html#gimproviders 
+
+
+Po przejściu na zakładkę główną “Ekran” pojawia się informacja o pamięci wideo oraz ilości wykorzystywanych monitorów. Mamy też opcje ustawienia skalowania.
+Następnie do wyboru jest kontroler grafiki oraz opcja akceleracji 3D. 
+
+Dokładny opis kontrolerów grafiki - https://www.virtualbox.org/manual/ch03.html#settings-screen 
+
+
+Po przejściu w zakładkę “Zdalny Pulpit” mamy możliwość uruchomienia dostępu zdalnego do tej maszyny wirtualnej. Do ustawienia są: port serwera, 
+metoda uwierzytelniania, limit czasu uwierzytelniania oraz możliwość wielokrotnego połączenia. 
+
+W następnej zakładce “Nagrywanie” mamy możliwość automatycznego nagrywania obrazu ekranu maszyny wirtualnej. Do wyboru jest ścieżka do pliku nagrania, 
+rozdzielczość ekranu, limit klatek, jakość obrazu. 
+
+
+Następna główna zakładka to “Pamięć masowa”. 
+
+Są tutaj opcje konfiguracji kontrolerów IDE oraz SATA: 
+
+- W zakładce IDE jest możliwość konfiguracji napędów optycznych, ich priorytetu oraz informacje o nich. 
+
+- Natomiast w zakładce SATA można wykonać konfigurację dysków wirtualnych. Jest możliwość przepięcia dysku wirtualnie do innego portu. 
+Można tutaj wybrać opcję SSD by wirtualny dysk był widoczny w systemie jako SSD. Ponadto w tym miejscu zawarte są wszystkie informacje o danym dysku. 
+
+
+W kolejnej głównej zakładce “Dźwięk” jest możliwość konfiguracji dźwięku. Do wyboru są opcje wyłączenia wyjścia lub wejścia dźwięku oraz wybranie emulacji 
+kontrolera audio. 
+
+
+W zakładce “Sieć” jest dostępna możliwość podłączenia do 4 wirtualnych kart sieciowych. Karty można podłączyć wg różnych typów połączeń: NAT, 
+Mostkowana karta sieciowa (bridge), sieć wewnętrzna, karta sieci izolowanej (host-only), sterownik rodzajowy, Sieć NAT, Cloud Network oraz niepodłączona. 
+
+Dodatkowe informacje odnośnie każdego z połączeń oraz ich wykorzystania są zawarte w dokumentacji: https://www.virtualbox.org/manual/ch06.html#networkingmodes 
+
+
+Kolejną zakładką jest “Porty szeregowe”. Porty szeregowe są używane tylko w konkretnych zastosowaniach takich jak: konfiguracja przemysłowych sterowników, 
+łączenia starych modemów itp.  
+
+Dodatkowe informacje o konfiguracji portach są dostępne w dokumentacji: https://www.virtualbox.org/manual/ch03.html#serialports 
+
+
+W zakładce “USB” istnieje możliwość włączenia kontrolera USB oraz wyboru konkretnej wersji tego kontrolera. 
+Służy to do konfiguracji przekierowania sprzętów podłączonych do komputera hosta. 
+
+
+Zakładka “Udostępniane foldery” służy do konfigurowania folderów, które będą współdzielone między maszyną wirtualną a maszyną hosta. 
+
+
+Zakładka “Interfejs użytkownika” pozwala na skonfigurowanie szybkich opcji, które będą widoczne na nakładce maszyny wirtualnej. 
+
+
+2. Proces instalacji 
+
+Po uruchomieniu skonfigurowanej maszyny wirtualnej, uruchomi się ona od razu z instalacją systemu Debian. 
+
+Na samym początku pojawia się ekran wyboru typu instalacji: Graficzna instalacja, zwykła instalacja oraz instalacja z syntezą mowy. 
+Jest także możliwość ustawienia wysokiego kontrastu dla ekranu instalacji. 
+
+W zaawansowanych opcjach znajduję się:  
+
+- możliwość automatycznej instalacji graficznej oraz standardowej; 
+
+- Rescue mode - możliwość naprawy uszkodzonego systemu; 
+
+- Expert install – tryb, który pozwala na kontrolę nad każdym aspektem instalacji systemu. 
+
+
+Po kliknięciu opcji Install zostajemy przeniesieni do wyboru języka, a następnie regionu. 
+W następnym kroku jest możliwość wyboru ustawień lokalnych takich jak: kodowanie lub układ języka. Po czym następuje wybór układu klawiatury. 
+
+Teraz następuje konfiguracja wybranych komponentów oraz próba połączenia maszyny wirtualnej z Internetem. 
+
+Po udanej konfiguracji pojawia się okno ustalenia nazwy tego komputera. Na następnym ekranie jest możliwość dodania komputera do konkretnej domeny. 
+
+Po konfiguracji nazwy sprzętu oraz domeny musimy nadać hasło konta systemowego administratora - root. Następnie musimy je potwierdzić.  
+
+W kolejnym kroku musimy podać pełne imię i nazwisko dla konta nowego użytkownika. Będzie to konto bez uprawnień administratora. 
+Po wciśnięciu Enter pojawi nam się informacja o podaniu nazwy użytkownika. Po czym pojawi się okno, na którym musimy podać hasło dla nowego konta, 
+które następnie należy potwierdzić. 
+
+Po tym kroku załaduje się komponent partycjonowania dysku. Na tym ekranie mamy możliwość wybrania 4 opcji:  
+
+- Guided – automatyczne utworzenie dysku, dostępne są opcje: użycie jednej głównej partycji lub rozdzielenie ich na konkretne dane; 
+
+- Guided with LVM – utworzenie partycji wraz z Logical Volume Manager. Pomaga to w zmienianiu alokacji dysków po pierwotnym utworzeniu, 
+ponieważ większość danych jest zapisana na jednej dużej partycji logicznej; 
+
+- Guided with encrypted LVM – analogicznie do poprzedniego wraz z szyfrowaniem. Brak dostępu bez podania frazy zabezpieczającej; 
+
+- Manual - ręczne utworzenie partycji na dysku. 
+
+Przy wybraniu opcji Manual, najpierw musimy się zgodzić na utworzenie tablicy partycji. Tworzy to wolne miejsce gotowe do partycjonowania.  
+
+Za każdym razem przy wybraniu wolnego miejsca mamy opcje do wyboru: Nowa partycja lub automatyczne rozdzielenie wolnego miejsca.  
+
+Po wybraniu nowej partycji musimy określić jej wielkość. Po czym musimy wybrać typ partycji – Primary albo Logical. 
+Ostatnią opcją jest miejsce utworzenia partycji - początek lub koniec wolnego miejsca. 
+
+Na następnym ekranie pojawią nam się wszystkie informacje dotyczące nowej partycji. 
+
+Na początku będzie informacja w jakim systemie plików będziemy używać tej partycji: 
+Ext4 journaling file system, Ext3 journaling file system, Ext2 file system, btrfs journaling file system, JFS journaling file system,
+XFS journaling file system, FAT16 file system, FAT32 file system, swap area, physical volume for encryption, physical volume for RAID,
+physical volume for LVM, do not use the partition. 
+
+Informacje o każdym formacie są zawarte w dokumentacji Debiana: https://wiki.debian.org/FileSystem.
+Szczegółowe informacje o poszczególnych systemach plików są zawarte w linkach w tabeli na powyższej stronie.
+
+Poniżej została przedstawiona lista cech systemów plików.
+Ext4:
+- System plików dziennika
+- Obsługuje rozmiary plików do 16 terabajtów i woluminy do 1 eksabajta
+- Poprawiona wydajność i niezawodność w porównaniu z poprzednimi systemami plików Ext
+
+Ext3:
+- System plików dziennika
+- Kompatybilny z systemem plików Ext2
+- Obsługuje rozmiary plików do 2 terabajtów
+
+Ext2:
+- System plików niezwiązany z dziennikiem
+- Kompatybilny z systemem plików Ext3
+- Obsługuje rozmiary plików do 2 terabajtów
+
+btrfs:
+- System plików kopiowania przy zapisie
+- Obsługuje migawki i podwoluminy w celu elastycznego zarządzania danymi
+- Obsługuje rozmiary plików do 16 eksabajtów
+
+JFS:
+- System plików dziennika
+- Obsługuje rozmiary plików do 4 petabajtów
+- Obsługuje rejestrowanie metadanych w celu szybszego odzyskiwania po awarii
+
+XFS:
+- Wysokowydajny system plików z dziennikiem
+- Obsługuje rozmiary plików do 8 eksabajtów
+- Zaprojektowany z myślą o skalowalności i wysokiej współbieżności
+
+FAT16:
+- Starszy system plików
+- Ograniczona obsługa plików i rozmiarów woluminów (do 2 gigabajtów)
+- Szeroko stosowany w starszych komputerach i wymiennych urządzeniach pamięci masowej
+
+FAT32:
+- Obsługuje większe rozmiary plików i woluminów (odpowiednio do 4 gigabajtów i 2 terabajty)
+- Szeroko stosowany w wymiennych urządzeniach pamięci masowej
+
+Swap area:
+- Specjalna partycja używana do zarządzania pamięcią wirtualną
+- Przechowuje dane tymczasowo, gdy pamięć fizyczna systemu (RAM) jest pełna
+- Poprawia wydajność systemu, umożliwiając jednoczesne uruchamianie większej liczby programów.
+
+W Debianie głównie używa się systemu plików Ext4, ponieważ jest on najnowszą wersją przystosowaną do tego systemu operacyjnego. 
+Używa się także systemu plików swap dla partycji wymiany. Gdy wybieramy automatyczne utworzenie partycji z LVM tworzy się także partycja boot w systemie Ext2. 
+
+Następną opcją jest “Mount Point”. Są to punkty konkretnych danych systemowych. 
+Dokładna dokumentacja wraz z rekomendowaną wielkością jest dostępna: https://www.debian.org/releases/buster/amd64/apcs02.en.html 
+
+Poniżej są “Mount Options”, które są dokładnie opisane w instalatorze. 
+
+Po skończeniu konfigurowania partycji następuje instalacja systemu operacyjnego. 
+
+W trakcie instalacji może pojawić się informacja o konfiguracji menedżera paczek i czy jest on dostępny z jakiegoś innego urządzenia wejścia. 
+Jeżeli instalacja nie wykryje go, to poprosi o wybranie lokalizacji internetowej, z której ma pobrać resztę plików. 
+Na liście najlepiej wybrać region oraz lokalizację najbliższą fizycznie do instalowanego systemu. 
+Zależnie od poprzednich ustawień karty sieciowej może być potrzebna konfiguracja Proxy. 
+
+Może pojawić się pop-up odnośnie wysyłania anonimowych danych odnośnie używania paczek oprogramowania. Służy to do określenia, które aplikacje będą priorytetowe
+przy dystrybucji płytowej. 
+
+
+Następny krokiem instalacji jest wybór kolekcji oprogramowania. Dostępne są graficzne nakładki środowiska: 
+
+- Debian Desktop envoirement – Standardowa wersja graficzna systemu Debian
+Standardowe środowisko graficzne dla Debiana
+Oparte na środowisku graficznym GNOME 
+
+- GNOME - https://wiki.debian.org/Gnome 
+Nowoczesne i przyjazne dla użytkownika środowisko graficzne
+Domyślne środowisko graficzne dla Debiana
+
+- Xfce - https://wiki.debian.org/Xfce 
+Lekkie i szybkie środowisko graficzne
+Odpowiedni dla starszego sprzętu lub użytkowników preferujących minimalistyczny interfejs
+
+- GNOME Flashback - https://wiki.gnome.org/Projects/GnomeFlashback 
+Tradycyjne środowisko graficzne przypominające GNOME 2
+Zapewnia klasyczne środowisko pulpitu
+
+- KDE Plasma - https://wiki.debian.org/KDE 
+Nowoczesne i bogate w funkcje środowisko graficzne
+Oferuje wysoki poziom dostosowywania i elastyczności
+
+- Cinnamon - https://github.com/linuxmint/cinnamon 
+Intuicyjne i atrakcyjne wizualnie środowisko graficzne
+Oferuje tradycyjne środowisko pulpitu z nowoczesnymi elementami konstrukcyjnymi
+
+- MATE - https://mate-desktop.org/ 
+Rozwidlenie środowiska graficznego GNOME 2
+Zapewnia klasyczne środowisko pulpitu z nowoczesnymi funkcjami
+
+- LXDE - https://wiki.debian.org/LXDE 
+Lekkie środowisko graficzne przeznaczone dla sprzętu z niższej półki
+Prosty i konfigurowalny interfejs
+
+- LXQt - https://wiki.debian.org/LXQt 
+Lekkie środowisko graficzne oparte na frameworku Qt
+Zaprojektowany jako modułowy i konfigurowalny
+
+Dodatkowymi kolekcjami są: 
+
+- Web server - aplikacje przydatne do utworzenia i zarządzania serwerem webowym; 
+
+- SSH server - aplikacje przydatne do utworzenia i zarządzania serwerem SSH. 
+
+Najważniejszym, lecz nie koniecznym do prawidłowego działania jest “standard system utilities”. Jest to paczka standardowych/najpotrzebniejszych
+aplikacji. Bez tej paczki system będzie działał, ale możliwości pracy będą ograniczone przez brak najpotrzebniejszych aplikacji.
+
+
+Po wybraniu kolekcji oprogramowania instalacja wybranych opcji rozpoczyna się. 
+
+Przy końcu pojawi się pop-up odnośnie instalacji GRUB boot loader, w razie braku innego systemu operacyjnego. Bez instalacji tego narzędzia nie uruchomimy systemu.
+Musimy wybrać partycję, na której ma zostać zainstalowany boot loader. 
+
+
+Na koniec instalacji zostaniemy poproszeni o usunięcie dysku lub urządzenia, z którego był instalowany system. VirtualBox zazwyczaj robi to automatycznie.
+Po kliknięciu Continue system zostanie uruchomiony ponownie i jest gotowy do działania. 

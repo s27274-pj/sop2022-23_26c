@@ -1,0 +1,27 @@
+2023-03-04
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczylem sie:
+
+Instalować Debiana. Więcej o systemach plików, środowiskach graficznych. Dowiedziałem się też więcej o virtualboxie, hyper-V oraz trochę sposobach wirtualizacji w chmurze na Azure.
+
+2023-03-18
+Dzisiaj nauczyłem się pisać proste programy skryptowe w bashu, działanie powłoki i argumentów w komendach.
+
+2023-04-01
+Dzisiaj zgłębiłem pisanie skryptów w bashu, dowiedziałem się o instrukcjach warunkowych, pętlach, tablicach
+i ich składni w tym języku oraz jak używać komend linuxowych w takich skryptach, żeby móc wykonywać
+ciekawe operacje.
+
+2023-04-22
+Dzisiejsze zajęcia wprowadziły mnie w język C i jego składnię. Nauczyłem się poprawnie pisać proste programy
+w tym języku używając flag -Wall oraz --pedantic przy kompilacji programów. Poznałem podstawowe
+funkcję w tym języku takie jak scanf(), fscanf() oraz printf(), a także dowiedziałem się trochę
+o strukturach i wskaźnikach.
+
+2023-05-06
+Dzisiaj dowiedziałem się o procesach i ich id (PID). Procesy mogą mieć swoje procesy nadrzędne (parents)
+oraz podrzędne (children). Wszystko zaczyna się od pojedynczego procesu init o PID 1. Nie ma on żadnego
+parenta, chociaż pisze się że jego parent ma ID 0 ciekawe... Procesy mogą się forkować. Jest to 
+skomplikowany temat i napewno zajmie mi parę dni zrozumienie go.
+
+2023-05-20
+To be continued...

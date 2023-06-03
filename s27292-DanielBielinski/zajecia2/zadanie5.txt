@@ -1,0 +1,67 @@
+Polecenie a1:
+
+A=Ala
+
+echo $A ma kota, a kot ma ${A}ę
+
+Przerób je tak, aby tekst wypisywał się poprawnie.
+
+Rozwiązanie:
+
+echo $A ma kota, a kot ma ${A:0:2}ę
+
+Używamy do tego operacji na ciągach znaków. W nawiasach {} na początku podajemy zmienną, po pierwszym dwukropku index od którego zacznie się zmienna a po drugim dwukropku ilość znaków do wyświetlenia czyli wyjdzie nam z tego: Al
+
+
+Polecenie a2:
+
+Napisz skrypt, który będzie wypisywał taki tekst także dla imion męskich. Pomijamy zdrobnienia i imiona które się dziwnie odmieniają (na przykład Marek). Niech skrypt ten przyjmuje jeden argument - imię. Przykładowe wywołanie:
+
+$ ./pszetżkole Ala
+
+Ala ma kota, a kot ma Alę
+
+$ ./pszetżkole Justyna
+
+Justyna ma kota, a kot ma Justynę
+
+$ ./pszetżkole Stefan
+
+Stefan ma kota, a kot ma Stefana
+
+Czy jest to możliwe w czystym bash-u?
+
+Rozwiązanie:
+
+#!/bin/bash
+argument1=$1
+text="ma kota, a kot ma"
+if [[ ${argument1:(-1)} =~ [aeiouąęóy] ]]; then
+ echo "$argument1 $text ${argument1}ę"
+else
+  echo "$name $text $(echo "$argument1" | sed 's/[a-z]+$/a/')"
+fi
+
+
+Polecenie b: 
+
+Napisz skrypt, który wczyta jako argument jakiś tekst. Skrypt ten wypisze kolejno:
+
+Pierwszy znak z argumentu
+
+Ostatni znak z argumentu
+
+Zamieni w argumencie każdy tekst SOP na tekst poniżej (zastosuj echo z przełącznikiem -e):
+
+\e[32mSOP\e[0m
+
+Rozwiązanie:
+
+
+#!/bin/bash
+argument=$1
+pierwszy=${argument:0:1}
+echo "Pierwszy znak z argumentu: $pierwszy"
+ostatni=${argument:argument-1:1}
+echo "Ostatni znak z argument u: $ostatni"
+echo -e "$(argument//SOP/\\e[32mSOP\e[0m}"

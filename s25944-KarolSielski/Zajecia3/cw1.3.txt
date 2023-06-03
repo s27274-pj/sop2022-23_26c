@@ -1,0 +1,46 @@
+Treść: Napisz skrypt, który:
+
+sprawdzi, czy jego nazwa kończy się .sh .
+
+Jeśli nie, to niech zmieni swoją nazwę poprzez dopisanie tego rozszerzenia (rozszerzenie nazwy pliku). Sprawdzenie można zrobić na kilka sposobów, polecam przetestować 3 typowe:
+
+dopasowanie do wyrażenia regularnego (to jest bardziej uniwersalny sposób)
+
+porównanie ostatnich 3 liter nazwy skryptu
+
+użyć wbudowanego w basha mechanizmu do wyciągania części napisów ${%}, ${%%}, ${#}, ${##} 
+
+
+
+#!/bin/bash
+filename=$(basename "$0") <-- to nam daje nazwę podanego pliku bez "./"
+flag=true
+
+if [[ $filename =~ \.sh$ ]]; then
+echo "plik zawiera .sh wg regexa"
+else
+flag=false
+fi
+
+if [[ ${filename: -3} == ".sh" ]]; then
+echo "plik zawiera .sh wg konkatynacji stringa"
+else
+flag=false
+fi
+
+if [[ ${filename%.sh} == "cw1.3" ]]; then
+echo 'plik zawiera .sh wg mechanizmu ${%}'
+else
+flag=false
+fi
+
+if [ $flag == false ]; then
+newFilename="${filename%.*}.sh"
+mv "$filename" "$newFilename"
+echo "nazwa pliku zmieniona na $newFilename"
+fi
+
+Rezultat:
+Skrypt po wywołaniu robi oczekiwaną od niego rzecz.
+Nie jestem pewien czy miały być to osobne warunki czy jeden rozbudowany if, w każdym razie każda metoda jest wykonana
+if'em co pozwala na wywołanie echa po przejściu każdego testu i nie nestowania ifu w ifie.

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+## 2. Skrypt sprawdzający plik config.cfg
+
+# sprawdzenie czy plik config.cfg istnieje
+if [ -f "config.cfg" ]; then
+    # wykonanie pliku config.cfg
+    ./config.cfg
+# sprawdzenie czy podano argument
+elif [ $# -eq 1 ]; then
+    # sprawdzenie czy plik o podanej nazwie istnieje
+    if [ -f "$1" ]; then
+        # wykonanie pliku o podanej nazwie
+        ./"$1"
+    else
+        echo "Plik o nazwie $1 nie istnieje."
+    fi
+else
+    echo "Brak pliku config.cfg oraz nie podano argumentu."
+fi
+
+# konstrukcja podobna, jak w zadaniu1A, tutaj sprawdzamy jednak na początku, czy istnieje
+# plik config.cfg Używamy opcji warunkowej "-f", czy plik o podanej nazwie istnieje 
+# i jest zwykłym plikiem (nie katalogiem ani innym rodzajem pliku). Można użyć "-e", jeśli
+# chcemy sprawdzić wyłącznie, czy istnieje. 

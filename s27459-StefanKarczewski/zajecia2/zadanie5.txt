@@ -1,0 +1,25 @@
+# Ćwiczenie 5
+
+> Pamiętasz jedno z zadań poprzednich? Przerób je tak, aby tekst wypisywał się poprawnie.
+
+```bash
+A=Ala
+echo $A ma kota, a kot ma ${A/a/ę}
+```
+
+
+> Napisz skrypt, który będzie wypisywał taki tekst także dla imion męskich.
+> Pomijamy zdrobnienia i imiona które się dziwnie odmieniają (na przykład Marek).
+> Niech skrypt ten przyjmuje jeden argument - imię
+
+Jak najbardziej możliwe jest to do zrobienia w czystym bashu.
+
+(Rozwiązanie w pliku zadanie5a.sh)
+
+
+> Napisz skrypt, który wczyta jako argument jakiś tekst. Skrypt ten wypisze kolejno:
+> - Pierwszy znak z argumentu
+> - Ostatni znak z argumentu
+> - Zamieni w argumencie każdy tekst SOP na tekst poniżej (zastosuj echo z przełącznikiem -e)
+
+(Rozwiązanie w pliku zadanie5b.sh)

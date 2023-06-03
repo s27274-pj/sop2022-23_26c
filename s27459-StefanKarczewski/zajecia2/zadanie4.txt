@@ -1,0 +1,18 @@
+# Ćwiczenie 4
+
+> Wykonaj komendę ls -l w podpowłoce i przypisz ją do zmiennej X.
+> Wyświetl zawartość tej zmiennej.
+> Spraw, aby nie było różnicy (co najwyżej kolorki)
+> między zwykłym wykonaniem komendy a wypisaniem zawartości zmiennej X.
+
+```bash
+lsout=`ls -l --color=yes`
+echo "$lsout"
+```
+
+Użyłem `--color=yes` w ls, ponieważ domyślnym zachowaniem jest wyłączenie kolorów,
+kiedy zapisujemy wyjście do zmiennej lub przekazujemy dalej poprzez `|`.
+
+Zmienną $lsout otoczyłem cudzysłowami, ponieważ bez nich nie wypisują się nowe linie ze zmiennej.
+Użycie cudzysłowu również zapewnia, że powłoka nie będzie próbowała
+interpretować niektórych rzeczy zanim echo otrzyma finalną wartość.

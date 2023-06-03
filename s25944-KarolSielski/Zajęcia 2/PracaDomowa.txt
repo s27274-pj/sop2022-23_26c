@@ -1,0 +1,10 @@
+Zadanie PracaDomowa:
+Treść: Przygotuj skrypt, który odczyta plik (jego nazwa ma być argumentem skryptu) i wypisze go na terminalu tak, aby wszystkie wystąpienia Twojego imienia były podświetlone na czerwono. 
+
+-----
+#!/bin/bash
+sed 's/Karol/\o033[31m&\o033[0m/g' plik.txt
+-----
+
+Komentarz:
+Bardzo ciekawe zadanie, myślałem że trzeba będzie zaimplementować coś dodatkowego żeby były widoczne czerwone podreślenia

@@ -1,0 +1,19 @@
+#!/bin/bash
+read -p "Input file names separated by spaces:" -a FILES;
+for file in ${FILES[@]}; do
+	#while read line; do
+	#	echo "$line";  <--- this is the simplest approach without using cat, however it
+	#done < $file               can omit the last line of file if there is no empty last line
+	
+	#while IFS="" read -r line || [ -n "$line" ]; do
+	#	printf '%s\n' "$line"                     <--- this is another solution I've found,
+	#done < $file					       this one doesn't omit the lines at the end,
+	#						       however I don't fully understand what is happening
+	#						       here and I haven't found much helpful info on the
+	#						       internet so I decided not to use it and simply 
+	#                                                      use 'cat' instead
+	cat $file;
+done
+for file in ${FILES[@]}; do
+	tac $file;
+done

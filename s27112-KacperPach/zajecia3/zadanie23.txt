@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for file in $(ls -a)
+do
+    echo "Patrzcie Państwo, oto plik: $file"
+done

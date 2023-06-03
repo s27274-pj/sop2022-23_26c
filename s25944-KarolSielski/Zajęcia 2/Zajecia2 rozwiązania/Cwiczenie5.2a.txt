@@ -1,0 +1,8 @@
+#!/bin/bash
+A=$1
+length=${#A}-1
+if [[ ${A: -1} == "a" ]]; then
+	echo $A ma kota, a kot ma ${A:0:$length}e
+else
+	echo $A ma kota, a kot ma ${A}a
+fi

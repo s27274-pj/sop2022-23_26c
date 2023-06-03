@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# Testowanie zmiennych4
+
+A=Ala
+echo $A ma kota, a kot ma ${A}ę
+
+# w powyższym skrypcie znajduje się błąd, przez który wydrukowane
+# zdanie będzie posiadało nieprawidło odmienioną końcówkę "Alaę".
+
+# aby zdanie zostało wydrukowane poprawnie, użyjemy operatora "%",
+# dzięki czemu będziemy mogli usunąć ostatnią literę w zmiennej A.
+# przy manipulacji stringiem, operator ten pozwala na usunięcie 
+# najkrótszego pasującego suffixu. Po operatorze podajemy wzorzec,
+# czyli w naszym przypadku "?", reprezentujący pojedynczy znak. 
+# na koniec pozostawiamy literkę "ę", umieszczając ją poza
+# nawiasami klamrowymi.
+
+#A=Ala
+#echo $A ma kota, a kot ma ${A%?}ę
+
+# wykomentowany skrypt powyżej pozwala nam poprawnie odmienić imię
+# ze zmiennej A w dopełniaczu.
+

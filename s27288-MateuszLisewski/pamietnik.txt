@@ -1,0 +1,19 @@
+03.17.2023
+Zajęcia dotyczyły procesu konfiguracji maszyny wirtualnej w VirtualBox oraz instalacji systemu operacyjnego Debian
+
+18.03.2023
+Na zajęciach nauczyłem się:
+- tworzenia podstawowych skryptów w BASH,
+- tworzyć i wykorzystywać zmienne lokalne-powłoki,
+- o predefiniowanych zmiennych środowiskowych,
+- o zmiennych systemowych,
+- wykonywać operacje na ciągach znaków,
+- pisać oraz wykorzystywać wyrażenia regularne oraz przypomniałem sobie działanie komendy sed
+
+01.04.2023
+
+Na zajęciach nauczyłem się:
+- wykorzystywania wyrażeń warunkowych
+- obsługiwania pętli
+- tworzenia oraz wykorzystania tablic
+- tworzenia funkcji do wielokrotnego wykorzystywania

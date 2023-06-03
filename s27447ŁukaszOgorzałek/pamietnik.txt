@@ -1,0 +1,67 @@
+2023-03-04
+
+Mój kochany pamiętniczku, na dzisiejszych zajęciach nauczyłem się:
+- w jaki sposób zaliczyć przedmiot SOP;
+- jak korzystać z Githuba na potrzeby zajęć;
+- jak korzystać z oprogramowania wirtualizacyjnego VirtualBox;
+- jak zainstalować Debiana na maszynie wirtualnej.
+
+Powinienem:
+- pogłębić wiedzę na temat stosowania oprogramowania wirtualizacyjnego
+oraz systemów operacyjnych, w szczególności Linuxa;
+- zaznajomić się lepiej z funkcjonowaniem Githuba oraz z opcjami, których
+będę w przyszłości z używał.
+
+
+2023-03-18
+
+Na dzisiejszych zajęciach nauczyłem się:
+- nieco więcej o Githubie i jego funkcjach;
+- jak przy pomocy konsoli wykonywać operacje na repozytoriach git;
+- w dużym skrócie: czym jest Bash;
+- podstawy skryptowania w Bashu (skrypty, zmienne, operacje, itd.);
+
+Powinienem:
+- pogłębić wiedzę na temat powłok systemowych oraz języków skryptowych;
+- podszkolić się z podstaw skryptowania w Bashu (składnia, regex, argumenty itp.).
+
+2023-04-01
+
+Na dzisiejszych zajęciach nauczyłem się:
+- jak funkcjonują wyrażenia warunkowe w Bashu;
+- jak zaimplementować proste if-y w skryptach.
+
+Powinienem:
+- dokończyć teorię z lekcji w domu (pętle, tablice, funkcje);
+- wykonać zadania domowe;
+- zaprzyjaźnić się z manualem do Basha; 
+- przypomnieć sobie co nieco o C++ z poprzedniego semestru (może się przydać
+na następne zajęcia). 
+
+UWAGA: nie pamiętam czy wcześniejsze wersje tego pamiętnika były skonwertowane na format
+UNIX, ale idąc za radą od teraz wszystkie pliki .txt (włącznie z tym pamiętnikiem) 
+z zadaniami z zajęć będą wrzucane na Gita w tym formacie. 
+
+2023-04-15
+
+Na dzisiejszych zajęciach nauczyłem się:
+- jak wygląda programowanie w C;
+- dlaczego powinniśmy pisać w ANSI C;
+- w jaki sposób ręcznie kompilować kod;
+- jak napisać prosty program wykorzystujący podstawowe funkcje;
+
+Powinienem:
+- dokończyć teorię z lekcji w domu (struktury, IO, wskaźniki itd.);
+- wykonać zadania domowe;
+- zaprzyjaźnić się z manualem do Basha; 
+
+2023-04-15
+
+Na dzisiejszych zajęciach nauczyłem się:
+- co to jest fork(), jak działa i w jaki sposób stosować tę funkcję;
+- czym jest PID, PPID;
+- innych funkcji związanych z obsługą procesów;
+
+Powinienem:
+- dokończyć teorię z lekcji w domu (struktury, IO, wskaźniki itd.);
+- wykonać zadania domowe;

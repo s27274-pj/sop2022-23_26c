@@ -1,0 +1,8 @@
+#!/bin/bash
+lastCharPos=$((${#1}-1))  #długosc chara -1
+if [ ${1:$lasCharPos:1} == 'a' ] # sprawdzenie czy imie jest kobiece
+then 
+    echo $1 ma kota, a kot ma ${1:0:$lastCharPos}ę
+else
+    echo $1 ma kota, a kot ma ${1}a
+fi

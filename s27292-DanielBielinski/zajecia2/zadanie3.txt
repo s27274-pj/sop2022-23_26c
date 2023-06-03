@@ -1,0 +1,21 @@
+Polecenie: 
+
+Zobacz co przechowują zmienne i opisz jak rozumiesz uzyskany wynik. Do czego on jest i kiedy może się wg Ciebie przydać:
+
+PATH
+RANDOM
+PWD
+PS1
+USER
+HOSTNAME
+OSTYPE
+
+Wyjaśnienie: 
+
+PATH -> Przechowuje liste katalogów, które oddzielone są dwukropkiem i prowadzą do plików wykonywalnych (skrypty/programy) dla podstawowego usera systemu. Przydatne kiedy chcemy uruchomić jakieś polecenie bez potrzeby podawania przy tym pełnej ścieżki. Na przykład przy takim poleceniu ls nie potrzebujemy wpisywać całej ścieżki przed ls.
+RANDOM -> Przechowuje losową liczbe całkowitą której maksymalna ilość wynosi 32767 czyli 2^15. Przydać nam się to może gdy potrzebujemy w programie jakiegoś czynniku losowego.
+PWD -> Przechowuje informacje o tym w jakim aktualnie katalogu się znajdujemy. Podobnie jak przy PATH podczas wpisywania poleceń nie ma potrzeby na wskazywanie na dokładną ścieżke i katalog w jakim się znajdujemy. 
+PS1 -> Przechowuje ona informacje dotyczącą wyglądu i działania naszego terminalu. Za pomocą jej możemy dostosowywać wygląd jak i ulepszać pracowanie z terminalem pod własne potrzeby. Można zmieniać w nim kolory, dodawać znacziki czasu, zmieniać terminal dla poszczególnych użytkowników i wiele innych przydatnych rzeczy.
+USER -> Przechowuje informacje o tym jaki użytkownik jest aktualnie zalogowany do systemu. Może się przydać gdy chcemy uruchomić jakiś skrypt na komputerze, który ma działać tylko powiedzmy na folderów użytkownika jaki jest teraz zalogowany. 
+HOSTNAME -> Przechowuje informacje o tym jaką nazwe komputer posiada w sieci. Może nam się przydać gdy chcemy stworzyć jakieś skrypty związanie z sieciami gdzie potrzebujemy nazwy hosta.
+OSTYPE -> Przechowuje informacje o systemie operacyjnym, z którego to został ten request o OSTYPE wysłany i na którym działa. Przydatne gdy aplikacje chcą sprawdzić czy podczas uruchomienia sa na przykład kompatybilne z określonym systemem operacyjnym

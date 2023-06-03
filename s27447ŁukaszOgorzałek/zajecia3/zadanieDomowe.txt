@@ -1,0 +1,55 @@
+#!/bin/bash
+
+## 11. Zadanie domowe
+
+# 1. Wyrażenie regularne dla polskiego imienia:
+	
+	# ^[A-ZŁŚĆŻŹ][a-ząćęłńóśźż]+$
+	
+	# ^ 				- początek tekstu
+	# [A-ZŁŚĆŻŹ] 		- pierwsza litera musi być wielką literą (lub jednym z 
+	# polskich znaków diakrytycznych)
+	# [a-ząćęłńóśźż]+ 	- pozostałe litery to małe litery lub polskie znaki diakrytyczne 
+	# (jeden lub więcej znaków)
+	# $ 				- koniec tekstu
+	
+# 2. Wyrażenie regularne dla kodu pocztowego: 
+	
+	# ^[0-9]{2}-[0-9]{3}$
+
+	# ^ 				- początek tekstu
+	# [0-9]{2} 			- dwie cyfry oznaczające okręg pocztowy
+	# - 				- myślnik
+	# [0-9]{3} 			- trzy cyfry oznaczające sektor kodowy i placówkę
+	# $ 				- koniec tekstu
+	
+# 3. Wyrażenie regularne dla adresu e-mail:
+
+	# ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
+	
+	# ^ 				- początek tekstu
+	# [a-zA-Z0-9._%+-]+ - nazwa użytkownika (jeden lub więcej znaków)
+	# @ - znak '@'
+	# [a-zA-Z0-9.-]+ 	- nazwa domeny (jeden lub więcej znaków)
+	# \. 				- kropka (używamy backslash aby zescapować)
+	# [a-zA-Z]{2,} 		- sufiks domeny (dwa lub więcej znaków)
+	# $ 				- koniec tekstu
+
+# 4. Skrypt sprawdzający typ podanego tekstu:
+
+text=$1
+
+if [[ $text =~ ^[A-ZŁŚĆŻŹ][a-ząćęłńóśźż]+$ ]]; then
+    echo "Imię"
+elif [[ $text =~ ^[0-9]{2}-[0-9]{3}$ ]]; then
+    echo "Kod pocztowy"
+elif [[ $text =~ ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$ ]]; then
+    echo "Adres e-mail"
+else
+    echo "Nieznany typ tekstu"
+fi
+
+# przypisujemy pierwszy argument do zmiennej "text".
+# następnie sprawdzamy, czy "text" pasuje do wzorca dla imienia, kodu pocztowego lub adresu e-mail
+# za pomocą konstrukcji [[ $text =~ wzorzec ]].
+# wypisujemy odpowiedni komunikat dla pasującego wzorca lub "Nieznany typ tekstu" w przeciwnym wypadku.

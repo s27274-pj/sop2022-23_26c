@@ -1,0 +1,16 @@
+#!/bin/bash
+
+## 6. Wypisanie argumentów przy pomocy pętli for
+
+for arg in "$@"; do
+    echo "\"$arg\""
+done
+
+# korzystając z pętli for, iterujemy przez wszystkie argumenty skryptu,
+# (które są przechowywane w specjalnej zmiennej "$@"). 
+# wartość każdego argumentu jest przypisywana do zmiennej "arg".
+# wypisujemy przy pomocy "echo". 
+
+# echo "\"$arg\"" wypisuje wartość zmiennej arg w cudzysłowach. 
+# cudzysłów zostaje poprzedzony znakiem \, aby uniknąć zamknięcia ciągu znaków. 
+# w ten sposób każdy argument zostanie wypisany w cudzysłowach.

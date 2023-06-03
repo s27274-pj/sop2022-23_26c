@@ -1,0 +1,14 @@
+Ćwiczenie 6
+Treść:
+Teraz postaraj się zrobić to zadanie z haczykiem i podmianą fragmentu zmiennej (Ala ma ...)
+
+Rozwiązanie: Nie do końca rozumiem o co chodzi ale zastosowałem regexy w tym zadaniu:
+Kod:
+-----
+
+A=$1
+length=${#A}-1
+[[ ${A: -1} =~ /a$/ ]] && echo $A ma kota, a kot ma ${A:0:$length}e
+[[ ${A: -1} =~ ^[^a]*$]] && echo $A ma kota, a kot ma ${A}a
+
+-----

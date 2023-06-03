@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function colorEcho { 
+    # tu $1 to tekst a $2 to sam numer koloru
+    echo  -e "\033[$2m$1\033[0m" 
+}
+
+colorEcho "tekst" "31"
+colorEcho "tekst" "32"
+colorEcho "tekst" "33"

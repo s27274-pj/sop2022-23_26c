@@ -1,0 +1,49 @@
+#!/bin/bash
+# podpunkt A
+X=tekst
+echo $X
+path=$(pwd)
+bash -c "$path/test1.txt" # < tu zaczyna sie nowy proces basha 
+echo $X                   # dodatkowo postanowiłem wykonac eksperyment 
+                          # pokazujacy mi nieco wiecej jak dziala export 
+                          # jesli w 3 lini dodamy export "tekst" wydrukuje 
+                          # sie 3 razy natomiast bez export pojawi sie
+                          # tylko 2 ("eksperyment" dziala tylko jesli 
+                          # wykonamy skrypt wewnatrz folderu zajecia2)
+
+# podpunkt B
+X="Tekst dłuższy" # wartosc moze byc podana bez cudzyslowu ale 
+                  # tylko jedno slowo
+echo $X
+
+# ppkt. C 
+X="Tekst 1"
+Y="tekst:$X" # w "" będą rozpoznane zmienne 
+echo "$Y"
+Y='tekst:$X' # w '' nazwy zmiennych sa widziane jak zwylke stringi 
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+# ppkt. D
+A=Ala
+echo $A ma kota, a kot ma ${A:0:2}ę # < "Parameter Expansion" składnia: ${parameter:offset:długośc}
+
+## ZMIENNE 
+# Test wykonałem: ./zadanie2.txt 1 2 "3 4" 
+echo '$*: '
+for a in "$*"; do echo "<$a>"; done # string z wszytkimi elementami
+echo '$@: '
+for a in "$@"; do echo "<$a>"; done # array z argumentami osobno
+
+echo $0  # < sciezka z ktorej zostal wywolany skrypt; przetestowalem poprzez wywołanie pliku z roznych 
+         #   miejsc w stroturze plikow 
+
+echo $1 $2 $3 # < kolejne argumenty zachowanie jest tu jak w $@ to znaczy w przykladzie "3 4" jest
+              #   traktowane jako argument 3 nie 3 i 4 
+
+echo $#       # < dla "testu" ilosc argumetow jest 3 "3 4" traktowane jest tu jako jeden arg
+
+echo $?  # 0 jesli komenda zostala wykonana poprawnie
+nieistniejaca komenda 
+echo $?  # 127 (nie zero) komenda wykonana nie poprawnie 

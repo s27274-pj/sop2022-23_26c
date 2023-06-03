@@ -1,0 +1,20 @@
+Po wykonaniu:
+
+X=$(ls -l)
+echo $X
+
+otrzymalem: 
+razem 20 drwxr-xr-x 2 s27549 domain users 4096 11-12 14:04 belfast drwxr-xr-x 3 s27549 domain users 4096 10-22 10:37 cpp drwxr-xr-x 2 s27549 domain users 4096 10-23 15:33 katalog drwxr-xr-x 3 s27549 domain users 4096 03-25 12:29 SOP drwxr-xr-x 3 s27549 domain users 4096 10-08 10:32 windows
+
+jest to ten sam tekst jak po wykonaniu komendy ls -l z dwiema róznicami: nie ma kolorków, wszystko jest w jednej lini.
+
+Domyslnie echo pomija znaki takie jak \n czy \t, jesli zawrzemy zmienna $X w cudzyslowie to dostaniemy:
+
+echo "$X"
+
+razem 20
+drwxr-xr-x 2 s27549 domain users 4096 11-12 14:04 belfast
+drwxr-xr-x 3 s27549 domain users 4096 10-22 10:37 cpp
+drwxr-xr-x 2 s27549 domain users 4096 10-23 15:33 katalog
+drwxr-xr-x 3 s27549 domain users 4096 03-25 12:29 SOP
+drwxr-xr-x 3 s27549 domain users 4096 10-08 10:32 windows

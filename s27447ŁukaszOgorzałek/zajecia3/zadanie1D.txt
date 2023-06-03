@@ -1,0 +1,27 @@
+#!/bin/bash
+
+## 4. Skrypt sprawdzający ilość plików w katalogu
+
+file_count=$(find . -maxdepth 1 -type f | wc -l)
+
+if [ $file_count -gt 5 ]; then
+    echo "W bieżącym katalogu jest więcej niż 5 plików."
+else
+    echo "W bieżącym katalogu jest 5 plików lub mniej."
+fi
+
+
+# na początku tworzymy zmienną, która będzie przechowywać liczbę plików w bieżącym katalogu.
+
+# w łańcuchu poleceń przeszukujemy bieżący katalog, ograniczamy przeszukiwanie tylko 
+# do niego (a nie np. podkatalogów) za pomocą "-maxdepth 1", a określając parametr "-type" 
+# jako "f", ograniczamy wyszukiwanie do plików zwykłych. W celu zliczenia linii przychodzi
+# nam z pomocą polecenie "wc" z parametrem "-l". 
+
+# w końcu przy pomocy instrukcji warunkowej sprawdzamy, czy liczba plików jest większa 
+# od 5 oraz wypisujemy odpowiednią informacje w zależności od spełnienia lub niespełnienia
+# warunku. 
+
+# [!] Poprawa zadania: zrezygnowałem z podejścia z poleceniem "ls" i wykorzystałem 
+# to, o którym wspominałem wcześniej pod koniec w komentarzu. Wydaje się osiągać efekt, 
+# który w zamyśle miał realizować ten skrypt.

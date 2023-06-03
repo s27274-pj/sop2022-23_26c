@@ -1,0 +1,30 @@
+#!bin/bash
+
+# Przypisanie komendy do zmiennej
+
+X=$(ls -l --color=always)
+echo -e "$X" 
+
+# w powyższym krótkim skrypcie w nawiasach okrągłych wykonujemy 
+# w podpowłoce polecenie ls z parametrem -l oraz --color=always,
+# a jego wynik przypisujemy do zmiennej X. Następnie wywołujemy
+# tę zmienną poleceniem echo z parametrem -e, by umożliwić
+# interpretację sekwencji escape, dzięki czemu docelowe formatowanie
+# oraz kolory będą identyczne, jak przy wywołaniu komendy ls -l. 
+
+# parametr --color odpowiada za wystąpienie kolorów w outpucie.
+# domyślnie jest to opcja włączona przy poleceniu -ls, jednak 
+# przy przekazaniu wyniku tego polecenia do zmiennej trzeba
+# manualnie ustawić parametr na "always", jeśli chcemy, by kolory
+# były wyświetlane przy wywołaniu tej zmiennej. 
+
+# alternatywnie możemy posłużyć się poleceniem printf, służącym
+# do wyświetlania sformatowanego tekstu. W poniższym skrypcie
+# opcja %b wskazuje, że w ciągu znaków mają być interpretowane
+# sekwencje escape, a znak \n został umieszczony na końcu dla zachowania 
+# klarowności (ostatnia linijka zlewała się z linijką promptu). 
+
+X=$(ls -l --color=always)
+printf "%b" "$X" "\n"
+
+

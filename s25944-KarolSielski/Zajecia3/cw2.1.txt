@@ -1,0 +1,9 @@
+Treść: Napisz skrypt, który będzie wypisywał liczby od 10 do 1 co 2
+
+#!/bin/bash
+
+for ((i = 10; i > 0; i-=2)); do echo $i; done
+
+Rezultat:
+Skrypt po wywołaniu robi oczekiwaną od niego rzecz.
+Nauczyłem się podstawowej konstrukcji pętli for.

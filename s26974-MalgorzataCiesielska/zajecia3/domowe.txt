@@ -1,0 +1,13 @@
+#!/bin/bash
+NAME_REGEX='^[A-Z]{1}[a-z]{2,}$';
+POSTAL_REGEX='^[0-9]{2,2}-[0-9]{3,3}$';
+EMAIL_REGEX='^[a-zA-Z0-9_!?+=-^]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)+$';
+if [[ $1 =~ $NAME_REGEX ]]; then
+	echo "Imię";
+elif [[ $1 =~ $POSTAL_REGEX ]]; then
+	echo "Kod pocztowy";
+elif [[ $1 =~ $EMAIL_REGEX ]]; then
+	echo "Email";
+else
+	echo "Nic"
+fi

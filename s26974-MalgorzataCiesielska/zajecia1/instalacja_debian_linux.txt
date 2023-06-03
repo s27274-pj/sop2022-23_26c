@@ -1,0 +1,263 @@
+Zadanie: instalacja systemu operacyjnego Linux, dystrybucja Debian na maszynie wirtualnej
+
+1. Pobranie i instalacja Virtual Boxa: https://www.virtualbox.org/wiki/Downloads
+
+2. Pobranie obrazu instalacyjnego Debiana ze strony: https://www.debian.org/download
+	2a. Pobieramy obraz netinst, czyli do instalacji sieciowej 
+	- ze strony debian.org dowiemy się czym jest instalacja sieciowa: 
+	[CYTAT]
+	"A 'network install' or 'netinst' CD is a single CD which enables you to install the entire operating system.
+	This single CD contains just the minimal amount of software to install the base system and fetch the remaining packages over the Internet."
+	[KONIEC CYTATU]
+
+	2b. Pod adresem https://www.debian.org/distrib/ są dostępne również inne instalacje Debiana:
+		2b(i). complete installation image - wszystkie pakiety, nic nie jest ściągane z internetu w trakcie instalacji.
+		Plusem tego rozwiązania jest to, że wystarczy raz ściągnąć obraz i można go używać cały czas, jednak możemy nie
+		mieć wtedy najnowszych pakietów i poprawek
+		2b(ii). cloud image - pozwala stworzyć maszynę wirtualną z Debianem w chmurze (np. Azure albo Amazon Web Services)
+
+3. Otwieramy Virtual Boxa i wchodzimy w File -> Preferences -> General. Tu możemy wybrać folder, w którym będą nasze maszyny wirtualne.
+W ustawieniach możemy również dostosować rozszerzenia Virtual Boxa oraz sieci, skróty klawiszowe, język, ustawienia wyświetlania, itd.
+
+4. Tworzymy nową maszynę wirtualną (tu chciałabym zaznaczyć, że przy tworzeniu maszyny mam inne opcje niż Pan w trakcie zajęć - 
+zakładam, że wynika to z różnic w wersjach Virtual Boxa - nie mam np opcji wyboru typu pliku z wirtualnym dyskiem):
+	4a. Klikamy 'New' aby stworzyć nową maszynę
+		4a(i). Obok mamy również skrót do Ustawień Virtual Boxa, oraz 'Import' i 'Export' - opcje, 
+		które pozwalają nam zaimportować/wyeksportować istniejącą maszynę
+
+	4b. W okienku możemy nazwać naszą maszynę, wybrać folder, w którym zostanie zainstalowana, obraz, którego chcemy użyć, oraz typ i wersję systemu
+	
+	4c. W następnym kroku przydzielamy naszej maszynie pamięc RAM oraz ilość virtual CPU
+		4c(i). Ze strony debian.org dowiemy się, że zalecana ilość pamięci RAM dla Debiana w wersji bez desktopu to 512MB ale to ile powinniśmy
+		wybrać zależy od tego ile pamięci ma nasz komputer (nie zaleca się, żeby przeznaczać na jedną maszynę wirtualną więcej niż 50% naszego RAMu,
+		należy też pamiętać by zostawić wystarczająco pamięci dla naszego hosta)
+		oraz tego jak będziemy chcieli korzystać z naszej maszyny. Do jednych zastosowań wystarczy nam 1GB, do innych będziemy potrzebować więcej.
+		Według mądrych ludzi w internecie dla hostującego systemu z 16GB RAMu, 2-8GB jest sensowną wartością, zatem wybieramy 4GB (czyli 4096MB)
+	
+	4d. W kolejnym kroku tworzymy dysk wirtualny i przydzielamy mu pamięć, mamy następujące opcje:
+		4d(i). 'Create a Virtual Hard Disk Now' -  ta opcja pozwala nam stworzyć dysk z ilością pamięci wybraną przez nas - opcja, która nas interesuje
+		4d(ii). 'Use an Existing Virtual Hard Disk File' - tu możemy wybrać już istniejący plik dysku wirtualnego (ja takowego nie posiadam więc nie wybieram tej opcji)
+		4d(iii). 'Do Not Add a Virtual Hard Disk' - możemy stworzyć też maszynę wirtualną bez dysku - z tego co udało mi się znaleźć w internecie wynika,
+		że taka maszyna może wtedy bootować z CD czy innego nośnika pamięci, ale do naszych zastosowań ta opcja się nie nadaje 
+	Ostatecznie tworzymy dysk wirtualny i przydzielamy mu pamięć. Mamy też możliwość zaznaczenia checkboxa 'Pre-allocate Full Size' - czyli
+	wybieramy, czy nasz plik maszyny ma się dynamicznie zwiększać do momentu aż wykorzysta całą przydzieloną mu pamięć, czy też pamięć ta będzie
+	od razu zarezerwowana w całości. Druga opcja zajmuje dłużej do utworzenia ale jest szybsza w użyciu, przydzielanie dynamiczne jest natomiast
+	mniej wydajne w użyciu, może też nie mieć możliwości utworzenia ciągłych danych. 
+	Wybieramy dynamiczną alokację pamięci, żeby przyspieszyć proces instalacji i przydzielamy 20GB, gdyż wydaje się to być sensowną ilością
+	(opieram to na instynkcie, na dysku mam 120GB wolnej pamięci, więc 20GB brzmi okej).
+I tym sposobem maszyna wirtualna jest utworzona. Pojawia się po lewej stronie pod opcją 'Tools'.
+
+5. Zmieniamy ustawienia maszyny wirtualnej - wybieramy maszynę z listy i klikamy 'Settings'
+	5a. W sekcji 'General' możemy zmienić nazwę maszyny, wersję systemu, folder zapisywania snapshotów 
+	(zapisów, które pozwalają nam przywrócić system do danego stanu), opis maszyny, oraz ustawić szyfrowanie dysku 
+	(czego my nie robimy ponieważ spowalnia to działanie maszyny)
+	
+	5b. W sekcji 'System' możemy:
+		5b(i). Dostosować ilość pamięci RAM
+		5b(ii). Wybrać kolejność bootowania ('Boot Order') - tu odznaczamy wszystko poza 'Hard Disk',
+		ponieważ chcemy, żeby maszyna bootowała z dysku twardego
+		5b(iii). Wybrać chipset - PIIX3 albo ICH9 (ICH9 jest nowszy i pozwala na więcej, natomiast jest to eksperymentalny feature,
+		niezalecany do większości rozwiązań)
+		5b(iv). Wybrać wersję TPM - 1.0/1.2, lub wyłączyć TPM (TPM - Trusted Platform Module, służy do zwiększenia bezpieczeństwa komputera,
+		szyfrowania, itd) - ja wyłączam TPM gdyż do naszych zastosowań nie jest potrzebny
+		5b(v). Wybrać urządzenie wskazujące (myszkę, tablet, itp) - wybieramy to co mamy (w moim przypadku jest to mysz)
+		5b(vi). Ustawić 'Extended Features':
+			- 'Enable I/O APIC' - czym jest I/O APIC? -
+			[CYTAT]
+			"Advanced Programmable Interrupt Controllers (APICs) are a newer x86 hardware feature that have replaced old-style
+			Programmable Interrupt Controllers (PICs) in recent years. With an I/O APIC, operating systems can use more than
+			16 interrupt requests (IRQs) and therefore avoid IRQ sharing for improved reliability."
+			[KONIEC CYTATU] - czyli APIC pozwala wykonać więcej Interrupt Requestów niż PIC. Interrupt Request to zapytanie wysyłane
+			do komputera, zazwyczaj przez inne urządzenie, który na chwilę wstrzymuje inne operacje aby urządzenie mogło wykonać coś swojego.
+			Tą opcję zostawiam zaznaczoną, chociaż nie jest to konieczne
+			- 'Enable Hardware Clock in UTC Time' - czyli czy zegar systemowy ma korzystać z czasu UTC
+			- 'Enable EFI' - Extended Firmware Interface - wymagają tego niektóre systemy, np iOS 
+			(my korzystamy z Debiana więc nie zaznaczam)
+		5b(vii). Zmienić ustawienia procesora, np ilość wirtualnych CPU - to ustawiłam wcześniej więc tego nie zmieniam
+	
+	5c. W sekcji 'Display' możemy dostosować ustawienia ekranu, zdalnego ekranu oraz nagrywania - tu nic nie zmieniam
+	
+	5d. W sekcji 'Storage' mamy dostęp do urządzeń pamięci masowej - możemy tu zmienić ustawienia naszego dysku wirtualnego, oraz wybrać obraz dysku - 
+	ja już wcześniej wybrałam obraz debiana więc tu nic nie zmieniam
+
+	5e. W sekcji 'Audio' możemy włączyć/wyłączyć dźwięk oraz dostosować ustawienia dźwięku - ja dźwięk wyłączam więc nie zmieniam tych ustawień
+
+	5f. W sekcji 'Network' ustawiamy karty sieciowe. Domyślnie włączona jest jedna, ale możemy włączyć do czterech (ja zostawiam jedną).
+	Możemy też zmienić ustawienia karty sieciowej:
+		5f(i). 'Attached to' - wybieramy do czego karta jest podłączona:
+			- 'NAT' - jak maszyna będzie chciała się skomunikować z internetem nasz host będzie działał jako router, podmieni adres
+			i wyśle zapytanie do internetu ze swoim adresem
+			- 'Bridged Adapter' - maszyna dostanie własny adres, będzie to w sieci wyglądało tak jakbyśmy mieli drugi komputer
+			- 'Internal Network' - sieć wewnętrzna, służy do komunikacji tylko pomiędzy maszynami, tu ustawiamy nazwę sieci i
+			wtedy tylko maszyny znajdujące się w tej sieci mogą się między sobą komunikować
+			- 'Host-only Adapter' - sieć izolowana, nasz komputer i maszyna mogą rozmawiać tylko ze sobą
+			- Oraz inne sieci, które możemy dodawać w ustawieniach globalnych
+		Ja wybieram NAT, ponieważ chcę, żeby moja maszyna mogła komunikować się z siecią, i nie chcę, żeby miała przydzielony osobny adres
+		5f(ii). W 'Advanced' możemy wybrać typ karty sieciowej oraz zmienić MAC address - tego nie zmieniam ponieważ bardziej ufam ustawieniom domyślnym, niż
+		swojej nikłej wiedzy na temat sieci. Możemy również ustawić przekierowanie portów - tego również nie zmieniam
+	
+	5g. 'Serial Ports' - ustawienia portów szeregowych - nie zmieniamy nic, porty szeregowe są obecnie rzadko używane, większość komputerów nawet nie posiada takiego złącza 
+	(chociaż mają one zastosowanie w systemach embedded), więc niebędzie to nam potrzebne
+	
+	5h. 'USB' - tu możemy włączyć/wyłączyć kontroller usb - ja zostawiam włączony ponieważ korzystam z urządzeń podłączonych po USB (chociażby z klawiatury)
+	
+	5i. 'Shared folders' - tu możemy dodać katalogi współdzielone przez maszynę i nasz komputer aby mogły się wymieniać plikami - tu nic nie zmieniam ponieważ nie widzę potrzeby
+	
+	5j. 'User Interface' - ustawienia UI, tu też nic nie zmieniam ponieważ nie widzę potrzeby
+
+6. Uruchamiamy maszynę przyciskiem 'Start' (duża zielona strzałka):
+	6a. W okienku, które się pojawi będziemy widzieć 'No bootable medium found! Please insert a bootable medium and reboot'. Musimy zatem uruchomić nasz plik iso z debianem.
+	Na pasku narzędzi wchodzimy w 'Devices' -> 'Optical Drives' i tam zaznaczamy nasz plik iso. Następnie restartujemy maszynę, i zaraz po starcie wciskamy klawisz F12 aby
+	zbootować nasz obraz dysku. Tu widzimy 'Virtual Box temporary boot device selection'. Mamy do wyboru Hard Disk, CD-ROM, Floppy oraz LAN. Możemy również kontynuować bootowanie bez
+	wyboru urządzenia do bootowania. Ja wybieram CD-ROM ponieważ korzystamy z obrazu płyty.
+	
+	6b. Teraz widzimy menu do instalacji maszyny wirtualnej. Opcje, które tu mamy: 
+		6b(i). 'Graphical install' - instalacja graficzna - używamy tylko jeśli mamy zasoby do wyrenderowania środowiska graficznego
+		6b(ii). 'Install' - instalacja tekstowa - wymaga mniej zasobów i dla obeznanych jest również szybsza, gdyż wymaga użycia tylko klawiatury - imo jest też bardziej fun :) człowiek się
+		czuje bardziej jak hacker z filmu
+		6b(iii). 'Advanced Options': 
+			- 'Graphical Expert Install' - instalacja ekspercka, daje nam więcej opcji podczas procesu instalacji - z tego nie korzystam, ponieważ nie czuję się ekspertem
+			- 'Graphical Rescue Mode' - tryb awaryjny - nie ma awarii więc nie jest nam potrzebny
+			- 'Graphical Automated Install' - instalacja automatyczna - z tego też nie korzystam ponieważ chcę mieć kontrolę nad procesem instalacji
+			- 'Expert Install, 'Rescue Mode', 'Automated Install' - analogicznie do trzech pierwszych opcji tylko bez interfejsu graficznego
+			- 'Speech-enabled advanced options' - opcje zaawansowane dla syntezatora mowy - z tego również nie korzystam, ponieważ nie potrzebuję
+		6b(iv). 'Accessible dark contrast installer menu' - menu ze zwiększonym kontrastem, przydatne dla osób gorzej widzących - z tej opcji nie korzystam
+		6b(v). 'Help' - pomoc, nie korzystam
+		6b(vi). 'Install with speech synthesis' - instalacja z syntezatorem mowy, nie korzystam
+	Opcja, którą wybieram w tym kroku to 'Install'
+			
+7. Instalacja maszyny:
+	7a. W pierwszym kroku musimy wybrać język - ja wybieram angielski ponieważ jestem przyzwyczajona do pracy z komputerem w języku angielskim, ułatwia to też szukania w internecie pomocy
+	
+	7b. Teraz wybieramy lokalizację - służy to do ustawienia strefy czasowej systemu oraz lokalizacji z której będą pobierane pakiety - wybieramy więc Polskę (other -> Europe -> Poland)
+	
+	7c. Wybieramy 'locale', czyli ustawienia klawiatury, języka, encodingu - ja wybieram United States (z amerykańskimi słówkami/sposobem zapisu jestem bardziej zaznajomiona niż z brytyjskimi)
+	
+	7d. Konfiguracja klawiatury - wybieramy jaki chcemy mieć układ klawiatury - wybieram American English ponieważ klawiaturę z takim układem posiadam
+	
+	7e. Chwilę czekamy, pojawiają się różne paski postępu. Po jakimś czasie pojawia nam się okienko konfiguracji sieci. Tu musimy podać hostname, czyli nazwę, która będzie identyfikatorem
+	naszej maszyny w sieci. Zostawiam domyślne 'debian'. Następnie mamy możliwość ustalenia nazwy domeny - ja zostawiam to pole puste ponieważ nie będę korzystać z domeny.
+	
+	7f. Dalej przechodzimy do ustawień użytkowników - najpierw musimy ustalić hasło dla 'roota', czyli konta administracyjnego systemu. Wpisuję hasło zawierające małe i duże litery oraz liczby.
+	Hasło należy wpisać dwukrotnie. Następnie konfigurujemy konto użytkownika - podajemy pełne imię, username (ja podaję 'gosia'), a następnie hasło, tak samo jak dla roota podaję hasło zawierające małe i duże
+	litery oraz liczby.
+	
+	7g. Teraz przechodzimy do partycjonowania dysku. Tu mamy następujące opcje:
+		7g(i). 'Guided - use entire disk' - instalacja szybka, z sugerowanymi partycjami do wyboru - ta opcja nas nie interesuje
+		7g(ii). 'Guided - use entire disk and set up LVM' - LVM - Linux Volume Manager, pozwala na wykorzystanie wielu dysków i stworzyć z tego dyski logiczne, które mogą
+		być rozszerzane bez restartowania systemy
+		7g(iii). 'Guided - use entire disk and set up encrypted LVM' - to samo co poprzednio, tylko z enkrypcją dysku
+		7g(iv). 'Manual' - manualne tworzenie partycji, czyli to co wybieram, ponieważ chcę mieć pełną kontrolę nad tym procesem
+	
+	7h. Po wybraniu 'Manual' mamy następujące opcje:
+		7h(i). 'Guided Partitioning' - powrót do poprzedniego okna
+		7h(ii). 'Configure iSCI volumes' - opcja służy do konfigurowania dysków przez sieć, jeśli takowe mamy
+		7h(iii). Trzecia opcja to dysk wirtualny, który utworzyliśmy wcześniej - to wybieramy
+	
+	7i. Decydujemy, czy tworzyć nową tablice partycji - ponieważ uruchamiam maszynę po raz pierwszy, wybieram 'Yes'
+
+	7j. Pod naszym dyskiem wybieramy 'FREE SPACE' -> 'Create a new partition'
+		7j(i). Najpierw tworzymy partycję '/', czyli systemową, tu przydzielam 10GB, czyli połowę mojego dysku wirtualnego. Następnie przechodzę
+		do ustawień partycji. Tu mamy opcje:
+			- 'Use as:' - czyli jak będzie wykorzystywany dysk. Tu mamy następujące opcje:
+				* 'Ext4/Ext3 journaling file system' - journaling file system to system plików, który przed zapisaniem danych na dysk
+				najpierw zapisuje je w journalu, dzięki czemu jest mniejsze ryzyko korupcji danych podczas przywracania systemu po
+				utracie zasilania/crashu. Ext4 to nowsza wersja Ext3, która ma większe możliwości. Ext4 jest jednym z najpopularniejszych
+				systemów plików dla Linuxa i jest to opcja, którą ja wybieram. Ext3 jest domyślnym systemem dla starszych jąder, ale mamy
+				dostęp do nowszego i lepszego Ext4 więc Ext3 nas nie interesuje.
+				* 'Ext2 file system' - ext2 to truga wersja rozszerzonego systemu plików dla Linuxa. W przeciwieństwie do Ext4/Ext3 nie
+				posiada journalingu. Jest to stara wersja, więc nas nie interesuje.
+				* 'btrfs journaling file system' - system plików, który wspiera Copy On Write (COW). Definicja COW:
+				[CYTAT]
+				"If multiple callers request the same data at the same time, they will obtain the same pointer to the same resource.
+				If a caller wants to modify the content of the resource, the system will make a private copy to the caller.
+				But the original resources seen by other callers remain unchanged"
+				[KONIEC CYTATU]
+				Btrfs jest sporo nowszy od Ext4, a co za tym idzie mniej stabilny, wspiera natomiast większe rozmiary partycji, 
+				większe rozmiary plików, tworzenie snapshotów systemu plików i różne inne opcje, których Ext4 nie posiada. 
+				Takie bajery nie są mi natomiast potrzebne, więc nie wybieram tego systemu plików.
+				* 'JFS journaling file system' - system plików stworzony przez IBM, podobno dość szybki ale rzadko używany/wspierany
+				* 'XSF journaling file system' - ten system jest szybszy przy duży plikach, ale wolniejszy przy wielu małych,
+				z racji tego, że nie planuję korzystać z dużych plików tego systemu nie wybieram
+				* 'FAT16/FAT32 file system' - FAT - File Allocation Table - Jest to tabela, która przechowuje informacje
+				na temat lokalizacji plików. FAT powstało w latach 70-tych do użycia na dyskietkach. Nie jestem w stanie znaleźć zaleceń
+				co do użycia tego systemu na linuxie, zatem nie wybieram tej opcji.
+				* 'swap area' - miejsce na dysku, które będzie wykorzystane jako dodatkowa pamięć RAM, gdy takowa zostanie wyczerpana - 
+				to wybierzemy dla drugiej partycji
+				* 'physical volume for encryption' - tej opcji używamy, jeśli chcemy korzystać z szyfrowania dysku. Ja nie chcę, więc nie
+				używam.
+				* 'physical volume for RAID' - RAID - wykorzystanie kilku dysków twardych, które współpracują ze sobą
+				* 'physical volume for LVM' - LVM - Logical Volume Manager, pozwala na połączenie partycji znajdujących się na różnych
+				dyskach w jeden dysk wirtualny
+			Opcja, którą ostatecznie wybieram to Ext4.
+			- 'Mount point' - miejsce zaczepienia, mamy do wyboru '/' - root, '/boot', '/home', '/tmp' itd, ja wybieram root ponieważ tworzę
+			partycję systemową
+			- 'Mount options' - pozwala dostosować zachowanie systemu plików. Tych ustawień nie zmieniam
+			- 'Label' - pozwala ustawić etykietę dla danej partycji. Tutaj zostawiam puste.
+			- 'Reserved blocks' - przestrzeń zarezerwowana dla superusera. Zostawiam defaultowe 5% (chociaż przy dużych dyskach mogłoby być to
+			nawet 1%)
+			- 'Typical usage' - tu podajemy jak będziemy używać systemu plików. Mamy do wyboru 'standard', 'news', largefile', 'largefile4'.
+			Od tego co wybierzemy będzie zależeć to ile będziemy mieli 'inode-ów' - czyli miejsc na pliki. Jeśli chcemy tworzyć dużo małych
+			plików odpowiednia będzie opcja 'news'. Dla dużych plików wybieramy 'largefile', a dla jeszcze większych 'largefile4'.
+			Ja wybieram opcję standard gdyż na moje potrzeby jest wystarczająca
+			- 'Bootable flag' - można ustawić 'on' lub 'off'. Gdy włączymy tę opcję, partycja będzie partycją z której będzie bootował system.
+			Tylko jedna partycja może mieć włączoną tą opcję. Ja włączam tą opcję przy tworzeniu tej partycji, ponieważ chcę, żeby była
+			moją partycją bootującą.
+		7j(ii). Teraz tworzę drugą partycję, która będzie moim swap area (opisane wyżej). Zalecana ilość to (ilość RAM + 2) gdy mamy powyżej
+		2GB RAMu. Ja przydzieliłam 4GB RAMu, więc tutaj przydzielam 6GB pamięci. W 'Use as:' wybieram 'swap area', pozostałe opcje zostawiam,
+		tak jak poprzednio, bez zmian.
+	Wybieram 'Finish partitioning and write changes to disk', co prowadzi do okienka, w którym musimy zatwierdzić zmiany. Widzimy tu listę
+	partycji, które zostaną sformatowane:
+		7j(iii). 'partition #1 of SCSI2 (0, 0, 0) (sda) as ext4' - partition 1, czyli pierwsza partycja; of SCSI2 (SCSI wymawiamy 'scuzzy'),
+		czyli interfejsu SCSI2; (0, 0, 0) znaczą to odpowiednio numer interfejsu, numer dysku i numer partycji; sda to pierwszy dysk jaki znajdzie
+		system (dyski są odpowiednio nazywane sda, sdb, ...); as ext4 czyli jako system plików ext4. Druga partycja jest opisana analogicznie.
+	Wszystko się zgadza, więc wybieram 'Yes'.
+	
+	7k. Zaczyna się instalacja. W pewnym momencie dostajemy opcję zeskanowania dodatkowego dysku. Ja mam tylko jeden obraz dysku więc wybieram 'No'.
+	Teraz należy wybrać lokalizację, z jakiej będą pobierane pakiety. Wybieramy tą, która jest najbliżej, czyli 'Poland'. Następnie mamy do
+	wyboru różne domeny, z których można pobrać pakiety. Wybieram defaultowo zaznaczoną opcję, czyli 'deb.debian.org'. W kolejnym
+	kroku możemy ustawić proxy HTTP. Ja zostawiam to pole puste. Instalacja idzie dalej. Kolejna decyzja - tym razem trzeba wyrazić zgodę,
+	lub jej brak, na wysyłanie danych a propos najczęściej używanych pakietów do developerów. Nie udzielam zgody, ponieważ kiedy mogę, staram się
+	nie udostępniać takich danych. Wybieramy software do zainstalowania. Mamy do wyboru:
+		7k(i). 'Debian desktop environment' - to zaznaczamy jeśli chcemy mieć środowisko graficzne. Możemy zaznaczyć tylko tę
+		opcję (wtedy domyślnie zostanie zainstalowany GNOME) lub wybrać jedną z opcji z listy:
+			- 'GNOME' - jest to bardzo popularne środowisko graficzne dla Linuxa. Jest przyjazne dla użytkownika, konfigurowalne, i stabilne,
+			natomiast nie należy do 'najlżejszych' i najwydajniejszych, więc nie nadaje się dla systemów z mniejszą ilością pamięci
+			RAM
+			- 'Xfce' - jest to lekkie i wydajne środowisko graficzne, które nadal jest bardzo przyjazne dla użytkownika. Jest to środowisko
+			modularne, które pozwala na zainstalowanie tylko tych części, których potrzebujemy. Posiada również dużo pluginów co jeszcze bardziej
+			zwiększa możliwość dostosowania go do swoich potrzeb
+			- 'Gnome flashback' - wersja Gnome 3, która wizualnie bardzo przypomina Gnome'a 2, z myślą o użytkownikach, którzy
+			preferują wygląd Gnome'a 2
+			- 'KDE Plasma' - najpopularniejsze obok GNOME'a środowisko graficzne. W porównaniu do Gnome'a bardziej przypomina Windowsa i
+			jest bardziej skupione na estetycznym wyglądzie oraz konfigurowalności. Aplikacje na KDE mają też często więcej
+			funkcji niż na Gnomie. Do minusów KDE można zaliczyć jego wymyślność, która dla niektórych użytkowników może być przytłaczająca.
+			Jest też mniej stabilnym systemem w porównaniu do Gnome'a oraz posiada mniej użytkowników, co może utrudniać szukanie pomocy.
+			- 'Cinnamon' - środowisko utworzone na podstawie Gnome'a 3 na potrzeby dystrybucji Linux Mint. Od wersji 2.0 Cinnamon jest
+			już kompletnie odcięty od Gnome'a. Pod względem konfigurowalności i możliwości dostosowania wyglądu leży pomiędzy Gnome'm
+			i KDE. Mamy tu większe możliwości niż Gnome, ale nie ma ich tak przytłaczającej ilości jak w KDE. Cinnamon jest intuicyjny i można
+			z niego korzystać 'out of the box', bez większej konfiguracji, co czyni go przystępnym dla nowych użytkowników. Jest też dość wydajny,
+			więc nadaje się do systemów z mniejszą ilością RAM.
+			- 'MATE' - środowisko oparte na Gnomie 2, którego głównym celem jest zachowanie wyglądu Gnome'a 2, przy jednoczesnym wsparciu
+			nowych aplikacji i technologii. Jest też szybkie i wydajne, zatem również nadaje się do słabszych maszyn.
+			- 'LXDE' - jedno z najlżeszych środowisk graficznych dla Linuxa (lżejsze od Xfce). Jest bardzo wydajne, natomiast
+			bardzo minimalistyczne. Jest też dość stare i nie jest tak aktywnie rozwijane jak np. Xfce
+			- 'LXQt' - środowisko powstałe z połączenia LXDE i  Razor-qt (Razor-qt to kolejne open source środowisko graficzne, praca nad
+			nim została zawieszona na rzecz LXQt). W zamyśle ma zastąpić LXDE, również jest bardzo lekkim środowiskiem, ale jest
+			bardziej aktywnie rozwijane. W praktyce nie ma natomiast dużych różnic między LXDE a LXQt.
+		Gdybym miała instalować na maszynie wirtualnej środowisko graficzne, myślę, że wybrałabym Xfce ze względu na wydajność oraz 
+		możliwość dostosowania do własnych potrzeb. Na prywatnym komputerze prawdopodobnie zainstalowałabym KDE albo Cinnamon ze 
+		względu na ilość opcji i estetykę :) Teraz natomiast nic nie zaznaczam gdyż nie chcę środowiska graficznego.
+		7k(ii). 'Web server' - serwer webowy, nie będę z niego korzystać więc nie zaznaczam
+		7k(iii). 'SSH server' - server SSH, na ten moment nie będzie mi potrzebny więc również nie zaznaczam
+		7k(iv). 'standard system utilities' - standardowe narzędzia systemowe. Najbardziej przydatne narzędzia do pracy z systemem, między innymi
+		python, bzip2 (do tworzenia plików zip), info, time, file, itd. Tą opcję zostawiam zaznaczoną aby nie musieć instalować tego wszystkiego 
+		później.
+	Następnie wybieramy, czy chcemy zainstalować GRUB - program, który zarządza procesem bootowania. Jeśli na maszynie jest więcej niż jeden system
+	może to spowodować problemy, ale na mojej nie ma żadnego innego, więc wybieram 'Yes'. Następnie wybieramy dysk, na którym ma zostać zainstalowany
+	GRUB. Ja wybieram jedyny dostępny, czyli '/dev/sda'.
+	KONIEC INSTALACJI. Należy się jedynie upewnić, że dysk instalacyjny nie jest załadowany (Virtual Box zrobił to za mnie) i można bootować system.
+	Teraz można wpisać username i hasło i korzystać z systemu :)
+KONIEC :)))))
+		
+		

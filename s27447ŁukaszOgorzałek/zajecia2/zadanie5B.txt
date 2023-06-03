@@ -1,0 +1,52 @@
+#!bin/bash
+
+# Tekst jako argument, transformacja outputu
+
+#przypisanie do zmiennej input argumentu
+input="$1"
+
+# pobranie pierwszego znaku z input i przypisanie go do zmiennej first_char
+first_char=${input:0:1}
+
+# pobranie ostatniego znaku z input i przypisanie do zmiennej last_char
+last_char=${input: -1}
+
+# zastosowanie sed do zastąpienia wystąpień "SOP" w input na "SOP" z kolorem
+# zielonym, zapis wyniku operacji do zmiennej output
+output=$(echo "$input" | sed 's/SOP/\\e[32mSOP\\e[0m/g')
+
+# wyświetlenie pierwszego znaku z argumentu
+echo "Pierwszy znak: $first_char"
+
+# wyświetlenie ostatniego znaku z argumentu
+echo "Ostatni znak: $last_char"
+
+# wyświetlenie argumentu z wystąpieniami "SOP" na zielono
+echo -e "Output: $output"
+
+#------------------------------------------------------------------------------
+
+# co istotne, podczas przypisywania wartości do zmiennych first_char 
+# i last_char, korzystamy z możliwości rozwinięcia parametru i 
+# "wyciągnięcia" substringa ze zmiennej input, posiłkując się operatorem ":". 
+
+# input to nasza nazwa zmiennej, zawierającej łańcuch znaków, z którego chcemy
+# wyciąć dany fragment. ":" oddziela nam nazwę parametru od reszty składni,
+# z kolei pierwsza liczba oznacza znak, od którego zaczynamy wycinać
+# (w naszym przypadku 0, bo chodzi o pierwszy znak), natomiast druga liczba 
+# jest opcjonalna i oznacza liczbę znaków, które zostaną wycięte.
+# jeśli jej nie podamy, wyciągnięty zostanie cały fragment od danego offsetu 
+# do końca łańcucha.
+
+# w last_char natomiast przed dwukropkiem nie podajemy liczby, ponieważ chcemy
+# wyciąć tylko ostatni znak, a liczba ujemna informuje Bash, że chcemy wyciąć 
+# znak od końca łańcucha.
+
+
+# przy przypisywaniu wartości do zmiennej output, korzystamy z polecenia
+# zastępującego sed "s" (substitute). W syntaxie fragment "\\e[32mSOP\\e[0m"
+# pozwala nam, dzięki specjalnym sekwencjom znaków używanych do zmiany koloru
+# tekstu w terminalu, wyświetlić output, w którym "SOP" będzie pokolorowany na
+# zielono (reszta tekstu, jak i wyrażenia typu "sop" oraz "S OP" pozostaną 
+# w domyślnym kolorze). Końcowa flaga "g" oznacza, że operacja zastępowania 
+# ma zostać wykonana globalnie, tzn. dla każdego wystąpienia wzorca.

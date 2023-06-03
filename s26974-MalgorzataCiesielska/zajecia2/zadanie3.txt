@@ -1,0 +1,44 @@
+ZADANIE 3
+
+Zobacz co przechowują zmienne i opisz jak rozumiesz uzyskany wynik. Do czego on jest i kiedy może się wg Ciebie przydać:
+
+PATH
+RANDOM
+PWD
+PS1
+USER
+HOSTNAME
+OSTYPE
+
+1. PATH - zawiera listę katalogów, w których powłoka będzie szukać komend, które
+próbujemy uruchomić. Dzięki temu możemy ich używać niezależnie od folderu, w którym się znajdujemy
+bez konieczności wpisywania ich pełnej ścieżki. W moim przypadku wygląda tak:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib
+Poszczególne katalogi są oddzielone znakiem ':'. Komendy, z których często korzystamy warto dodać do zmiennej PATH.
+
+2. RANDOM - zwraca liczby pseudolosowe (całkowite, z zakresu od 0 do 32767). Wywołanie
+echo $RANDOM wyświetli w konsoli losową liczbę. Jest to przydatne, gdy potrzebujemy 'na szybko'
+losowej liczby, natomiast istnieją lepsze sposoby na generowanie liczb pseudolosowych.
+
+3. PWD - zawiera ścieżkę do katalogu, w którym się obecnie znajdujemy. W moim przypadku '/home/gosia/SOP/zaj2'.
+Myślę, że ta zmienna byłaby przydatna np. jeśli chcielibyśmy napisać skrypt w bashu, który miałby wykonywać
+jakieś operacje w/na katalogu, w którym się obecnie znajdujemy.
+
+4. PS1 - służy do definiowania sposobu, w jaki będzie wyświetlany prompt. Przydatne jeśli chcemy w jakiś sposób dostosować prompt, 
+aby wyświetlał informacje, które są dla nas istotne (albo poprostu dla zabawy). U mnie prompt wygląda tak:
+gosia@GOMEN:~/SOP/zaj2$
+A wartość zmiennej PS1 wygląda tak:
+\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$
+
+Znaczenie niektórych symboli:
+\u - nazwa obecnego użytkownika
+\h - nazwa hosta
+\w - katalog, w którym znajduje się użytkownik
+Cyfry zazwyczaj oznaczają kolory i formaty tekstu, np. 01;32m to pogubiony zielony tekst, a 01;34m to pogrubiony niebieski tekst
+(i rzeczywiście u mnie nazwa użytkownika i hosta są na zielono a obecny katalog jest na niebiesko)
+
+5. USER - przechowuje nazwę obecnego użytkownika
+
+6. HOSTNAME - przechowuje nazwę hosta
+
+7. OSTYPE - rodzaj systemu, z którego korzystamy - u mnie 'linux-gnu'

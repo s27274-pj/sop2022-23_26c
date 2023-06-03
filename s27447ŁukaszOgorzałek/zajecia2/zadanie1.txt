@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# Skrypt wykorzystuje komendę "echo" do wyświetlenia w terminalu tekstu.
+
+echo "Witamy w terminalu"
+

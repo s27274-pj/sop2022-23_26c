@@ -1,0 +1,16 @@
+ZADANIE 1
+
+1. Skrypt:
+#!bin/bash
+echo "Witamy w terminalu"
+
+2. Wynik:
+"Witamy w terminalu" wyświetlone w konsoli
+
+3. Interpretacja:
+Wykonało się polecenie echo, które wyświetla tekst w konsoli
+
+4. Uwagi:
+#!bin/bash - ta linijka jest konieczna aby system wiedział jakiego
+interpretera użyć. Bash (Bourne Again Shell) jest najpopularniejszym interpreterem
+i jest standardem dla większości dystrybucji Linuxa.

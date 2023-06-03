@@ -1,0 +1,17 @@
+#!/bin/bash
+
+## 7. Skrypt kompilujący programy napisane w C
+
+for file in *.c; do
+    filename=${file%.c}
+    cc "$file" -o "$filename"
+done
+
+# pętlą for iterujemy po wszystkich plikach w bieżącym katalogu z rozszerzeniem
+# ".c". Wartość każdego pliku jest przypisywana do zmiennej "file".
+
+# tworzymy zmienną "filename", która przechowuje nazwę pliku bez rozszerzenia
+# ".c". W tym celu korzystamy z mechanizmu wycięcia końcówki ze zmiennej "file".
+
+# na koniec poleceniem "cc" kompilujemy dany plik o rozszerzeniu ".c" do pliku
+# wykonywalnego o takiej samej nazwie jak plik pierwotny, jednak bez rozszerzenia ".c".

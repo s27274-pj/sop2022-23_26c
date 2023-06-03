@@ -1,0 +1,58 @@
+# Ćwiczenie 2
+
+```bash
+X=tekst
+echo $X
+bash
+echo $X
+```
+> Co się stało? Czy potrafisz wyjaśnić?
+
+Ustawiliśmy wartość zmiennej `X` i wypisaliśmy ją za pomocą echo.
+Następnie uruchomiliśmy kolejną powłokę i zmienna ta nie została zachowana.
+Zwykłe zmienne są zachowywane tylko na czas trwania powłoki.
+
+
+```bash
+X=Tekst dłuższy
+echo $X
+```
+> Co jest nie tak? jak to naprawić? Zobacz czy pomoże zastosowanie cudzysłowów i apostrofów.
+
+Dostajemy błąd "dłuższy: command not found", ponieważ spacja jest traktowana jako koniec instrukcji przypisującej wartość do zmiennej `X`.
+Reszta linii jest traktowana jest jako zwykła komenda.
+Zastosowanie cudzysłowów naprawia ten problem:
+```bash
+X="Tekst dłuższy"
+echo $X
+```
+Teraz zapisuje się pełna wartość zmiennej i wypisuje się cały napis "Tekst dłuższy".
+
+
+```bash
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+```
+> Jaka jest różnica między " a ' ?
+
+Wartości w cudzysłowach mają interpretowane wartości zmiennych, podpowłok, etc.
+Wartości w apostrofach to dosłowne ciągi znaków, więc nie są one podmieniane.
+Tutaj pierwsze `echo` wypisze "tekst:Tekst 1", bo `$X` został podmieniony na wartość ze zmiennej `X`.
+Drugie `echo` będzie dosłownie "tekst:$X".
+Trzecie `echo` będzie miało ten sam efekt, co pierwsze. Nie mamy w tekście spacji, więc nie będzie tu żadnego problemu.
+Dobrą praktyką jednak będzie definiowanie wartości w cudzysłowach lub apostrofach, aby zapobiec ewentualnych problemów.
+
+
+```bash
+A=Ala
+echo $A ma kota, a kot ma ${A}ę
+```
+> Tak, tu coś będzie nie tak, zaraz to naprawimy.
+
+Tutaj wypisze się "... kot ma Alaę", bo wciąż wypisujemy pełną wartość zmiennej `A` i tylko dodajemy do tego "ę".
+Można to naprawić za pomocą podmiany znaków: `${A/a/ę}`. Wtedy "Ala" zmieni się w "Alę".

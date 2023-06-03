@@ -1,0 +1,14 @@
+# Ćwiczenie 1
+
+> Napisz skrypt wyświetlający na terminalu tekst "Witamy w terminalu".
+> Skorzystaj z komendy echo oraz informacji podanych powyżej.
+> Pamiętaj o atrybutach i o tym jak się wywołuje programy.
+
+```bash
+# Definiuję zmienną, w której zapiszę wiadomość, którą chcę wypisać
+message="Witamy w terminalu"
+
+# Wypisuję wiadomość za pomocą `echo`
+echo "$message"
+```
+

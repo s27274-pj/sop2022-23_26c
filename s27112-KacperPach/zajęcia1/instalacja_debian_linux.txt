@@ -1,0 +1,157 @@
+[treść]
+zainstalować debian na virtualboxsie, i opisać wszystkie opcje.
+[wykonanie zadania]
+(Virtualbox)
+Nowa maszyna
+    > dodaję nazwę; folder w którym będzie zainstalowana maszyna;
+      wybieram mój ISO Image( robię to teraz aby nie musiec dodawać 
+      tego później); typ to Linux wersja Debian 64-bit (ustawione 
+      automatycznie bo nazwa zaweiera DEB)
+        > iso image pobrałem ze strony debian org 
+    > dalej ustawiam ram (2048 MB); i 2 procesory virtualne; 
+      enable EFI pozstawiam wyłączone poniewaz bios będzie wystarcajcy 
+      do tego zadania np nie planuje nigdy towrzyc partycji powyrzej 2.2tb
+    > pomijam narazie dodanie dysku poniewaz chce zrobic to w ustawieniach 
+      maszyny 
+Ustawienia Maszyny
+    > Ogolne 
+        => jest tu nazwa typ i wersja maszyny; zmiana folderu migawek 
+        (słuza do zapisania chwilowego stanu maszyny, do którego możemy
+        sie potem cofnacn); spodzielony schowek oraz przeciagani 
+        i upuszcznenie pozostawiam wyłączone nie będa przydatne do instalacji 
+        maszyny (zwłaszcz przeciaganie i upuszcznenie)
+        => w opisie dodaje krotkie podsumowanie zadania z poczatku pliku 
+        => szufrowanie dysku pozostawiam wyłączone aktualnie maszyna nie 
+        potrzebuje takich zabespieczen 
+    > System 
+        => ram pozostawiam w takim samym rozmiarze na teraz; odpinam za to 
+        dyskietke; w kolejnosci bootwania pozostawiam napęd, dysk 
+        => chipset pozostawiam na PIIX3; ICH9 byłby potrzbny do nowszych
+        systemów operacyjnych natomiast PIIX3 jest tu wystarczający 
+        => TPM jest potrzebny jesli chcieli byśmy uzywac serwisow jak 
+        Windows hello, słurzy do enkrypcji i zabespieczenia (tu nie jest
+        wymagany)
+        => urzadenie wskzujace mysz ps/2 zapeni najwieszka kompatybilnosc
+        nie bedziemy tez potrzebowac wielodotyku
+        => ustawienia procesora pozostawiam takie same; PAE/NX wyłączony 
+        system jest x64 + nie planuje ziwekaszac ramu do 4gb
+        => akclereacje ustawiam na KVM poniewaz debian jest linuxem 
+    > Ekran 
+        => pozostawiam na najniższych ustawieniach bo nie sa potrzebne 
+        wyzsze 
+        => kontroler grafiki vmsvga jest przeznaczony dla linux pozostale 
+        nowszych/ starszych windowsow; akceleracja 3d off 
+        => pulpit zdalny wylaczony; port to port w sieci na ktorym bedzie widoczny
+        => nagrywanie wylaczone mozna tu zmienic scierzke oraz jakosc w celu zmniejszenia
+        miejsca zajmowanego przez rejestracje 
+    > Pamięc 
+        => dodaje dysk do saty o formacie VDI poniewaz jest deykowany dla VB 
+        i nie planuje zmienia programu do wirualizacji. 2gib tyle jesl chcial bym 
+        zainstalowac srodowisko graficzne. pre allocate wyłaczone bo róznica w 
+        prędkości nie jest duza zwłaszcza dla ssd.
+    > Dzwiek 
+        => pozostawiam właczny wyłacznie na wyjsciu; reszta domyślnie 
+    > Sieć 
+        => właczona (NAT)
+            ==> to samo ip, najprostrze 
+        => Bridged     
+            ==> są na takim samym poziomie w sieci co komputer;
+        => wewnętrzna
+            ==> tylko urzadenia z podsieci;
+        => izolowana 
+            ==> dodaje karte virtualna możemy wyizolowac np od innych maszyn 
+            (utrzymujac komunikacje z naszym komputerem)
+        => siec nat 
+            ==> dostep do sieci + dostep do innych maszyn wirtualnych 
+        => cloud Network 
+            ==> eksperymentalne zwiazane z oracle cloud
+        => niepodłaczona 
+            ==> karta istnieje ale nie jest podłaczona do sieci 
+        => adres MAC
+            ==> unikatowy adres naszego komputera 
+        => przekierowanie portow
+            ==> możemy przekazac porty na inne porty jesli port jest zajety np;
+    > porty szeregowe
+        => nie planuje podłaczać specjalistycznych urzadzen/ drukarek
+    >USB
+        => podłaczone brak urzadzen 2.0 kompormis predkość/kompatybilnosc
+    >UDOSTEPNIAN FOLDERY 
+        => przydatne jeśli chcemy korzystać z folderów miedzy pc a vm aktualnie nie 
+        dodaje 
+    >INTERFACE UZYTKOWNIKA 
+        => pozostawiam default można zmienic ui 
+
+(instalacja)
+    notataka: za pomoca esc mozna wrocic do czesci instalacji wczesniejeszej 
+    > nie graficzna (jak należy) 
+    > j. angielski
+    > europa
+    > polska 
+    > en_US.UTF-8
+    > keymap polisz
+    > hostanme KP
+    > domain name puste nie jestem w żadnej domenie 
+    > ustawiam haslo root 
+    > user kacper
+    > haslo usera inne niz root
+    > PARTYCJONOWANIE 
+        => guided 
+            => wybor dysku
+            GUIDED:
+                => wszytkie pliki na jednej partycji
+                    > szybka instalacja do celów testowych 
+                => osobna partycja na katalogi domowe 
+                    > przydatne jesli chcemy reinstalować system pozostawiając dane uż
+                => podział na partycje dla home var tmp
+            GUIDED + LVM:
+                => linux volum menager 
+                    > pozwala z kilku dysków stworzyć dyski logiczne które mogą być 
+                    rozszerzane dynamicznie w trakcie działania systemu.
+            GUIDED + ENCRIPTED LVM: 
+                => to samo co wcześniej + enkrypcja 
+        => maual 
+            > guided wraca do poprazedniej opji 
+            > ISCSI volumes 
+                >> zamontowanie dysku sieciowego 
+            => wybór dysku 
+                > tworzenie partycji 
+                PARTYCJE PRIMARY:
+                    prawidziwe partycje mbr ma miejsce tylko na 4
+                PARTYCJE LOGICZNE:
+                    w rzeczywistosci wszystkie są częscią jednej partycji mbr sa natomiast 
+                    podzielone logicznie; przydatne gdy pomimo nie urzycia efi chcemy mieć 
+                    duzo partycji 
+            => rodzaje partycji (wybieram ext4)
+                EXT > pierwszy system plików 
+                EXT3 > wprowadził journaling; zapisuje co bedziemy robić, co robimy,
+                a potem że to zrobilismy; przydtne przy nagłej utracie energii 
+                EXT4 > znacznie szybszy od EXT3 przy tym zachowujac journaling 
+                btrfs > od oracle GNU licencjal default dla Fedory 
+                JFS > od ibm journaling
+                XFS > Duże dyski twarde wielkość pliku może wynosci 8 mln TB
+                FAT16 > 16 bitów do adrsowania plików mała pojemność ale uniwersalny 
+                FAT32 > 32 bity w boot sektorze 16 tb (dla dysków o sektorach 4096b)
+            => Mount Options 
+                defaults > domyślne opcje montowania
+                noatime >  wyłącza aktualizację czasu dostępu do plików może poprawić wydajność systemu
+                nodev > uniemożliwia uruchomienie na partycji programów które wymagają dostępu do urządzeń
+                noexec >  uniemożliwia uruchomienie na partycji plików wykonywalnych zwiększa bezpieczeństwo systemu
+                nosuid > uniemożliwia uruchomienie na partycji plików z ustawionym bitem SUID ( pozwala na wykonywanie pliku z uprawnieniami właściciela)
+                ro > montuje partycję w trybie tylko do odczytu
+                rw > montuje partycję w trybie odczytu i zapisu
+                uid > opcja ustawia identyfikator użytkownika który będzie właścicielem wszystkich plików 
+                gid > -||- dla grupy 
+                sync/ async >  synchronizacji operacji I/O
+                discard /nodiscard > odzyskiwanie przestrzeni dyskowej poprzez użycie TRIM
+            => RAID 
+                > pozwala na kilku parycji widzianych przez system jako jeden dysk twardy 
+                w zależnosci od typ raid moze slurzc to wydajnosci lub niezawodnosci dyskow
+            => LVM 
+                > logiczne volumeny > łączenie różnych partycji w jedną logiczną przestrzeń dyskową oraz dzielenie jednej partycji na wiele mniejszych logicznych woluminów
+            => iSCSI
+                > dyski sieciowe 
+    > poland jako lokalizacja
+    > ftp.task.gda.pl (najblirzej)
+    > tak do rankingu pakietów
+    > pominięcie instalacji środowiska graficznego 
+    > yes > wybór dysku 

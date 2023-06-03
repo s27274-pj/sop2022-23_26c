@@ -1,0 +1,9 @@
+^[A-PR-UWZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$ 
+
+# Od początku linii wykluczamy duże litery Q X oraz Y
+bo żadne polskie imię nie zaczyna się od tych liter
+
+# Następnie ten wyraz musi się zaczynać dużą literą
+lub polskim znakiem diakrytycznym
+
+# Potem musi być przynajmniej jedna mała litera lub polski znak

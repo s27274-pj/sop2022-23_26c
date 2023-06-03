@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Zadanie 5a:
+
+# Napisz skrypt, który będzie wypisywał taki tekst także dla imion męskich.
+# Pomijamy zdrobnienia i imiona, które się dziwnie odmieniają (na przykład Marek>
+# Niech skrypt ten przyjmuje jeden argument-imię. Przykładowe wywołanie:
+# $ ./pszetżkole Ala
+# Ala ma kota, a kot ma Alę
+# $ ./pszetżkole Justyna
+# Justyna ma kota, a kot ma Justynę
+# $ ./pszetżkole Stefan
+# Stefan ma kota, a kot ma Stefana
+# Czy jest to możliwe w czystym bash-u?
+
+# Jest to jak najbardziej możliwe
+
+ostatniaLitera=$1
+ostatniaLitera=${ostatniaLitera: -1}
+
+if [[ "$ostatniaLitera" == "a" ]]
+then
+	echo "$1 ma kota, a kot ma ${1:: -1}ę." # imiona żeńskie kończą się na literę 'a', więc zamiast ostatniej litery będę podmieniał literę 'ę'
+else
+	echo "$1 ma kota, a kot ma ${1}a." # wszystkie inne przypadki będą kończyć się literą a
+fi

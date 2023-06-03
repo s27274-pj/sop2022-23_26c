@@ -1,0 +1,22 @@
+#!/bin/bash
+
+fibonacci() {
+if [ $1 -eq 0 ]; then
+	echo 0
+	return 0
+elif [ $1 -eq 1 ]; then
+	echo 1
+	return 1
+else
+	local a=$(fibonacci $(( $1 - 1 )))
+	local b=$(fibonacci $(( $1 - 2 )))
+	local c=$((a+b))
+	echo $c
+	return $c
+fi
+} 
+fibonacci 10
+echo $(($?))
+echo "The number is equal to: $(fibonacci 10)" #z jakiegos powodu nie funkcja nie zwraca wartosci wiec musi byc echo, chetnie
+					       #sie dowiem jak to naprawic
+

@@ -1,0 +1,23 @@
+#!/bin/bash -i
+
+echo $PATH # zmienna środowiskowa; foldery oddzielone :, u mnie pierwszy pokazuje się python; 
+           # mozemy np sprawdzic czy urzytkownik ma zainstalowany python jesli w 
+           # dalszej częsci bedziemy chcieli wykonac skrypt pythonowy; czasem tez 
+           # przy instalacji interpertera pythona komenda "python" nie dziala tu mozemy
+           # sprawdzic czy nie jest to spowodowanie nie dodaniem jej do zmiennych srodowiskowych
+
+echo $RANDOM # generowanie semi losowych numerow; przydatne w generowaniu tresci dla uzytkownika 
+
+echo $PWD # scierzka z ktorej uzytkownik aktulnie sie znajduje; !! nie jest to scierzka gdzie znajduje
+          # sie ten skrypt chyba ze urzytkownik jest akurat w tym samym katalogu !! przydatne jesli 
+          # skrypt ma tworzyc/sprawdzac pliki w katalogu z ktorego zostal wywolany 
+
+echo $PS1 # zmienne PS0 do PS4 przechowuja bash prompt; zmieniajac je mozemy go dopasowac do siebie
+
+echo $USER # nazwa uzytkownika; mozemy promptowac uzytkownika z custmowymi wiadomosciami do niego 
+           # bez pytania go wczesniej o imie 
+
+echo $HOSTNAME # nazwa komputera moze byc uzywana do podobnych rzeczy jak wymienione w $user ja 
+
+echo $OSTYPE # generalny typ systemu jaki uzywamy dla mnie wyskakuje darwin22.0 poniewarz wykonuje 
+             # skrypt z komputera z systemem macos 

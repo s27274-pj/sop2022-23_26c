@@ -1,0 +1,22 @@
+ZADANIE 6
+
+Skrypt:
+#!/bin/bash
+echo "$1 ma kota, kot ma $1" | sed 's/a$/ę/g' | sed 's/\([^ę]\)$/\1a/g'
+
+Analiza:
+1. '|' przekazuje wynik polecenia do następnego polecenia
+2. sed 's/a$/ę/g' 
+	- s oznacza podmianę (substitution)
+	- a$ oznacza pojedynczy znak 'a' na końcu wyrażenia ($ oznacza koniec wyrażenia)
+	- g oznacza wyszukiwanie globalne (w całym wyrażeniu)
+czyli jeśli znajdziemy literę 'a' na samym końcu wyrażenia, to podmieniamy ją na 'g'
+3. sed 's/\([^ę]\)$/\1a/g'
+	- s oznacza podmianę (substitution)
+	- \([^ę]\)$ oznacza brak znaku 'ę' na końcu wyrażenia
+	- \1a oznacza literę 'a' poprzedzoną wyrażeniem znadującym się w pierwszych (i w tym przypadku jedynych) okrągłych nawiasach
+	(czyli '[^ę]')
+	- g oznacza wyszukiwanie globalne (w całym wyrażeniu)
+czyli w wyrażeniach, które nie kończą się na literę 'ę' zastępujemy ostatnią literę samą sobą z dołożoną literą 'a'
+(bo jeśli wyrażenie kończy się na literę 'ę' to imię jest kobiece i już zostało odpowiednio sformatowane w poprzednim
+użyciu komendy sed)

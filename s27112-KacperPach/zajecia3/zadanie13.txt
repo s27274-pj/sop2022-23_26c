@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if ! [[ $0 =~ \.sh$ ]]; then # dopasowanie regularne 
+    mv "$0" "$0.sh"
+fi

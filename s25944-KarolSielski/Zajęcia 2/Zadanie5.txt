@@ -1,0 +1,84 @@
+Zadanie 5a:
+	Podpunkt 1:
+	Treść: Pamiętasz jedno z zadań poprzednich?
+	-----
+
+	A=Ala
+	echo $A ma kota, a kot ma ${A}ę
+
+	-----
+	Przerób je tak, aby tekst wypisywał się poprawnie.
+
+	Rozwiązanie:
+	-----
+
+	A=Ala
+	echo $A ma kota, a kot ma ${A:A:2}ę
+
+	-----
+
+	Podpunkt 2:
+	Treść:
+
+	Napisz skrypt, który będzie wypisywał taki tekst także dla imion męskich. Pomijamy zdrobnienia i imiona które się 	dziwnie odmieniają (na przykład Marek). Niech skrypt ten przyjmuje jeden argument - imię. Przykładowe wywołanie:
+	-----
+	
+	$ ./pszetżkole Ala
+	Ala ma kota, a kot ma Alę
+	$ ./pszetżkole Justyna
+	Justyna ma kota, a kot ma Justynę
+	$ ./pszetżkole Stefan
+	Stefan ma kota, a kot ma Stefana
+
+	-----
+
+	Czy jest to możliwe w czystym bash-u?
+
+	Rozwiązanie:
+
+	-----
+	A=$1
+	length=${#A}-1
+	if [[ ${A: -1} == "a" ]]; then
+		echo $A ma kota, a kot ma ${A:0:$length}e
+	else
+		echo $A ma kota, a kot ma ${A}a
+	fi
+	-----
+
+	ODP: Nie wiem czy da się to zrobić w czystym bashu ponieważ nie do końca wiem gdzie jest granica między 
+	czystym bashem a tym nieczystym :P
+
+Zadanie 5b:
+Treść: Napisz skrypt, który wczyta jako argument jakiś tekst. Skrypt ten wypisze kolejno:
+
+Pierwszy znak z argumentu
+
+Ostatni znak z argumentu
+
+Zamieni w argumencie każdy tekst SOP na tekst poniżej (zastosuj echo z przełącznikiem -e):
+
+\e[32mSOP\e[0m
+
+Przykładowy tekst testowy:
+SOP! SOP w imieniu prawa! SOP w imieniu prawa!
+
+Wynikowo ma to wyglądać tak:
+
+SOP(zielone)! SOP(zielone) w imieniu prawa! SOP(zielone) w imieniu prawa!
+
+Rozwiązanie:
+-----
+text = "$1"
+echo ${text:0:1}
+echo ${text: -1}
+echo -e ${text//SOP/"\e[32mSOP\e[0m"}
+-----
+
+Warto zaznaczyć, że należy użyć "//" przed tekstem który nas interesuje bo tylko wtedy zostaną zastąpione wszystkie 
+wystąpienia
+
+
+
+
+

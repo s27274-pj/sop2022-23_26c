@@ -1,0 +1,9 @@
+Treść:Napisz skrypt, który będzie wypisywał wszystkie argumenty wywołania skryptu (pamiętaj o tym, że argument może w sobie zawierać jakieś spacje) napisane w cudzysłowach.
+
+
+#!/bin/bash
+
+for i in "$@";do echo "\"$i"\"; done
+
+Rezultat:
+Rozszerzyłem swoją wiedze o pętli for jak i nauczyłem się znaczenia $@ <-- lista argumentów skryptu, jeszcze z tego co wyczytałem można użyć "$*" ale zmieniło by to w jaki sposób argumenty wyswietlały by się w terminalu

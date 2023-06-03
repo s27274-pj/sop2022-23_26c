@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -f config.cfg ]; then # -f sprawdza czy istneije plik i jest zwykłym plikeim; mozna by tu uzyc 
+        ./config.cfg       # -x aby sprawdzic czy plik istnieje i jest wykonywalny 
+elif [ $# -gt 0 ] && [ -f "$1" ]; then 
+    ./$1
+else
+    echo "błąd, nie znaleziono pliku config.cfg ani pliku podanego jako argument."
+fi

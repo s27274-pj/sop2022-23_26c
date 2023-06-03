@@ -1,0 +1,11 @@
+^[a-zA-Z_+-]+[a-zA-Z_+-[0-9.]*@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$
+
+# Od początku linii musi być przynajmniej jedna mała,
+bądź duża litera lub podłoga, myślnik albo plus
+
+# Potem mogą być znaki takie jak małe, duże litery, z kropkami i cyframi.
+Potem obowiązkowa jest małpa, a po niej musi występować przynajmniej raz
+jedna mała, bądź duża litera, albo cyfra, kropka, lub myślnik
+
+# Następnie w adresie e-mail musi znajdować się kropka, a po niej
+ciąg dwóch lub więcej liter dużych lub małych, gdzie dobiegamy do końca linii

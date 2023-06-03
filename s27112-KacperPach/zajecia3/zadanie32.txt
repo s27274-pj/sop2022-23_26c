@@ -1,0 +1,14 @@
+fibonacci() {
+  local n=$1
+  if [ $n -le 1 ]; then
+    return $n
+  else
+    fibonacci $((n-1))
+    local arg1=$?
+    fibonacci $((n-2))
+    local arg2=$?
+    return  $(($arg1 + $arg2))
+  fi
+}
+fibonacci 7
+echo $?

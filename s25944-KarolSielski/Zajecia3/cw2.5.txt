@@ -1,0 +1,32 @@
+Treść: Napisz skrypt, który wczyta listę plików do wypisania z wiersza poleceń, a następnie wypisze ich zawartości raz w kolejności od początku do końca, a raz na odwrót. Podpowiedzi:
+
+indeksy ujemne tablicy mogą się przydać
+
+można wyliczać wartości wyrażeń arytmetycznych (i+1)
+
+przyda się for
+
+może się przydać: cat oraz tac ale postaraj się zrobić to bez używania tych poleceń (drukowanie znak po znaku od początku do końca i od końca do początku)
+
+
+
+#!/bin/bash
+
+files=("$@")
+
+for file in "${files[@]}"; do
+	echo $file
+	cat "$file"
+	echo "-e"
+	echo "reversed file $file"
+	tac "$file" | rev #rev odwraca kolejnosc charow w lini np. karol -> lorak
+done
+
+
+Rezultat:
+W takiej formie jakiej jest wypełnia on swoje zadanie(pomyślnie, warto dodać).
+Niestety podejrzewam ze nie jest to dla Pana zadowalające powinno się użyć tablicy dodać do niej znaki i po niej iterować
+a w drugiej czesci zadania iterować od tyłu ale niestety nie udało mi się tego zaimplementować. Jestem świadomy ze jest
+to do poprawy, zrobię to w najbliższym możliwym czasie
+
+

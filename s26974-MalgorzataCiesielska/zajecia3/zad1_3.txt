@@ -1,0 +1,8 @@
+#!/bin/bash
+FILE_NAME=$(basename "$0") #basename returns the name of the file without the path 
+						   # e.g. instead of /home/file.txt we will get file.txt
+if ! [[ $FILE_NAME =~ \.sh$ ]]; then  # the '!' in after the if is a negation, so it will match if the condition
+									  # is not true. '=~' is used to match regex
+	mv "$FILE_NAME" "${FILE_NAME}.sh" 
+fi
+

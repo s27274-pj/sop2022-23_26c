@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Skrypt odmieniający imiona
+
+# ponieważ nie byłem pewny, czy można wykonać to zadanie
+# nie używając instrukcji warunkowych, postanowiłem dowiedzieć się,
+# jak zastosować prostego "if-a" w skrypcie. Chciałem także wykorzystać
+# fragment kodu z zad. 2D.
+
+#-----------------------------------------------------------------------
+
+# deklarujemy zmienną "name" i przypisujemy jej imię, będące
+# pierwszym (i jedynym) argument skryptu
+
+name="$1"
+
+# instrukcja warunkowa sprawdzająca, czy imię kończy się na literę 'a'
+# (z wykorzystaniem wyrażenia regularnego)
+	# "=~" to operator związany z wyrażeniami regularnymi, porównuje wartość
+	# zmiennej do wartości wyrazenia regularnego;
+	# "." oznacza "dowolny znak";
+	# "+" oznacza "jeden lub więcej wystąpień poprzedniego elementu";
+	# "a" oznacza literę "a";
+	# "$" oznacza koniec ciągu.
+	
+	# jeśli warunek jest spełniony, skrypt wyświetla odpowiednią frazę. 
+	
+	# w przypadku, gdy imię kończy się na "a", wykorzystujemy parametr zastępczy 
+	# "${name%?}" w celu usunięcia ostatniego znaku z name (czyli "a") -[Zad2D]-
+	# i zastąpienia go literą "ę". Całość wyświetlana jest za pomocą polecenia echo.
+	
+	# bardzo ważne jest wykorzystanie tutaj podwójnych kwadratowych nawiasów,
+	# które - jeśli dobrze zrozumiałem - nie są komendą, jak w przypadku pojedynczych
+	# nawiasów ("test"), a częścią syntaxu ("keyword?"). Pojedyncze nawiasy nie 
+	# pozwalają na dopasowywanie do wyrażeń regularnych.
+		# proszę o poprawienie, w przypadku gdy źle pojmuję powyższe kwestie.
+	
+	# jeśli warunek nie jest spełniony (imię nie kończy się na "a"), skrypt wyświetla 
+	# inną frazę, w której ostatnia litera imienia zostaje zastąpiona literą "a" za 
+	# pomocą "${name}a".
+
+if [[ "$name" =~ .+a$ ]]; then
+  echo "$name ma kota, a kot ma ${name%?}ę"
+else
+  echo "$name ma kota, a kot ma ${name}a"
+fi
+
+# skrypt powinien zadziałać z polskimi żeńskimi imionami (kończącymi się na -a),
+# oraz z dużą częścią imion męskich.
+
+

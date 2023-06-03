@@ -1,0 +1,7 @@
+#!/bin/bash
+for file in "$PWD"/*; do
+	BASE_NAME="${file##*/}"; #name without file path
+	if [[ "${BASE_NAME##*.}" == "c" ]]; then #${BASE_NAME##*.} gets only extension
+		cc "$BASE_NAME" -o "${BASE_NAME%.*}"; #${BASE_NAME%.*} gets only name without extension
+	fi
+done

@@ -1,0 +1,17 @@
+Polecenie:
+
+Ćwiczenie 1
+Napisz skrypt wyświetlający na terminalu tekst "Witamy w terminalu". Skorzystaj z komendy echo oraz informacji podanych powyżej. Pamiętaj o atrybutach i o tym jak się wywołuje programy.
+
+
+Rozwiazanie zadania:
+
+Włączamy edytor nano aby móc stworzyć nasz plik i w nim wpisujemy kod:
+
+#!/bin/bash
+echo "Witamy w terminalu."
+
+Pierwsza linijka czyli "#!/bin/bash" służy do określenia interpretera z którego będzie korzystać nasz skrypt czyli w naszym przypadku powłoka bash.
+Druga linijka czyli "echo "Witamy w terminalu."" służy do wyświetlenia na ekranie za pomocą polecenia echo tekstu w cudzysłowiach.
+Po napisaniu tego kodu klikamy ctrl+x aby zapisać nasz plik i dajemu mu dowolną nazwe ( w moim przypadku zad1 ) a po tym ".sh" ponieważ jest to skrypt w powłoce i jest to jego rozszerzenie. Następnie by uruchomić ten plik nadajemy mu uprawnienia do wykonania za pomocą komendy "chmod +x zad1.sh". Jak już nadaliśmy temu plikowi uprawnienie do wykonania to możemy go uruchomić za pomocą komendy "bash zad1.sh" i w taki oto sposób na ekranie ukazuje się tekst "Witamy w terminalu".
+

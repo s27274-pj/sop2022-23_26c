@@ -1,0 +1,18 @@
+#!/bin/bash
+fibonacci () {
+	if [[ $1 -le 0 ]]; then
+		return 0;
+	elif [[ $1 == 1 ]]; then
+		return 1;
+	else
+		fibonacci $(( $1 - 1 ));
+		local FN1=$?;  # '$?' is the result of the last method called, local makes the variable only
+			       # accessible within the function
+		fibonacci $(( $1 - 2 ));
+		local FN2=$?;
+		return $(( FN1 + FN2 ));
+	fi
+}
+fibonacci 4; 
+result=$?;
+echo $result;

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Testowanie zmiennych3
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+# powyższy skrypt prezentuje różne zastosowania cudzysłowów oraz apostrofów.
+
+# po użyciu cudzysłowów, Bash wykona rozwinięcie zmiennych i znaków specjalnych,
+# dlatego w trzeciej linijcie zostanie wydrukowane "tekst: Tekst 1".
+
+# podwójnych cudzysłowów używa się także do tzw. interpolacji nawiasów 
+# klamrowych.
+
+# z kolei użycie apostrofów spowoduje utworzenie dosłownego ciągu tekstowego,
+# dlatego też powłoka wydrukuje nam drugi tekst o treści "tekst:$X",
+# bez rozwijania zmiennej X.
+
+# nie jest konieczne użycie podwójnych cudzysłowów do przypisywania wartości
+# do zmiennej, jeśli chcemy, by została ona rozwinięta. Zaleca się jednak
+# ich stosowanie, aby uniknąć nieoczekiwanych problemów, gdy wartość zmiennej
+# zawiera znaki specjalne.

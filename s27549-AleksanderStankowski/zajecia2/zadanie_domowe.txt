@@ -1,0 +1,4 @@
+#!/bin/bash
+
+text=$(sed s/Olek/\\\\e[31mOlek\\\\e[39m/g $1)
+echo -e "$text"

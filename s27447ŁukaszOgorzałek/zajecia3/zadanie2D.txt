@@ -1,0 +1,68 @@
+#!/bin/bash
+
+## 8. Wypisanie zawartości plików 
+	#!# (nie jestem pewny czy dobrze zrozumiałem polecenie)
+
+# wczytanie listy plików z wiersza poleceń do tablicy
+files=("$@")
+
+# wypisanie zawartości plików w kolejności od początku do końca
+for ((i=0; i<${#files[@]}; i++)); do
+    echo "Plik: ${files[$i]}"
+    while read -r line; do
+        echo "$line"
+    done < "${files[$i]}"
+    echo -e "\n"
+done
+
+# wypisanie zawartości plików od końca
+for ((i=0; i<${#files[@]}; i++)); do
+    echo "Plik: ${files[$i]}"
+    lines=()
+    while read -r line; do
+        lines+=("$line")
+    done < "${files[$i]}"
+    for ((j=${#lines[@]}-1; j>=0; j--)); do
+        echo "${lines[$j]}"
+    done
+    echo -e "\n"
+done
+
+# 1 pętla:
+
+# pętla for iteruje po wszystkich plikach w tablicy "files" w kolejności
+# od początku do końca. Zmienna "i" przechowuje bieżący indeks w tablicy "files".
+
+# następnie przy pomocy pętli while i polecenia "read", zczytujemy plik linia po linii
+# (parametrem -r wyłączamy interpretację backslashy) i drukujemy je (komenda "echo").
+
+# done < "${files[$i]}" - w tym miejscu kończymy blok pętli while i jednocześnie 
+# przekazujemy zawartość pliku, którego nazwa znajduje się pod indeksem "$i" w tablicy "files", 
+# jako dane wejściowe dla pętli. 
+	#!# nie jestem pewny, czy dobrze zrozumiałem jak w tym konkretnym przypadku funkcjonuje
+	#!# input redirection na pętli.
+# w ten sposób pętla kończy działanie po przeczytaniu wszystkich linii z pliku.
+
+# echo -e "\n" - wypisanie pustego wiersza, dzięki czemu oddzielimy następne pliki.
+
+# 2 pętla:
+
+# druga pętla zaczyna się stosunkowo podobnie, jednak po wypisaniu nazwy pliku, inicjalizujemy
+# zmienną "lines", czyli tablicę, która będzie przechowywać zawartość pliku (linie).
+
+# następnią przy pomocy pętli while zczytujemy zawartość pliku linia po linii i dodajemy je 
+# do tablicy "lines". Pętla kończy działanie po przeczytaniu wszystkich lini z pliku.
+
+# w drugiej pętli for, zmiennej iterującej przypisujemy początkowo indeks ostatniego elementu
+# tablicy "lines". 
+	#!# jeżeli dobrze rozumiem, ${#lines[@]} to długość tablicy "lines", czyli liczba
+	#!# elementów w tablicy. Aby uzyskać indeks ostatniego elementu, należy od długości tablicy
+	#!# odjąć 1, ponieważ indeksy w tablicy są liczone od 0, a nie od 1.
+	#!# takie ustawienie zmiennej iterującej pozwoli nam na iterowanie tablicy w odwrotnej kolejności.
+	
+# echo "${lines[$j]}" - wypisanie zawartości pliku w odwrotnej kolejności (a konkretnie wypisanie
+# kolejnych elementów ("linijek") tablicy "lines", zaczynając od ostatniego elementu. 
+
+
+
+

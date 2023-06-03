@@ -1,0 +1,30 @@
+Zobacz co przechowuja zmienne i opisz jak rozumiesz uzyskany wynik. Do czego on jest i kiedy moze sie wg Ciebie przydac:
+
+PATH - lista katalogów które sa przeszukiwana w celu znalezienia komendy lub programu
+Mozemy tutaj dodac nasz wlasny katalog z programem, dzieki czemu nie musimy podowac pelnej sciezki aby go uruchomic
+wynik: /usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+RANDOM - przechowuje losowa liczbe calkowita miedzy 0 a 32767
+Nie jest to najlepszy lub najbezpieczniejszy sposób na gernerowanie liczb losowych, ale jest przydatny gdy potrzebujemy
+czegos na szybko np. do tworzenia losowych nazw plików
+wynik: 14844
+
+PWD - przechowuje sciezke biezacego katalogu roboczego
+Jest to przydatna informacja gdy podczas skryptu poruszamy sie miedzy katalogami.
+wynik: /home/PJWSTK/s27549
+
+PS1 - przechowuje format wiersza polecen (prompt) w Bashu.
+Mozemy tutaj dodawac lub usuowac jakie informacje maja byc pokazane w prompcie.
+wynik: \[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$ czyli s27549@szuflandia22:~$
+
+USER - przechowuje nazwe aktualnie zalogowanego uzytkownika
+Przydatne gdy chcemy bezposrednio sie zwrócic do uzytkowanika po jego nazwie
+wynik: s27549
+
+HOSTNAME - przechowuje nazwe komputera
+Przydatne gdy chcemy bezposrednio sie zwrócic do uzytkowanika po nazwie jego komputera
+wynik: szuflandia22
+
+OSTYPE - przechowuje nzawe rodzaju systemu operacyjnego 
+Przydatna infromacja dzieki której mozemy dostosowac dzialanie skryptu do konkretnego systemu.
+wynik: linux-gnu

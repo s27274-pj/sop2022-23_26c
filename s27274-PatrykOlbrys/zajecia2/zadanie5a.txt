@@ -1,0 +1,12 @@
+#!/bin/bash
+
+imie="$1"
+imie_len=${#imie}
+last_char="${imie:$imie_len-1}"
+
+
+if [ $last_char == 'a' ]; then
+    echo "${imie} ma kota, a kot ma ${imie:0:$imie_len-1}ę"
+else
+    echo "${imie} ma kota, a kot ma ${imie}a"
+fi

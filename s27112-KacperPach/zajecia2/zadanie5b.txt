@@ -1,0 +1,10 @@
+#!/bin/zsh
+echo ${1:0:1}
+echo ${1:$((${#1}-1)):1}
+echo -e ${1//SOP/"\e[32mSOP\e[0m"} # \e nie dziala poprawnie na moim macos jest to spowodowane
+                                  # stara wersja basha ktora jest domyslnie zainstalowana na 
+                                  # macach rozwiazan jest kilka, zainstalowac nowsza wersje 
+                                  # bash; na internecie widzialem tez zastopienie escape char 
+                                  # na \x1B lub \033; ja zmieniłem poczatek pliku na #!/bin/zsh
+                                  # aby shellem uzytym przez skrypt byl zsh. 
+                                  # // po jeden oznacza zastąpienie wszystkich wystąpień

@@ -1,0 +1,6 @@
+#!/bin/bash
+A=$1
+length=${#A}-1
+[[ ${A: -1} =~ /a$/ ]] && echo $A ma kota, a kot ma ${A:0:$length}e
+[[ ${A: -1} =~ ^[^a]*$ ]] && echo $A ma kota, a kot ma ${A}a
+

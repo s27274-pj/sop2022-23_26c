@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Testowanie zmiennych2
+
+Y=Tekst1 dłuższy
+echo $Y
+
+# po uruchomieniu skryptu, zmienna Y nie wyświetli się poprawnie,
+# ponieważ ze względu na spację, powłoka zinterpretuję "dłuższy"
+# jako osobną komendę i będzie próbowała ją wykonać.
+
+# aby poprawnie przypisać zmiennej wartość ze spacją, można
+# wykorzystać do tego znak cudzysłowu lub apostrofu.
+
+Z="Tekst2 dłuższy z cudzysłowem"
+echo $Z
+
+Q='Tekst3 dłuższy z apostrofami'
+echo $Q

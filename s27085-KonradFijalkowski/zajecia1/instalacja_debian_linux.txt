@@ -1,0 +1,351 @@
+1. Pobieranie
+W tym kroku wybieram odpowiedni plik do celu jakim jest demonstracyjne zainstalowanie Debiana
+Pierwsze co zrobię to pobiorę obraz instalacyjny systemu Debian ze strony https://www.debian.org/download. Jest to plik małego obrazu netinst. Nie zawiera on dodatkowych pakietów, trzeba je pobrać już po instalacji systemu. Wybieram plik dla komputerów 64-bitowego, bo taki właśnie mi odpowiada.
+
+Inne opcje obrazów instalacyjnych:
+Wersja complete:
+Obraz płyty dla napędu wirtualnego, zawiera więcej paczek przez co nie potrzeba zbyt mocnego połączenia do internetu. Można go raz pobrać a potem już tylko z niego instalować.
+Oznacza to jednak że co jakiś czas wymagane jest pobranie aktualnego obrazu, aby być na bieżąco z aktualizacjami.
+Poza tym i tak dobrze byłoby mieć wszelkie hotfixy.
+
+Płyty z systemem:
+W czasach gdy wszystko można pobrać specjalne płyty czy książki są raczej dla kolekcjonerów, a nie inżynierów. Niepraktyczne rozwiązanie dla potrzeb testowania systemu.
+
+Computer z debianem:
+Komputer mam własny, zawsze mogę złożyć inny na którym mogę zainstalować system przy użyciu obrazu pobranego z internetu.
+Nie ma potrzeby ograniczać sie tylko do jednego systemu, szczególnie że mogę postawić dodatkową maszyne.
+
+Niezależy obraz płyty:
+Na pokaz instaluje system na którym w mogę chcieć też dokonać zmian by zobaczyć jak się z nim współpracuje, dlatego nie potrzebuje obrazu płyty który traci swoja konfiguracje. Jest to jednak dobre rozwiązanie gdyby ktoś potrzebował szybko dostepu do systemu który chce wypróbować.
+
+Obraz chmury:
+Gotowy system, zainstalowany i gotowy do uzytkowania w sieci.
+Siła obliczeniowa zdalnie daje możliwość korzystania z debiana za opłatą za czas użytkowania. Przystępne dla zdecentralizowanych działań nie posiadająych gotowego sprzętu.
+My komputery posiadamy, więc nie jest to nam potrzebne.
+
+2. Nowa maszyna
+Podaje nazwę, folder który będzie ją przechowywał i odpowiedni typ systemu, Debian, w wersji 64 bit tak jak jest mój system.
+
+Przydzielanie pamięci:
+Na stronie https://www.debian.org/releases/jessie/mips/ch03s04.html.en znajduje się opis recomendowanych ilości pamięci dla naszej maszyny. Celem naszych działań jest zredukowanie uzytkowania zasobów, aby nie generować sztucznego popytu na kolejne podzespoły, które miałyby jedynie być  marnotrawione przez zbyt dużą alokacje.
+
+Można podać wartości które nie są wielokrotnością liczby 2, jednak część niepaczysta będzie niewykorzystana i zmarnowana, ponieważ komputer nie jest w stanie jej przydzielić.
+
+Ja wybiorę 1 GB pamięci, co jest więcej niż rekomendowana, a pozwoli mi szybciej przeprowadzić instalacje systemu. Nie będę wykonywał na tej maszynie jakiś duzyć obliczeń czy operacji ani nie będę hostawał żadnych usług, dlatego nie przesadzam.
+
+Dysk twardy:
+Wybieram opcje stworzenia dysku twardego. Nie wybieram opcji dodawania, ponieważ żadnego dysku z Debianem nie posiadam, ani tak samo nie tworze maszyny bez dysku, bo zaraz będę chciał z niego skorzystać przy instalacji.
+
+Typ wirtualnego dysku:
+VDI(VirtualBox Disk Image):
+Format dla VirtualBoxa, z nim kompatybilny. Jest to najbezpieczniejsza opcja dla mojej nowej maszyny, dlatego tą właśnie opcje wybieram.
+
+VHD(Virtual Hard Disk):
+Opcja dla Hyper-V Platform, która współgra z HyperV Hypervisor, służący do zarządzania wirtualizacją, i Hyper-V services, które udostępniają usługi wirtualizacyjne. Pozwala to na rozdzielenie ról komputerów w sieci, gdzie  hosty korzystają z wielu usłóg oferowanych przez maszyny w sieci.
+Można je podpiąć do systemu lokalnego jako plik, który będzie funkcjonował jako kolejny dysk twardy pod systemem, który może zawierać inny OS.
+Słuzy również do korzystania w chmurze w Azure, gdzie z niego można korzystać z systemów operacyjnych.
+Nie wybieram go bo nie korzystam z Hyper-V
+
+VMDK (Virtual Machine Disk):
+Używany do paczki oprogramowania firmy VMware (VM fusion, server, workstation itd.). 
+
+Przydzielanie miejsca na dysku:
+Dynamiczne przydzielanie:
+Jest przyrostowe w trakcie działania maszyny. Oznacza to że operacje zapisu na dysku przeplatają się z zapisami hosta, przez co zwiększa to liczbę przenoszenia głowic dysku z miejsca na miejsce (na HDD). Sama alokacja też chwilę trwa, wiec w połączeniu z wieloma potencjalnymi miejscami na których pliki moga być zapisane może doprowadzić to do spadków wydajności.
+
+Stały rozmiar: 
+Prealokacja pliku na dysku, która tworzy jeden, spójny obszar na dysku na którym odbywają się wszelkie operacje zapisu/odczytu. Zajmuje on jednak pamięć nawet jeżeli nie jest używana.
+Wybieram dynamiczne przydzielnia, ponieważ zyskamy na czasie na którym nam zależy w tym zadaniu, na pamięci, której zbyt wiele szczerze nie potrzebujemy.
+
+
+Lokalizacja i rozmiar pamięci twardej:
+Wybieram miejsce na dysku które zawiera wszystkie moje maszyny.
+W ilości pamięci wybieram 10 GB. Zalecane jest 2GB, ale chciałbym móc stworzyć więcej dysków aby się na nich trochę poduczyć, oraz mieć pole manewru w przyszłości jeżeli będę chciał coś do maszyny pobrać.
+
+Ustawienia maszyny:
+
+Ogólne:
+Opcje podstawowe jak wcześniej przy ustawianiu maszyny.
+Zaawansowane:
+Lokalizacja migawek pozostaje bez zmian; służy do tworzenia migawek które pozwalają na przywracanie wcześniejszych stanów maszyny oraz testowanie oprogramowania poprzez sprawdzanie jego zachowania na maszynie.
+Wpółdzielony schowek, przydatny przy kopiowaniu tekstów pomiedzy maszynami. My to zostawiamy, nic kopiować nie musimy.
+Przeciąganie i upuszczanie jest przydatne gdy ma się dostęp do myszy, my jednak go mieć nie bedziemy, a więc zostawiamy to wyłączone.
+Możliwe że aby te dwie opcje działały trzeba doinstalować paczki rozszerzeń.
+
+Opis:
+Jak ktoś potrzebuje zrobić większy opis dla współpracowników to jest to przydatne w pracu w grupie.
+
+Szyfrowanie:
+Chroni dane na dysku przed stroną nieuprawnioną. My nic chować nie musimy, a spowalnia to tylko pracę dysków przez zastosowanie algorytmów szyfrujących.
+Szyfrowanie jest niezależne od formatu obrazu, choć nie można takich dysków używać z innymi programami do wirtualizacji. Do szyfrowania uzywany jest Advanced Encryption Standard (AES)(który jest jedynym szyfrem zaaprobowanym przez NSA, który jest symetrycznym szyfrem używanym na całym świecie jako standard. Długość bitów zwiększa ilość kombinacji klucza, zwiększając też ilość koniecznych obliczeń do odnalezenia klucza. (źródło: https://docs.oracle.com/en/virtualization/virtualbox/6.0/admin/diskencryption.html)
+
+System:
+Płyta główna:
+Kolejność bootowania:
+Wybieramy jedynie dysk twardy który ustawiam na samej górze, napęd optyczny manualnie jednorazowo wybiore do instalacji systemu, a dyskietek i sieci nie będę używał do przechowywania systemu.
+
+Chipset:
+"PIIX3 jest domyslnym chipsetem dla VirtualBoxa, rekomendowanym dla większości geustów. Jako że systemy Mac OS X mogą nie być wspierane przez ten chipset, VB posiada również ICH9, który wspiera więcej kart rozszerzeń PCI, np 36 kart sieciowych w porównaniu do 8 na PIIX9. Jest jednak w fazi eksperymentalnej i nie jest wkazany dla maszyn które go nie potrzebują.(źródło: https://www.virtualbox.org/manual/ch03.html)"
+Urządzenie wskazujące:
+Wybieram mysz, bo innych nie posiadam i nie potrzebuje.
+
+Rozszerzone właściwości:
+"Włączam I/O APIC (Advanced Programmable Interrupt Controller - zaawansowany programowalny kontroler przerwań) zgodnie z rekomendacją w dokumentacji (https://www.virtualbox.org/manual/ch03.html)". Jest to cecha systemów architektury x86 firmy Intel która zastapiła PIC, która częściowo umożliwiła pracę systemów wieloprocesorowych.
+
+Czas UTC:
+Synchronizacja czasu z Uniwersalnym czasem koordynowanym, wybieram bo nie chce ręcznie ustawiać zegara systemowego w ustawieniach
+
+Włącz EFI:
+Opcja EFI (Extensible Firmware Interface) jest interfejsem zastępującym BIOS w komunikacji  z komputerem. Korzystna w przypadku gdy chcemy osiągnąć określony efekt. Ja tego nie zaznaczam, ponieważ zależy mi na podstawowej instalacji.
+Procesor:
+Przeznaczam na tą maszyne jeden procesor z 100% mocy, bo więcej potrzebować nie będę.
+
+"PAE/NX:
+Pozwala na adresowanie większej ilości adresów niż pozwala na to architektura maszyny wirtualnej. Jest to pomocne w przypadku gdy mamy np 16GB RAMu, które chcemy użytkować na maszynie 32-bitowej.  Ja takiego problemu nie mam, obdywa systemy są 64  bitowe.(https://superuser.com/questions/1118712/when-do-i-have-to-use-pae-nx)"
+Zagnieżdżanie VT-x/AMD-v:
+Pozwala na robienie wirtualizacji w wirtualizacji, nie zaznaczam bo nie mam takich planów
+Akceleracja:
+interfejs parawirtualizacyjny:
+Zwiększają wydajność i dbałość o dokładność w czasie maszyny. Pozostawiwam domyslne, nie mam szczególnego wyboru na mysli.
+Zagnieżdżanie stronicowane:
+Jeżeli procesor posiada technologie AMD-V czy INTEL VT-x to ta opcja może znacząco zwiekszyć szybkość pracy maszyny
+
+Ekran:
+Pamieć wideo, akceleracje i ilość monitorów pozostawiam bez zmian, nie mam zamiaru grać na tym komputerze w gry. Akceleracja pozwala na korzystanie z zasobów gospodarze przy posiadaniu pakietu rozszerzeń.
+
+Kontroler grafiki:
+Oznacza typ karty graficznej używanej przez maszynę.
+"VBoxSVGA: The default graphics controller for new VMs that use Windows 7 or later.
+
+This graphics controller improves performance and 3D support when compared to the legacy VBoxVGA option.
+
+VBoxVGA: Use this graphics controller for legacy guest OSes. This is the default graphics controller for Windows versions before Windows 7 and for Oracle Solaris.
+
+3D acceleration is not supported for this graphics controller.
+
+VMSVGA: Use this graphics controller to emulate a VMware SVGA graphics device. This is the default graphics controller for Linux guests.
+
+None: Does not emulate a graphics adapter type.
+(źródło https://www.virtualbox.org/manual/ch03.html)"
+
+Zdalny pulpit:
+Pozwala na dostęp do Remote Desktop Portocol, określa jego port, czas i typ ustanawiania połączenia oraz ich ilość. Pozostawiam wyłączone, nie będę używać
+Nagrywanie:
+Nie musze nagrywać mojego procesu instalacji, więc pozostawie wyłączone. Określa takie rzeczy jak jakość, lokalizacja nagrać, co nagrania obejmują oraz ich źródło.
+
+Pamięć:
+Do dysku twardego wybieramy controller i jego port, czy jest to dysk SSD zgodnie z prawdą, czy jest możliwe aby w trakcie jego uzytkowania go odłączyć (obydwie opcje odłączam).
+Dyski bootujące zazwyczaj podłącza się do Primary Device w napędzie optycznym. Sam obraz instalacyjny już na tym etapie mozna przyłączyć do maszyny, jak i zrobić to później, już w czasie instalacji. ja zrobię to już teraz i oszczędze sobie później pracy.
+
+Dźwięk: 
+Do instalacji dźwięk nie bedzie potrzebny, wiec go odznaczam.
+
+Sieć:
+Aktywuje jedynie pierwsza karte sieciową z NAT aby mieć dostępnym do zewnętrznej sieci.
+Opcja bridged sprawi że komputer stanie się widoczny w sieci jako osobna istota.
+SIeć wewnętrza stworzy osobna sieć między komputerem a maszyną, tworząc małą sieć.
+"Karta sieci izolowanej (host-only) – rozwinięcie sieci wewnętrznej, komputer gospodarza wykorzystuje wirtualną kartę sieciową i za jej pośrednictwem może komunikować się z wirtualnymi maszynami.
+Rodzajowy sterownik – opcja stosowana do budowania sieci VDE, a także tunelowania UDP.
+Cloud Network (experimental) – eksperymentalna opcja wykorzystania sieci w chmurze firmy Oracle.
+Niepodłączona – interfejs sieciowy maszyny wirtualnej jest utworzony, jednak pozostaje rozłączony podłączony, podobnie jak w przypadku odłączenia kable od fizycznego interfejsu.
+(źródło https://ckziumragowo.pl/szkolne-artykuly/2021/Rodzaje-sieci-w-programie-VirtualBox#:~:text=Karta%20sieci%20izolowanej%20(host%2Donly,VDE%2C%20a%20tak%C5%BCe%20tunelowania%20UDP.)"
+
+Karta sieciowa pozostaje bez zmian, moja maszyna nie ma żadnych specjalnych opcji do wykorzystania tylko z jakoś szczególną kartą.
+
+Adres MAC:
+Media access control adress (MAC address) to unikalny identyfikator przypisany dwo każdego kontrolera interfejsu sieciowego (Network Interface Controller, NIC). Znajduje użycie w drugiej warstwie modelu ISO/OSI (data link layer), np. w protokołach DHCP (ang. Dynamic Host Configuration Portocol), ARP (ang. Adress Resolution Protocol) czy przez ISP (providerzy w subskrypcjach dla jednego adresu udostępniają swoje usługi tylko dla urządzeń z określonymi adresami MAC)
+
+Przekierowanie portów (Port Forwarding) służy do przekierowania pakietów z jednego socketu do drugiego w gatewayu (router, firewall) sieci. Pozwala to zdalnym hostom na łączenie się z urzadzeniami w sieci LAN. 
+
+Porty szeregowe:
+Wykorzystywane do urządzeń sieciowych (np. rollover cable) i przemysłowych, które wciąż te połączenia wykorzystują. Użyteczna przy komunikowaniu się z urządzeniami oczekującymi na ręczną konfiguracje.
+
+USB:
+Pozostaje włączone aby można było komunikować się z maszyną chociąz poprzez klawiature.
+
+Udostępnianie folderów:
+Opcja do dzielenia katalogów do dzielenia się plikami z członkami sieci. Automatyczne montowanie sprawia, że goszczone systemy automatycznie będa próbowały go zamontować przy starcie. Tylko do odczytu ogranicza dostep do katalogu.
+
+3. Instalacja
+Maszyne można włączyć bez interfejscu graficznego, choć początkowo okno instalacji maszyny się pojawi (osobny start), a bezgłowy start nie wyświtli całkowicie nic.
+
+Przyciskiem F12 sprawdzam kolejnośc bootowania, literą C przechodzę do GRUBa, boot loader odpowiadającego za kolejność włączania systemów na dyskach operacyjnych. 
+Instalacji graficznej uzywamy kiedy mamy zasoby i dużo czasu, zaś instalacja zwykła jest szybsza i znajduje lepsze rozwiązanie w połączeniach szeregowych oraz sieciowych.
+
+Wybieram "Install".
+
+Opcje zaawansowane:
+Rescue mode pomaga w diagnozowaniu i rozwiązywaniu problemów na działającej maszynie.
+Automated install z plikiem zawierającym wszystkie odpowiedzi na pytania w installatorze poozwala na wpełni zautomatyzoany proces instalacji, np z sieci czy podłączalnego medium.
+Speech enabled options włącza opcje syntezatora mowy.
+
+Dark Contrast installer zwiększa kontrast grafiki installatora.
+
+Wybieramy język angielski:
+Łatwiej znaleźć materiały z pomocą, których jest znacznie więcej. Poza tym pomaga to w nauce języka
+
+Lokalizacja:
+Wybieramy lokalizacje najbliżej Polski, ponieważ ma to znaczenie przy wybieraniu głównego servera z którego będziemy pobierać pliki.
+Ustawienia języka klawiatury wybieramy angielskie, ponieważ jest to najbardziej uniweralne, a Polskie znaki diakrytyczne mogą mieć problem z kompatybilnością.
+Rozkład klawiatury powinien odpowiadać waszej fizycznej klawiaturz;
+
+Hostname jest kwestią prywatną.
+
+Domeny służą do pracy w organizacji z strukturą kontrolera domeny. Ja takiej nie posiadam więc zostawiam jak jest.
+
+Ustawiam hasło dla użytkownika root, które jest używany do autoryzacji operacji administratora (w systemach Ubuntu-podobnym hasło roota nie jest znane, za to często używane jest polecenie sudo)
+
+Pełne dane o mnie wypełniam w pełni.
+
+Podaje login (s27085) i hasło
+
+Partycjonowanie dysków
+- Guided:
+Wybieramy dysk który chcemy ustawić, i tworzymy:
+	- jedną party na pliki systemowe i prywatne( (użytkownika)
+	- osobna partycje /home na pliki prywatne(przydatne przy kolejnych formatowaniach komputera)
+	- osobna partycja dla /home, /var, /tmp rozdziela logi i chwilowe pliki od plików systemowych i prywatnych
+
+- Guided with LVM
+Tworzy możliwośc użytkowania logicznych dysków wirtualnych. Pozwala to w czasie rzeczywistym dołączać więcej pamięci masowej do działającego systemu\
+
+- Guided with encrypted LVM
+Dodatkowo zaszyfrowane partycje (partycja swapowa powinna byc szyfrowana)
+
+-Manual:
+	- iSCSI volumes - montowanie dysków przez sieć
+	- wybranie własnego dysku (podział z użyciem 1000, a nie jak 1024 w microsofcie)
+Tworzymy nowy MBR, który pozwala na tylko 4 partycje podstawowe. W razie potrzeby posiadania większej ilości partycji należy stworzyć partycje rozszerzoną, a w niej kolejne partycjne logiczne. Wynika to z faktu, że MBR ma tylko 64 bajty na tablice partycje (ang. partition table), a iformacje o jednej partycje mają 16 bajtów (64/16 = 4).
+Robię jedną partycje podstawową z 4 GB miejsca, tak na początek.
+
+Przestrzeń wymiany powinna mieć 1,5 do 2 razy ilości RAMu, dlatego tworzę partycje z 2GB miejsca.
+
+Systemy plików:
+"Ext4: większe limity rozmiaru, obsługa extents, prealokacja, opóźniona alokacja, kompatybilność wsteczna, zwiększona liczba obsługiwanych podfolderów
+Ext3: system księgowania (dokładny zapis zmian na dysku), brak możliwości odzyskania skasowanych plików w odróżnieniu od ext2
+Ext2: posiadał systemy zapobiegania defragmentacji dysku, rozpoznawania uszkodzeń oraz wolne pola w strukturach danych
+btrfs: możliwość zmiany rozmiaru partycji online, Dodawanie/usuwanie urządzeń blokowych w locie, RAID na poziomie obiektów – możliwość stworzenia odpowiednika RAID1 oraz RAID0, migawki, metadane, kompresja w locie, defragmentacja online, aresacja do 16 eksabajtów
+JFS(Journaled File System): extents, księgowanie, B+ drzewa, 32PB rozmiaru partycji
+XFS: Quick Recovery, Massive Scalability, Fast Transactions, Efficient Allocations, Excellent Bandwidth	
+FAT16: stosowany od MS-DOS do Windows 95, arch 16-bit
+FAT32: wykorzystuje tylko 28-bitów, partycja maks 2TB
+swap area: przestrzeń na dysku uzywana jako wolniejszy RAM, można je stworzyć w pliku lub w partycji
+
+i partycje dla systemu RAID ("redundant array of inexpensive disks") służących do zabezpieczenia dysków przy użyciu nadmiarowości, sum kontrolnych czy bitów parzystości, partycje szyfrowania czy wirtualnych dysków logicznych.
+(źródła: https://www.oracle.com/linux/technologies/xfs-overview.html#:~:text=XFS%20is%20a%20high%2Dperforming,support%2C%20at%20no%20additional%20charge., https://students.mimuw.edu.pl/SO/Projekt03-04/temat5-g7/4.jk-jfs/jfs.html, https://pl.wikipedia.org/wiki, https://askubuntu.com/questions/508870/what-is-a-swap-area)"
+
+"Mount options:
+Default - Use the default options: rw, suid, dev, exec, auto, nouser, and async.
+dev - Interpret character or block special devices on the filesystem.
+rw - Mount the filesystem read/write. Read-write is the kernel default and the mount default is to try read-only if the previous mount syscall with read-write flags on write-protected devices failed.
+exec - Permit execution of binaries and other executable files.
+auto - Can be mounted with the -a option.
+suid - Honor set-user-ID and set-group-ID bits or file capabilities when executing programs from this filesystem.
+nouser - Forbid an ordinary user to mount the filesystem. This is the default; it does not imply any other options.
+async - All I/O to the filesystem should be done asynchronously.
+(źródło https://manpages.debian.org/testing/mount/mount.8.en.html#:~:text=Use%20the%20default%20options%3A%20rw,the%20kernel%20and%20filesystem%20type)"
+
+Ustawiam bootable flag na on, jako ze z tej partycji podstawowej będę używał systemu.
+Reserved blocks pozostawiam na 5% aby pozostawić dość miejsca na dysku w przypadku wszelkich usterek.
+
+Typical usage:
+Jako że jest to partycja robocza to wybieram standard, który posiada i-nody na najmniejszy rozmiar bloku. New, largefile i largefile4 posiadają mniejszą ilość i-nodów przypadających na party, co jest pozytywne dla składowania duzych plików. Grozi to jednak zuzyciem wszystkich i-nodów i brakiem możliwośc zapisuje do partycji mimo miejsca na niej.
+
+RAID:
+"Sposób wykorzystania w systemie komputerowym dwóch lub większej liczby dysków twardych, w którym dyski te współpracują pomiędzy sobą. Osiąga się w ten sposób szereg różnorodnych możliwości nieosiągalnych przy użyciu zarówno pojedynczego dysku, jak i kilku dysków podłączonych jako oddzielne[1]. (źródła: https://pl.wikipedia.org/wiki/RAID)"
+
+iSCSI:
+"Technika umożliwiająca wykonywanie operacji wejścia-wyjścia na dysku twardym odległej maszyny za pomocą protokołu TCP/IP.
+Protokół iSCSI umożliwia budowę systemów pamięci masowych SAN (ang. Storage Area Network) przy zastosowaniu macierzy dyskowych SCSI i sieci Ethernet (protokół TCP/IP). Największą zaletą iSCSI jest możliwość tworzenia rozległych systemów SAN przy wykorzystaniu typowych elementów sieciowych, co ułatwia budowę systemu i zmniejsza jego koszt w porównaniu z klasycznymi rozwiązaniami typu Fibre Channel."(źródło: https://pl.wikipedia.org/wiki/ISCSI)"
+
+LVM:
+ "Mechanizm systemu operacyjnego do zarządzania przestrzenią pamięci masowej. W szczególności, zarządca pozwala na połączenie partycji znajdujących się na różnych urządzeniach pamięci masowej w jeden dysk wirtualny. Jego rozmiar nie jest zdefiniowany na stałe – jeśli zachodzi taka potrzeba, istnieje możliwość jego rozszerzenia o nową przestrzeń pamięciową. (źródła: https://pl.wikipedia.org/wiki/LVM)"
+
+Wciskam "Finish partitioning and write changes to disk" a nastepnie "Yes"
+
+SCSI(0, 0, 0) oznacza pierwszym kontroller dysku na pierwszym dysku i na jego pierwszej partycji.
+Przy wyborze innego nośnika z pakietami wybieram "No", ponieważ nic innego nie mam przygotowane.
+W konfiguracji Package Manager wybieramy Poland, abyśmy mieli najszybszy dostęp do servera. Wybrałem ftp.pl.debian.org, jako że to wydaje się byc najbliżej możego miejsca zamieszkania.
+
+Popularity contest - nie bedziemy w nim brali udziału, ten system jest testowy, więc dane z niego nie byłby reprezentatywne.
+
+Środowisko graficzne:
+Nie będziemy instalować jakiegokolwiek środowiska graficznego.
+GNOME - ograniczona kontrola wyglądu, gotowe UI, mniej zasobożerne niż KDE, GNOME Shell
+XFCE - mało wymagające środowisko z minimalistycznym podejściem pozostawiącym wszelką konfiguracje dla uzytkownika
+GNOME Flashback - alternatywa do GNOME 3 z wyglądem GNOME 2, tylko na Ubuntu
+KDE Plasma - z wyglądu podobny do Windowsa, więcej aplikacji i funkcjonalności niż GNOME
+Cinnamon - oparte na GNOME 3, społeczność Linux Mint, 
+MATE - altenatywa GNOME 2, wraz z jego programami
+LXDE - starsze niż LXQT, uzywa GTK(jak GNOME czy XFCE), bez wsparcia devów
+LXQT - używa QT toolkit (jak KDE)
+web server - potrzebne gdy używamy SO jako server web
+ssh server - tak samo tylko że do usługi ssh
+
+
+standard system utilities:
+"
+apt-listchanges
+lsof
+mlocate
+w3m
+at
+libswitch-perl
+xz-utils
+telnet
+dc
+bsd-mailx
+file
+exim4-config
+m4
+bc
+dnsutils
+exim4
+python2.7
+openssh-client
+aptitude
+bash-completion
+python
+host
+install-info
+bzip2
+reportbug
+krb5-locales
+bind9-host
+time
+info
+liblockfile-bin
+whois
+aptitude-common
+patch
+ncurses-term
+mutt
+mime-support
+exim4-daemon-light
+ftp
+nfs-common
+python-reportbug
+rpcbind
+texinfo
+python-minimal
+procmail
+libclass-isa-perl
+python-apt
+python-support
+exim4-base
+debian-faq
+doc-debian
+"(źródło: https://csmojo.com/posts/what-debian-standard-system-utilities-include.html)
+
+Wybieram tylko ostatni kwadracik zaznaczony i wciskam "Continue".
+
+Wybieram "Yes" aby stworzyć boot loader w MBR, poniewaz nie mam innego loadera.
+Ewentalnie można by boot loadera dopisac lub nadpisać już istniejący znajdujący sie w MBR lub boot recordzie na początku konkretnej partycji.
+Z dysków wybieram jedyny możliwy.
+
+Wciskam "Continue" aby wykonać restart maszyny.
+
+Po restarcie loguje się na utworzone konto którego dane podawalem przy instalacji.
+
+Wpisuje "tasksel", wybieram UI jaki mi odpowiada (w przypadku wybrania kilku użytkownik będzie mógł wybrać podczas logowania). Należy mieć na uwadze że instalacja GUI znacznie wydłuża proces instalacji systemu. Brak wyboru oznacza pozostanie przy braku środowiska graficznego.
+

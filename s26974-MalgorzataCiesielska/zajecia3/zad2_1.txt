@@ -1,0 +1,5 @@
+#!/bin/bash
+for i in {10..1..2}; do  #starts at 10, decrements by 2 until 1 is reached
+	echo $i
+done
+

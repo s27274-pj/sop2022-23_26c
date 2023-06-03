@@ -1,0 +1,12 @@
+# Ćwiczenie 3
+
+> Zobacz co przechowują zmienne i opisz jak rozumiesz uzyskany wynik.
+> Do czego on jest i kiedy może się wg Ciebie przydać
+
+- PATH - lista katalogów, w których powłoka szuka programów wykonywalnych
+- RANDOM - pseudolosowa liczba, która jest zmieniana przy każdym odczytaniu zmiennej RANDOM
+- PWD - ścieżka do katalogu, w którym aktualnie się znajdujemy (to samo co program `pwd`)
+- PS1 - szablon "promptu", który wyświetlany jest na początku każdej linii w powłoce
+- USER - nazwa użytkownika na którego jesteśmy aktualnie zalogowani
+- HOSTNAME - nazwa hosta maszyny na której pracujemy
+- OSTYPE - typ systemu operacyjnego, np. "linux-gnu" dla większości dystrybucji Linuxa lub "darwin18" dla MacOS

@@ -1,0 +1,307 @@
+Na stronie https://www.debian.org/download pobieram debian-11.6.0-amd64-netinst.iso.
+Pobieram obraz systemu, bo będę korzystał z niego w celach demonstracyjnych,
+nie są potrzebne żadne, specjalne dodatkowe pakiety.
+
+Na stronie https://www.virtualbox.org/wiki/Downloads pobieram virtualboxa
+na windowsa klikając na 'Windows hosts'.
+
+Instaluję virtualboxa i go uruchamiam. Tworzę nową maszynę wirtualną klikając
+przycisk New. Wpisuję nazwę deb i virtualbox automatycznie dopasowuje mi
+odpowiedni typ i wersję debiana, czyli Linux i Debian 64-bit. Wybieram Next.
+Ustawiam pamięć na 4096 MB, bo chcę później zainstalować środowisko graficzne
+oraz ta liczba jest podzielna przez 2 więc każdy megabajt może być wykorzystany.
+
+Klikam next. Wybieram opcję stwórz wirtualny dysk twardy,
+ponieważ nie mam instniejącego wirtualnego dysku twardego,
+a system potrzebuje mieć miejsce na dysku twardym.
+Wybieram Virtualbox Disk Image ponieważ tworzę nową maszynę,
+ten format jest natywny dla virtualboxa i jest najbardziej z nim kompatybilny,
+nie potrzebuję zachowania kompatybilności wstecznej,
+nie używam też chmury do czego potrzebne jest VHD ani VMware'a do czego jest VMDK. Klikam next.
+W dynamicznie przydzielanej opcji tworzony jest plik i z czasem jego rozmiar rośnie,
+jeżeli jest wykonywane dużo operacji na dysku to dane zapisywane są
+w różnych miejscach i głowica dysku musi się często przemieszczać,
+z kolei w stałym rozmiarze jest rezerwowane miejsce o stałej ilości i ten plik jest wypełniany zerami,
+jest ciągły. Nie potrzebuję tego małego wzrostu w wydajności,
+ani rezerwowania miejsca które zajmuje dodatkowyczas przy instalacji,
+bo instaluję ten system w celach demonstracyjnych, tak więc wybieram dynamicznie przydzielany.
+Nie potrzebuję zmieniać lokalizacji pliku wirtualnego dysku, więc zostawiam ścieżkę domyślną.
+Zostawiam domyślną opcję 8 GB, żeby tego miejsca nie brakowało na maszynie wirtualnej, ale żeby też ta maszyna nie zajmowała mi dużo miejsca na moim dysku. Klikam Create.
+
+Tworzenie maszyny zakończone.
+
+Klikam ustawienia maszyny, którą przed chwilą stworzyłem.
+W zakładce General nie potrzebuję zmieniać nazwy, typu ani wersji. Wybieram opcje Advanced.
+Nie zmieniam folderu który przeznaczony jest na migawki systemu,
+które używane są by przywrócić system do stanu w którym była robiona migawka
+w przypadku na przykład jego awarii. Nie potrzebuję współdzielonego schowka
+, który umożliwia kopiowanie z systemu do maszyny wirtualnej i na odwrót zależnie,
+którą opcję wybierzemy. Może to działać w jedną stronę, z komputera do maszyny,
+odwrotnie, lub w obydwie.
+Tak samo przeciąganie i upuszczanie, nie potrzebuję tego, więc zostawiam na disabled.
+Opis, nie wstawiam opisu maszyny.
+Nie używam szyfrowania dysku, nie potrzebuję tego plus to spowalnia proces odczytu i zapisu.
+W zakładce System zostawiam domyślną pamięć ram.
+
+Mam ściągnięty plik .iso więc odznaczam dyskietkę, bo nie będę jej używał.sieć.
+Dysk twardy i napęd optyczny zostawiam zaznaczony.
+Ta opcja musi być zaznaczona, ponieważ system potrzebuje dysku by się uruchomić.
+Zostawiam domyślny chipset.
+Jako urządzenie dotykowe wybieram mysz PS2.
+Nie potrzebuję I/O APIC więc go odznaczam.
+Zostawiam odznaczone EFI, nie potrzebuję tego.
+Gdyby to było zaznaczone to potrzeba wpisać parę komend by uruchomić system.
+Zostawiam czas zegarowy w UTC, synchronizuje on czas.
+Przechodzę do zakładki processor. Zostawiam jeden, nie potrzebuję więcej.
+Zostawiam wykorzystanie procesora na 100%, nie spodziewam się dużych obciążeń, więc nie potrzebuję go ograniczać.
+Zostawiam wyłączone PAE/NX, nie potrzebuję funkcji dodających rozszerzonego alokowania pamięci.
+Zostawiam wyłączone zagnieżdżone VT-x/AMD-V, nie będę przeprowadzał wirtualizacji w wirtualnej maszynie.
+Przechodzę do zakładki Akceleracja zostawiam domyślne opcje.
+Przechodzę do zakładki Ekran. Nie będę bawił się grafiką więc zostawiam domyślne opcje.
+W zakładce zdalny pulpit zostawiam wyłączoną opcję, nie będę korzystał z pulpitu zdalnego. 
+W zakładce nagrywanie też zostawiam wyłączone, też nie będę z tego korzystał.
+W zakładce pamięć wybieram płytkę w kontrolerze IDE.
+Obok zakładki optical drive IDE Secondary Device 0 rozwijam ikonę płytki.
+Z rozwijanego menu wybieram opcję wybierz plik dysku
+i wybieram plik .iso Debiana, który wcześniej pobrałem.
+Przechodzę do zakładki dźwięk, nie będę z niego korzystał, więc go odznaczam.
+Przechodzę do zakładki Sieć. Zostawiam kartę sieciową włączoną
+i zostawiam wybrany NAT w zakładce,
+bo mam netinst czyli instalację sieciową więc
+maszyna wirtualna będzie musiała się komunikować z internetem typ karty jak i adres MAC zostawiam domyślny. Inne karty sieciowe nie będą mi potrzebne toteż zostawiam je wyłączone.
+W zakładce porty szeregowe zostawiam wyłączoną opcję,
+nie będę z tego korzystać (konfiguracja sieciowa innych maszyn).
+Kontroler USB zostawiam włączony, bo potrzebuję żeby działała mi klawiatura.
+W zakładce udostępniane foldery nic nie dodaję,
+nie mam potrzeby dzielenia folderów mojego komputera z maszyną wirtualną.
+W zakładce interfejs użytkownika nic nie zmieniam,
+to jest nieistotne do działania mojej maszyny wirtualnej.
+
+Uruchamiam maszynę poprzez przycisk start.
+
+Ukazuje mi się menu bootujące maszyny wirtualnej.
+Chcę szybciej przejść przez instalację więc wybieram instalację tekstową mimo,
+że mam zasoby na instalację graficzną. Więc wybieram install. Inne opcje instalacji w advanced options to expert install. Ta opcja umożliwia dokładniejszą instalację z wieloma różnymi opcjami.
+Rescue mode używa się gdy coś złego stanie się z komputerem,
+i chcemy go naprawić. 
+Są dwa warianty wszystkich opcji graficzne i tekstowe. 
+Speech enabled advanced options to ustawienia dla konfiguracji syntezatora mowy.
+Bo wybraniu opcji install wybieram język angielski ponieważ
+informatyka jest po angielsku i w razie szukania odpowiedzi na jakiś problem,
+mamy wtedy dostęp do większej ilości informacji i supportu z od większej ilości ludzi.
+W lokalizacji wybieram zakładkę other aby odnaleźć Polskę
+bo z tamtych serwerów chcę pobierać pakiety, żeby było szybciej.
+Wybieram Europe, a następnie Poland.
+Jako typ klawiatury wybieram United States, żeby zablokować możliwość
+podania polskich znaków diakrytycznych ponieważ to może sprawiać później problemy.
+Wybieram amerykański układ klawiatury.
+Zostawiam nazwę hosta 'debian'.
+Nie wpisuję żadnej nazwy domenowej.
+Wpisuję hasło roota zawierające małe litery.
+Wpisuję user w full name.
+Login użytkownika ustawiam na user.
+Ustawiam hasło użytkownika zawierające małe litery.
+
+Teraz ustawiam partycjonowanie dysków.
+
+Pierwsza opcja to Guided - use entire disk.
+Następnie wybiera się, który dysk chce się partycjonować.
+Po wybraniu dysku są trzy opcje. Pierwsza wrzuca wszystkie pliki na jedną partycję.
+Druga oddziela katalog /home czyli katalogi domowe użytkowników od innych katalogów
+takich jak /var itd. od siebie.
+To przydaje się szczególnie wtedy kiedy chcemy łatwo przeinstalować system bez usuwania plików użytkowników.
+Trzecia opcja oddziela katalogi /home /var oraz /tmp.
+
+Druga opcja to Guided - use entire disk and set up LVM (Linux Volume Manager).
+Dzięki Linux Volume manager możemy podłączyć kolejny dysk fizyczny
+do maszyny wirtualnej i poszerzyć dysk logiczny w Linuxie,
+pojawia się wtedy dodatkowe miejsce na dysku logicznym.
+Można to zrobić bez restartu systemu.
+
+Trzecia opcja to Guided - use entire disk and set up encrypted LVM.
+Robi to samo co druga opcja tylko jeszcze dodatkowo szyfruje dysk.
+
+Czwarta opcja to Manual i ją właśnie wybierzemy.
+
+Opcja Configure iSCSI volumes umożliwia montowanie dysku przez sieć.
+
+
+Z dostępnych opcji wybieram nazwę dysku.
+
+Jako, że miałem odznaczoną opcję EFI tworzę nową
+tablicę partycji na dysku, wybieram tak.
+
+Tworzę podstawową partycję systemową o wielkości 8 GB
+z systemem plików Ext4 na początku dostępnej pamięci. 
+
+Ext4 (fourth extended file system) - Przebudował całość mechanizmu journaling.
+Jest to najszybszy system plików od wszystkich poprzednich.
+
+Ext3 (third extended file system) - Ten system wprowadził journaling gdzie zapisuje to co będzie robić,
+potem zapisuje to co robi, a potem zapisuje to co zrobiło.
+Jest to mechanizm chroniący przed sytuacjami kiedy będzie zanik zasilania
+podczas zapisu na dysku to nasze dane nie zostaną uszkodzone.
+
+***skopiowane z internetu***
+
+*** Ext2 (second extended file system) - The ext2 or second extended
+file system is a file system for the Linux kernel. *** 
+
+
+*** btrfs - is a computer storage format that combines a file system based on
+the copy-on-write (COW) principle with a logical volume manager ***
+
+*** Journaled File System (JFS) is a 64-bit journaling file system created by IBM.
+JFS is a journaling file system. Rather than adding journaling as an add-on feature
+like in the ext3 file system, it was implemented from the start. The journal can be up to 128 MB.
+JFS journals metadata only, which means that metadata will remain consistent but user files
+may be corrupted after a crash or power loss.
+JFS's journaling is similar to XFS in that it only journals parts of the inode. ***
+
+*** XFS is a high-performance journaling file system created by Silicon Graphics, Inc.
+XFS is particularly proficient at parallel IO due to its allocation group based design.
+This enables extreme scalability of IO threads, filesystem bandwidth,
+file and filesystem size when spanning multiple storage devices. ***
+
+*** FAT16 odmiana systemu plików FAT, która posługuje się 16-bitowym adresowaniem przy dostępie do plików.
+Stworzony do obsługi pierwszych dysków twardych, gdyż jego poprzednik FAT12 był niewystarczający.  ***
+
+*** FAT32, który pomimo nazwy sugerującej 32 bity, wykorzystuje tylko 28 z nich,
+pozwalając teoretycznie na opisanie 268 435 438 klastrów, co umożliwiałoby użycie
+go na 16 terabajtowych dyskach twardych z sektorami 512-bajtowymi.
+Z powodu ograniczeń wynikających z 32-bitowego pola w boot sektorze,
+określającego rozmiar partycji w sektorach, rozmiar partycji obsługiwanej w tym systemie
+plików nie może przekroczyć 2 TB dla 512-bajtowych sektorów i 16 TB dla dysków o sektorach 4096-bajtowych. ***
+
+*** Swap - Linux divides its physical RAM (random access memory)
+into chunks of memory called pages. Swapping is the process whereby a page of memory
+is copied to the preconfigured space on the hard disk, called swap space,
+to free up that page of memory. The combined sizes of the physical memory and the swap
+space is the amount of virtual memory available. ***
+
+*** RAID - Redundant Array of Independent Disks (RAID) is a storage technology that
+combines multiple disk drive components (typically disk drives or partitions thereof)
+into a logical unit. Depending on the RAID implementation, this logical unit can be
+a file system or an additional transparent layer that can hold several partitions.
+Data is distributed across the drives in one of several ways called #RAID levels,
+depending on the level of redundancy and performance required.
+The RAID level chosen can thus prevent data loss in the event of a hard disk failure,
+increase performance or be a combination of both. ***
+
+Potem mamy mount options domyślnie zaznaczone jest defaults.
+
+*** defaults - default mount settings (equivalent to rw,suid,dev,exec,auto,nouser,async).
+suid - allow the operation of suid, and sgid bits. They are mostly used to allow users
+on a computer system to execute binary executables with temporarily elevated privileges
+in order to perform a specific task. ***
+
+Włączam Bootable flag na 'on', ponieważ musi być jakaś partycja bootująca, bo inaczej system nie wystartuje.
+
+Tworzę jeszcze partycję logiczną z pozostałych 0.6 GB typu swap. (Chcę zobaczyć jak to działa)
+
+Wybieram opcję 'Done setting up partition'. Następnie 'Finish partitioning and write changes to disk'. 
+
+SCSI1 (0, 0, 0)
+Pierwsze zero od lewej oznacza że to jest pierwszy Controller (pierwszy bo liczymy od zera),
+drugie zero oznacza że to jest pierwszy dysk i trzecie zero oznacza
+że to jest pierwsza partycja na tym dysku. 
+source: *** https://askubuntu.com/questions/1062335/what-is-the-meaning-of-scsi3-0-0-0-in-partition-disks-during-ubuntu-installa ***
+
+W oknie configure package manager, wybieram 'No', ponieważ nie mam innej płyty z dodatkowymi pakietami.
+
+W packagr manager wybieram 'Poland', bo chcę pobierać pakiety z serwera w Polsce.
+Następnie ftp.task.gda.pl, bo ten serwer jest najbliżej.
+Dalej, nie podaję proxy, bo nie mam proxy.
+
+W oknie gdzie jest napisane 'Participate in the package usage survey?'
+wybieram opcję 'No' bo także instaluję ten system do celów demonstracyjnych
+i nie ma co przesyłać nieprawdziwych danych. 
+
+W software selection zaznaczam tylko opcję standard system utilities.
+
+Xfce to bardzo lekkie środowisko graficzne.
+
+Cinnamon jest zbalansowanym środowiskiem graficznym, nie jest zbyt ciężki, wygląda ok.
+
+MATE, LXDE, LXQt podobnie jak Cinnamon.
+
+GNOME Flashback jest lżejszy na zasobach niż GNOME.
+
+Najwięcej zasobów zużywają oraz najlepiej wyglądają GNOME oraz KDE Plasma.
+
+Opcja web server przydaje się do zainstalowania serwera webowego.
+
+Opcja SSH server przydaje się do zainstalowania serwera SSH.
+
+Bez standard system utilities system niezbyt nadaje się do użycia.
+W skład system utilities wchodzą pakiety:
+
+***
+apt-listchanges
+lsof
+mlocate
+w3m
+at
+libswitch-perl
+xz-utils
+telnet
+dc
+bsd-mailx
+file
+exim4-config
+m4
+bc
+dnsutils
+exim4
+python2.7
+openssh-client
+aptitude
+bash-completion
+python
+host
+install-info
+bzip2
+reportbug
+krb5-locales
+bind9-host
+time
+info
+liblockfile-bin
+whois
+aptitude-common
+patch
+ncurses-term
+mutt
+mime-support
+exim4-daemon-light
+ftp
+nfs-common
+python-reportbug
+rpcbind
+texinfo
+python-minimal
+procmail
+libclass-isa-perl
+python-apt
+python-support
+exim4-base
+debian-faq
+doc-debian
+
+source: https://csmojo.com/posts/what-debian-standard-system-utilities-include.html
+***
+
+Ponieważ odznaczyłem opcję EFI a jest tylko MBR,
+bez niego nie da się uruchomić komputera w oknie install the GRUB
+boot loader wybieram opcję Yes. Wybieram dysk.
+
+W oknie Installation complete naciskam continue, maszyna się restartuje,
+wybieram Debian/GNU Linux. Loguję się na konto roota. 
+Debian jest już zainstalowany.
+
+Uruchamiam tasksel. Wyświetla mi się menu.
+Jeżeli nie zaznaczę nic w podanym menu,
+to wygląd systemu pozostanie taki jaki jest teraz.
+Jeżeli wybiorę więcej niż jedną z dostępnych opcji środowisk graficznych
+to będę miał do wyboru podczas logowania jaki system graficzny chcę mieć uruchomiony.
+Instalacja środowiska graficznego znacznie wydłuża proces instalacji.

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Zadanie 1:
+
+# Polecenie:
+# Napisz skrypt wyświetlający na terminalu tekst "Witamy w terminalu".
+# Skorzystaj z komendy echo oraz informacji podanych powyżej.
+# Pamiętaj o atrybutach i o tym, jak się wywołuje programy.
+
+echo "Witamy w terminalu"
+
+# Drugim rozwiązaniem byłoby stworzenie zmiennej, a następnie jej wywołanie
+
+# printf "%s" $'Witamy w terminalu\n'
+# Trzecie rozwiązanie, jakie przychodzi mi do to użycie printf, które znam z Javy i C++
+# Jedyny problem, jaki napotkałem to fakt, że apostrofy nie sprawiają, aby znaki escapowane były poprawnie
+# interpretowane; \n w standardzie ASCII nie jest tłumaczony na znak nowej linii (do zbadania)

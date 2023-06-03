@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Zadanie domowe: plik jako argument skryptu
+
+# przypisanie pliku z argumentu do zmiennej
+filename="$1"
+
+# zastosowanie sed do podświetlenia imienia "Łukasz" na czerwono i wypisanie 
+# wyniku na ekranie.
+sed "s/Łukasz/\o033[31m&\o033[0m/gI" "$filename"
+
+# w tym skrypcie wykorzystujemy polecenie sed w podobny sposób, jak w zadaniu 5B,
+# jednak z pewnymi zmianami:
+
+	# zamiast stosowania sekwencji "\e", ze względu na to, że z jakiegoś powodu
+	# w przypadku tego zadania nie chciała działać, posłużyłem się sekwencją
+	# zapisaną w postaci trzech cyfr, oznaczającą kod znaku ucieczki w ósemkowym 
+	# systemie liczbowym, czyli "\o033".
+	
+		# |?|(jeśli ma Pan pomysł dlaczego sekwencja "\e" nie zadziałała w tym 
+		# przypadku, to byłbym wdzięczny za wyjaśnienie)|?|
+		
+	# "&" oznacza cały dopasowany tekst (w tym przypadku imię "Łukasz"). 
+	
+	# naturalnie na końcu znajduje się flaga "g", ponieważ chcemy, 
+	# zastąpić wszystkie wystąpienia imienia "Łukasz", a nie tylko pierwsze.
+	
+	# dodajemy jeszcze flagę "I", ponieważ zmiana powinna być wykonana bez 
+	# uwzględniania wielkości liter.
+	
+	# skrypt ten wyświetli na czerwono wszystkie wystąpienia imienia "Łukasz",
+	# bez wzgłędu na rozmiar liter, a także zdrobnienia, w których członem jest 
+	# pełne imię "Łukasz", podobnie jak imię odmienione przez przypadki (ale na 
+	# czerwono będzie tylko fragment zawierający człon "Łukasz").
+	# Nie wyświetli na czerwono jednak innych zdrobnień, takich jak "Łuki",
+	# ani imienia zapisanego z błędami ortograficznymi.
+	
+	# do zadania dołączony został plik testowy "zadanieDomoweTekst.txt"

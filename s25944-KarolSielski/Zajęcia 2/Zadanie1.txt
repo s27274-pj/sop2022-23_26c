@@ -1,0 +1,28 @@
+Zadanie 1:
+Treść: Napisz skrypt wyświetlający na terminalu tekst "Witamy w terminalu". Skorzystaj z komendy echo oraz informacji podanych powyżej. Pamiętaj o atrybutach i o tym jak się wywołuje programy.
+
+Wykonanie zadania:
+
+-Utworzenie pliku tekstowego za pomocą komendy 'cat > "Ciwczenie" '
+-napisanie w pliku
+
+-----
+
+#!/bin/bash
+echo "Witamy w terminalu"
+
+-----
+
+-Wywołanie go w terminalu za pomocą komendy "bash > Zadanie1"
+-W konsoli pojawia nam się napis "Witamy w terminalu" spowodowane jest to komendą echo
+-Do komendy echo można też ogólnie użyć zmiennych takich jak :
+
+'-n' - rozpoczyna to nową linijkę w konsoli
+'-e' - pozwala na funkcje backslasha w tekście np jak "\t = tab"
+'-E' - wyłącza funkcje backslasha w tekście
+
+Przemyślenia:
+-Wynik jest taki jakiego oczekiwałem
+
+
+

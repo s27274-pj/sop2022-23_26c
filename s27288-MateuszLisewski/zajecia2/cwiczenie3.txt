@@ -1,0 +1,15 @@
+PATH - zmienna systemowa, która określa ścieżki, w których system operacyjny będzie szukał plików wykonywalnych.
+
+RANDOM: generuje liczbę pseudolosową z przedziału: 0, 32767
+Można wykorzystywać gdy potrzbena jest nam w skryptach liczba losowa.
+
+PWD: jest to folder w którym w tej chwili jest wykonywana komenda.
+
+PS1:Jest to zmienna, która określa znak zachęty - to co mamy przez znakiem $ w konsoli.
+Można to zmienić by mieć więcej informacji przy wykonywaniu każdej komendy, kolorować itp.
+USER: Zmienna, która wyświetla użytkownika, który jest zalogowany w konsoli
+HOSTNAME: Nazwa komputera na który jest uruchomiony terminal
+OSTYPE: Typ systemu na którym jest uruchomiony terminal
+
+3 ostatnie zmienne mogą być używane np. by ograniczyć uruchamianie skryptów do konkretnych
+użytkowników, nazw komputerów, typów systemów.

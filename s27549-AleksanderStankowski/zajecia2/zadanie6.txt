@@ -1,0 +1,17 @@
+Ćwiczenie 6
+Teraz postaraj się zrobić to zadanie z haczykiem i podmianą fragmentu zmiennej (Ala ma ...)
+
+#!/bin/bash
+
+imie="$1"
+
+if [[ $imie == *[ek] ]]
+then
+        echo "$imie ma kota, a kot ma ${imie/ek/ka}."
+else
+        if [[ $imie == *[a] ]]; then
+          echo "$imie ma kota, a kot ma ${imie/a/ę}"
+        else
+          echo "$imie ma kota, a kot ma ${imie}a"
+        fi
+fi

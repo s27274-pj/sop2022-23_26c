@@ -1,0 +1,30 @@
+Treść: Napisz skrypt, który 
+
+sprawdzi, czy w bieżącym katalogu jest więcej niż 5 plików. 
+
+Jeśli tak, to wypisze odpowiedni komunikat z informacją że tak jest.
+Podpowiem:
+
+ls - wyświetla listę plików
+
+wc - word count - zlicza znaki, słowa i linie
+
+grep ma parametr który też może podawać ilość wystąpień wzorca w strumieniu - poszukać w manualu jaki to parametr
+
+może warto użyć także innego polecenia by znaleźć pliki?
+
+
+#!/bin/bash
+
+fileCount=$(ls | wc -l)
+
+if [ "$fileCount" -gt 5 ]; then
+echo "W katalogu jest wiecej niz 5 plikow"
+else
+echo "W katalogu jest mniej niz 5 plikow"
+fi
+
+
+Rezultat:
+Skrypt po wywołaniu robi oczekiwaną od niego rzecz.
+Nie koniecznie trzeba było używać grepa jak widać, ale mam wrażenie że problem może się pojawić przy bardzo długiej nazwie pliku

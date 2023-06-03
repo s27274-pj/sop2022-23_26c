@@ -1,0 +1,2 @@
+#!/bin/bash
+sed 's/Karol/\o033[31m&\o033[0m/g' plik.txt

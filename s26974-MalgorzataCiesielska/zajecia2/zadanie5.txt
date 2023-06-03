@@ -1,0 +1,73 @@
+ZADANIE 5
+
+5a. Pamiętasz jedno z zadań poprzednich?
+
+A=Ala
+echo $A ma kota, a kot ma ${A}ę
+
+Przerób je tak, aby tekst wypisywał się poprawnie.
+
+Poprawny skrypt:
+#!/bin/bash
+A="Ala"
+echo "$A ma kota, a kot ma ${A/a/ę}"
+
+${A/a/ę} to operacja na tekście, która sprawia, że pierwsze wystąpienie 'a' (wielkość znaku istotna) w zmiennej A zostanie zastąpione przez 'ę'
+
+---------------------------
+
+Napisz skrypt, który będzie wypisywał taki tekst także dla imion męskich. 
+Pomijamy zdrobnienia i imiona które się dziwnie odmieniają (na przykład Marek). 
+Niech skrypt ten przyjmuje jeden argument - imię. Przykładowe wywołanie:
+
+$ ./pszetżkole Ala
+Ala ma kota, a kot ma Alę
+
+$ ./pszetżkole Justyna
+Justyna ma kota, a kot ma Justynę
+
+$ ./pszetżkole Stefan
+Stefan ma kota, a kot ma Stefana
+
+Czy jest to możliwe w czystym bash-u?
+
+Skrypt:
+#!/bin/bash
+if [ ${1:(-1)} = 'a' ]; then
+        echo "$1 ma kota, a kot ma ${1/%a/ę}"
+else
+        echo "$1 ma kota, a kot ma $1a"
+fi
+
+Czyli: Jeśli ostatnia litera pierwszego przekazanego argumentu to 'a',
+wyświetl '[imię] ma kota, a kot ma [imię]' z ostatnim wystąpieniem litery 'a' podmienionym na 'ę' w drugim użyciu imienia.
+W przeciwnym przypadku wyświetl to samo, tylko w drugim użyciu imienia dodaj 'a' na końcu.
+
+Jak widać jest to możliwe w czystym bash-u.
+
+Uwagi:
+${1/%a/ę} - tutaj znak '%' znaczy, żę litera 'a' musi być na końcu zdania (żebyśmy dostali 'kot ma Barbarę' a nie 'kot ma Bęrbara').
+
+---------------------------
+
+5b. Napisz skrypt, który wczyta jako argument jakiś tekst. Skrypt ten wypisze kolejno:
+Pierwszy znak z argumentu
+Ostatni znak z argumentu
+Zamieni w argumencie każdy tekst SOP na tekst poniżej (zastosuj echo z przełącznikiem -e): \e[32mSOP\e[0m
+
+Skrypt:
+#!/bin/bash
+echo "${1:0:1}"
+echo "${1:(-1)}"
+echo -e "${1//SOP/"\e[32mSOP\e[0m"}"
+
+Analiza:
+echo "${1:0:1}" - wyświetl jeden znak z parametru pierwszego zaczynając od pozycji 0
+
+echo "${1:(-1)}" - wyświetl ostatni znak parametru pierwszego (tu należy pamiętać o nawiasach okrągłych albo o postawieniu spacji przez -1, 
+ponieważ ${1:-1} ustawiłoby 1 jako wartość, która ma być wyświetlona jeśli nie przekażemy żadnego argumentu. Nie wyświetliłoby natomiast ostatniego
+znaku
+
+echo -e "${1//SOP/"\e[32mSOP\e[0m"}" - echo z flagą -e pozwala interpretować znaki specjalne. Tutaj podmieniamy wszystkie wystąpienia 'SOP'
+na 'SOP' napisane kolorem zielonym (\e[ rozpoczyna zmianę koloru, \e[0m kończy. 32m to kod koloru). Aby podmienić wszystkie wystąpienia, 
+a nie tylko pierwsze, musimy użyć '//' zamiast '/' przed 'SOP'

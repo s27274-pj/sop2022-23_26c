@@ -1,0 +1,8 @@
+2023-03-17
+na zajęciach uczyliśmy się dodać wirtualną maszynę w virtualboxsie oraz zainstalować debiana (jak prawdziwy administrator nie graficznie).
+muszę pogłembić temat jeśli chodzi o formatowanie i partycjonowanie dysków.
+zaskakująkce było jak dużo więcej opcji daje nam instalacje nie graficzna 
+
+2023-03-31
+na zajeciach nauczyłem się podstaw skryptowania w bashu; 
+powinienem poduczyc sie korzystania z regexa 

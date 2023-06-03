@@ -1,0 +1,47 @@
+ZADANIE 2
+
+1. Zobacz taką serię poleceń:
+X=tekst
+echo $X
+bash
+echo $X
+
+Co się stało? Czy potrafisz wyjaśnić?
+
+Po pierwszym wywołaniu echo $X w konsoli jest wyświetlana wartość zmiennej X, natomiast po drugim nie. Dzieje się tak, 
+ponieważ polecenie "bash" otwiera drugą powłokę wewnątrz obecnej powłoki, a w tej podpowłoce nie przypisaliśmy
+wartości do zmiennej X.
+
+---------------------------
+
+2. Zobacz:
+
+X=Tekst dłuższy
+echo $X
+
+Co jest nie tak? jak to naprawić? Zobacz czy pomoże zastosowanie cudzysłowów i apostrofów.
+
+Po wywołaniu programu dostajemy w konsoli taką informację: 'zad2.sh: 2: dłuższy: not found'
+Dzieje się tak ponieważ bash traktuje tekst po spacji jako komendę i próbuje ją wywołać.
+Aby przekazać tekst ze spacjami musimy go zawrzeć w cudzysłowy (wtedy będziemy mogli
+w tekście przekazywać zmienne i polecenia i będą one automatycznie interpretowane) albo
+w apostrofy (wtedy cały tekst będzie traktowany dosłownie, nawet znaki specjalne i polecenia)
+
+---------------------------
+
+3. Zobacz:
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"       *
+Y='tekst:$X'
+echo "$Y"	**
+Y=tekst:$X
+echo "$Y"	***
+
+Jaka jest różnica między " a ' ?
+
+Tak jak napisałam w poprzednim punkcie, cudzysłów pozwala na przekazywanie zmiennych, a apostrof nie.
+Pierwsze wykonanie komendy echo (oznaczone *) wyświetli w konsoli tekst:Tekst 1.
+Drugie wykonanie (**) wyświetli tekst:$X (czyli $X zostało potraktowane dosłownie, a nie jako zmienna), 
+a trzecie (***) tekst:Tekst 1 (czyli * i *** dadzą taki sam efekt)

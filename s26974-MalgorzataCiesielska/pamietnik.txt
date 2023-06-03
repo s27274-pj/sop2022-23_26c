@@ -1,0 +1,47 @@
+2023-03-04
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+Jak zainstalować Linuxa Debiana na Virtual Boxie. Wszystko było dość jasne, chociaż temat na pewno można by było zgłębić,
+jak każdy inny :). Chętnie dowiedziałabym się o alternatywach Virtual Boxa. Jedyne co mnie trochę zaskoczyło 
+(chociaż to zbyt silnie powiedziane), to inne opcje w Virtual Boxie niż te pokazane na zajęciach, oraz jedna różnica przy instalacji Debiana
+(nie miałam kilku opcji przy partycjonowaniu dysku, które były pokazane na zajęciach). 
+Ogólnie zajęcia fajne, proces instalacji przyjemny, chociaż opisywanie procesu instalacji dość nudne i mozolne. Moim zdaniem trochę nadmiarowe 
+jest opisywanie WSZYSTKICH opcji i co znaczą. Oczywiście, warto wiedzieć dlaczego jedna opcja jest lepsza od drugiej, natomiast myślę, 
+że mózg nie jest w stanie pochłonąć takiej ilości informacji na raz, i podejrzewam, że duża część z tego szybko zacznie uciekać. Osobiście
+dużo lepiej przyswajam informacje w mniejszych "gryzach".
+Niemniej zajęcia całościowo oceniam na plus :)
+
+----------------------------------------------------------
+
+2023-03-18
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+Podstaw pisania skryptów w bashu. Generalnie wszystko było dość proste, chociaż natknęłam się na kilka problemów, np.
+bash program.sh mogłam wywołać bez problemu, ale żeby skorzystać z ./program.sh musiałam już zmienić uprawnienia pliku.
+Regex jako odwieczny wróg programistów również sprawiał trochę problemów i pomimo tego, że miałam wcześniej
+styczność z wyrażeniami regularnymi to kilka momentów frustracji się pojawiło. Jednak pisanie w bashu póki co
+jest bardzo przyjemne i sprawia frajdę :)
+
+----------------------------------------------------------
+
+2023-04-01
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+If-ów, pętli, oraz funkcji w bashu. Te zajęcia były póki co najciekawsze, było więcej okazji do zastanowienia się nad 
+sposobem rozwiązania zadania :) Było trochę "pułapek", np. różnica między if [[ ]] oraz if [ ], konieczność
+pisania 'fi' na końcu if-a i 'done' na końcu pętli for, ale logika pozostaje taka sama jak w c#, pythonie, itd, więc te
+konstrukty nie były bardzo trudne do zrozumienia
+
+----------------------------------------------------------
+
+2023-04-22
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+Duuuuużo o wskaźnikach, musiałam przypomnieć sobie sporo informacji z zeszłego semestru ale nauczyłam się też sporo nowych rzeczy,
+na co dzień programuję raczej na "wyższych" poziomach więc wykorzystywanie wskaźników jest dla mnie zupełnie nowe, ale jest to bardzo
+rozwijające i mam wrażenie, że pomaga mi trochę inaczej spojrzeć na programowanie.
+
+----------------------------------------------------------
+
+2023-05-06
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+Sporo o procesach. Była to dla mnie pierwsza podczas tych zajęć kompletnie nowa i nieznana rzecz, więc było dużo do nauki.
+Było sporo googlowania i zastanawiania się co i dlaczego nie działa, w szczególności przy zadaniu z chat-em, 
+jednak myślę, że udało mi się w miarę opanować temat (oczywiście tylko na podstawowym poziomie i na pewno sporo minie zanim w pełni
+osiądą te wszystkie nowe informacje :)).

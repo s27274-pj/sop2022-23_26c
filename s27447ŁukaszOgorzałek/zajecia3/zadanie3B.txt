@@ -1,0 +1,49 @@
+#!/bin/bash
+
+## 10. Ciąg Fibonacciego
+
+function fibonacci {
+    if [[ $1 -le 1 ]]; then
+        return $1
+    else
+        local a
+        local b
+        fibonacci $(( $1 - 1 ))
+        a=$?
+        fibonacci $(( $1 - 2 ))
+        b=$?
+        return $(( a + b ))
+    fi
+}
+
+# przykładowe wywołanie funkcji
+fibonacci 8
+result=$?
+printf "%d\n" "$result"
+
+
+# funkcja "fibonacci" przyjmuje jeden argument, który oznacza element
+# ciągu Fibonacciego, którego wartość ma zostać nią obliczona.
+
+# po zadeklarowaniu funkcji "fibonacci", sprawdzamy w pierwszej kolejności, 
+# czy pierwszy argument jest mniejszy lub równy 1. Jeśli tak, zostanie on
+# zwrócony, ponieważ pierwsze dwie liczby ciągu Fibonacciego to 0 i 1.
+
+# w przeciwnym wypadku funkcja rekurencyjnie wywołuje samą siebie i przekazuje 
+# dwa mniejsze argumenty (jeden mniejszy o jeden, drugi mniejszy o dwa) do zmiennych
+# "a" oraz "b", a następnie suma tych zmiennych jest zwracana za pomocą "return".
+
+	#*# wyjaśnienie rekurencji jest dla mnie nadal trudne, ale jeśli dobrze rozumiem,
+	#*# w przypadku wywołania np. "fibonacci 4", funkcja będzie się wywoływać rekurencyjnie
+	#*# z bloku else do momentu wywołania "fibonacci 1", po czym zostanie wykonany blok if
+	#*# z powodu spełnienia warunku, a następnie zacznie się stopniowy powrót do "fibonacci 4"
+	#*# aktualizujący wartości "a" oraz "b", na koniec zwracając naszą szukaną wartość
+	#*# (wartość 4 elementu ciągu = suma a + b dla "fibonacci 4"), jaką jest 3. 
+
+# wynik zwracany przez funkcję jest przypisywany do
+# zmiennej "result" za pomocą zmiennej "$?" po wywołaniu funkcji.
+
+	#*# zmienna "$?" to kod powrotu ostanio wykonywanego polecenia.
+	#*# w naszym przypadku interesuje nas wynik naszej funkcji, będący jednocześnie 
+	#*# jej kodem powrotu. Możemy w ten sposób bezpiecznie przypisać go do innej zmiennej, 
+	#*# a następnie wyświetlić. 

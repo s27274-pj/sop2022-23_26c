@@ -1,0 +1,6 @@
+#!/bin/bash
+color_print () {
+	COLOR="\\033[$2m" # '\\033[' - signifies beginning of color code, 'm' - is the end of the color code
+	echo -e "${COLOR}$1" #prints the first argument with the color
+}
+color_print "Hello world" "0;31" #0;31 is red

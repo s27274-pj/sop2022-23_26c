@@ -1,0 +1,361 @@
+Instalacja Debiana na maszynie wirtualnej
+s28048 - Igor Olowski
+
+Pobieranie pliku instalacyjnego Debian
+
+
+Pobieramy Debiana ze strony https://www.debian.org/distrib/
+Spośród opcji:
+- Download an installation image
+	- A small installation image - podstawowa wersja systemu, z racji ciaglych aktualizacji online oraz przewidanego uzycia tylko do instalacji, korzystamy z tej opcji
+	- A larger complete installation image – używany w przypadku instalacji przy braku dostepu do internetu przy użytkowaniu, nie uwzglednia aktualnych pobieranych z internetu aktualizacji, z racji większej objętości odrzucamy
+- Buy a set of CDs or DVDs from one of the vendors selling Debian CDs - Gotowe dyski/pamieci z  systemem, z racji konieczności poniesienia kosztów nie wykorzystujemy
+- Buy a computer with Debian pre-installed - Domyslnie zainstalowany system na nowym komputerze, z racji użycia maszyny wirtualnej odrzucamy
+- Use a Debian cloud image - System do zainstalownia na serwerach typy Azure, AWS, przy wlasnej maszynie wirtualnej nie używamy
+- Try Debian live before installing - System do spróbowania, brak koniecznosci instalacji, z racji utraty danych po restarcie komputera, nie używamy
+
+Przy kazdej z powyższych wersji używamy wersji dla danej architektury własnego komputera,w moim przypadki 64-bit AMD (uzywany Intel core i5) .
+W moim przypadku, plik zajmuje 397,312 Kb, konieczne jest zapewnenie takiej przestrzeni na komputerze.
+
+
+
+Konfiguracja maszyny wirtualnej - Oracle VM VirtualBox
+
+Klikamy przycisk New, rozpocznie on proces tworzenia maszyny.
+Okreslamy nazwe maszyny,ktora bedzie uzywana do okreslania system wedle uznania, kolejno okreslamy wedle wlasnych upodoban miejsce na pliki tworzonej maszyny wirtualnej w naszym komputerze
+Tutaj jest opcja bezposredni instalacji pliku ISO z wybranym systemem operacyjnym, wiecej poniizej - w naszym wypadku bedziemy ja pozniej doglebnie konfigurowac recznie ,dlatego wybieramy druga opcje
+Druga opcja to wybranie systemu z dostepnej listy:
+- Windows
+- Linux
+-Solaris
+- BSD
+- IBM OS/2
+- Mac OS X
+Wybieramy oczywiscie system Linux, wersja Debian (64-bit) z racji posiadanej architektury procesora i checi instalacji tego systemu
+W wypadku instalacji przez ISO - wybranie nazwy systemu nie jest możliwe
+Przy tym sposobie instalacji mozlwie jest uzycie trybu Unattended Guest OS, ktory pozwala pobrac system automatycznie,w tym wypadku trzeba bedzie od razu podac dane uzytkownika/administratora oraz dodatkowe informacje do systemu takie jak w przypadku WIndowsa, klucz produktu i host name oraz nazwe domeny, dodatkowa opcja pozwala instalowac system w tle.
+
+Przechodzimy dalej do wyboru ilosci pamieci 
+W przypadku instalacji systemu bez wersji desktop, nalezy przypisac wedle producenta min 256 mb RAM, zalecena 512 mb, a na dysku twardym poswiecic 2 Gb. Z racji prostej instalacji uzyjemy opcji bez desktopu, jednak w przypadku chęci jego posiadania konieczne bedzie uzycie min 1 gb, zalecane 2 gb RAM oraz 10 gb na dysku twardym. W celu usprawnienia instalacji osobiscie uzyje dwukrortnosci zalecanej pamieci operacyjnej i pamieci na dysku twardym.
+Kolejno jest opcja ustawienia liczby wirtualnych procesorow do uzycia, min 1 ale producent zaleca by nie uzywac wiecej niz polowy ilosci watkow procesora na wlasnym komputerze, ja uzyje 2, przy 8 wątkach na kompueterze .
+Opcja Enable EFI (umożliwia bootowanie EFI) dotyczy wyboru typu rozruchu systemu operacyjnego  wirtualnego przy systemach bardziej zaawansowanych niż Debian (np. Windows)
+Nastepnie tworzymy wirtualny dysk pamieci twardej, dobieramy pojemnosć, podobnie jak poprzednio wybieramy pojemnosc dwukrotnie wieksza niz zalecana (czyli 4gb) dla latwiejszego dzialania systemu. Jest mozliwe użycie calej przestrzeni posiadanego dysku przy uzyciu funckji Pre-allocate full size. Mozliwe jest też dobranie wczesniej stworzonego wirtualnego dysku, lub nie dodawanie zadnego dysku wirtualnego, gdzie możemy później dodać dysk twardy o odpowiedniej pojemności i dostosować go do naszych potrzeb. Opcja ta może być przydatna, gdy chcemy utworzyć pusty system i zainstalować na nim system operacyjny z zewnętrznego źródła, na przykład z wirtualnego napędu CD/DVD lub obrazu ISO.
+
+Nastepnie system podsumowouje wybrane ustawienia, należy użyc przycisku finish, aby skonczyc ten etap
+
+Nastepnie ukazuje nam się lista wszystkich stworzonych maszyn, wybieramy ostatnio stworzona i przechodzimy do ustawień
+
+General:
+- Basic
+	Zminana nazwy i typu systemu
+- Advanced
+	- Zmiana pliku do zapisywania snapshotu, która to funkcja umożliwia zapisanie stanu maszyny wirtualnej w danym momencie i utworzenie punktu kontrolnego, do którego można wrócić w dowolnym momencie. Snapshot stanowi swoisty zapis maszyny wirtualnej, wraz z jej ustawieniami, plikami, systemem operacyjnym i aplikacjami, na etapie, w którym został utworzony. W moim przypadku folder mi odpowiada.
+	- Dzielenie schowka - Shared Clipboard. Umożliwia ustawienie możliwości ustalenia kopiowania miedzy komputerem a maszyną, opcje sa nastepujace:
+		- disabled - brak polaczenia
+		- host to guest - umozliwia kopiowanie od komputera do maszyny
+		- guest to host - umozliwia kopiowanie od maszyny do komputera
+		- Bidirectional - umowzliwa kopiowanie w kazda strone
+		Nie zamierzam przenosic danych miedzy komputerem a maszyna, co jest równiez nie mozliwe przy braku desktopu,  zostawiam disable.
+	- Drag'n drop umożliwia przeciąganie plikow miedzy komputerem a maszyna, z takimi samymi opcjami jak powyższe dzielenie schowka, nie zamierzam przenosic plikow miedzy komputerem a maszyna, jak rowniez instalacja dokonywana jest bez desktop, wiec nie moglo by to dzialac.
+- Description - pozwala na wpisanie krótkiego opisu maszyny wirtualnej. Jest to opcjonalne pole, które można wypełnić lub pozostawić puste, tak robie to w naszym przypadku.
+-Disk encryption - pozwala zaszyfrowac dysk, po kliknieciu przycisku enable możliwa jest wybor klucza szyfrowania 128/256 zależnie od żadanego poziomu zabezpieczen (256 trudniejszy do zlamania), nastepnie trzeba podac dwukrotnie haslo aby zatwierdzic szyfrowanie, z racji braku perspektyw trzymania wrazliwych danych na maszynie, opcji nie uzywam
+
+System:
+- Motherboard
+	- Base memory - ustawienie uzywane pamieci RAM, zostawiamy jak ustawiono przy konfiguracji.
+	- Boot order - ustawienie kolejnosci bootowania z danych dyskow pamieci (Floppy,Optical, Hard Disk, Network), bedziemy wstepnie uruchiam system z dysku twardego, dlatego wybieramy te opcje jako domyslna, reszte zostawiamy
+	- Chipset: 
+		-PIIX3 - chipset firmy Intel, który oferuje kontrolery dla urządzeń IDE i USB oraz kontroler dźwięku.
+		-ICH9 - chipset firmy Intel, który oferuje zaawansowane funkcje, w tym kontrolery dla urządzeń SATA, USB i dźwięku
+		Zostawiam  PIIX3 z racji braku koniecznosci uzycia szerokiej gamy kompenentów maszyny wirtualnej
+	- TPM -  Trusted Platform Module
+		Z opcjami: none, v1.2, v2.0 służa one do przechowywania kluczy wirtualnych( opcja 2.0 jest bardziej zaawansowana) z racji braku koniecznosci uzycia zostawiamy none.
+	- Pointing device - urzadzenie do wskazywnaia, opcje wyboru: USB tablet (jednodotykowy , PS/2 mouse, USB multi-touch table (wielodotykowy), USB MT TouchScreen and Touchpad ( ekran dotykowy lub panel dotykowy), wybieramy mysz, z braku innych urządzeń.
+	- Extended Features:
+		- Enable I.O APIC - Input/Output Advanced Programmable Interrupt Controller -  zaawansowany programowalny kontroler przerwań wejścia/wyjścia. Kontroler, który umożliwia zarządzanie przerwaniami sprzętowymi i przyspiesza komunikację między urządzeniami wejścia/wyjścia a procesorem, z racji użycia dwóch rdzeni procesora, zostawiam włączone. 
+		- Enable Hardware Clock in UTC Time umozliwa usttawienie czasu systemowego w strefie czasowej UTC zamiast lokalnej, jako patriota zostawiam czas lokalny.
+		- Enable EFI - Opcja uzycia EFI, zamiast standardowego BIosa, z racji instalacji Linuxa, a nie systemu takiego ja WIndows, zostawiamy tą opcję wyłączoną, tak jak przy poczatkowej instalacji
+		- Enable Secure Boot - opcja dostepna jedynie przy użyciu EFI, prz włączeniu maszyna wirtualna będzie wymagała podpisu cyfrowego dla każdego uruchamianego jądra systemu operacyjnego oraz sterownika. Zapobiega to uruchomieniu niezaufanego kodu i chroni system przed szkodliwym oprogramowaniem.
+- Processor 
+	- Opcja wybrania ilosci wątków używanych do działania maszyny, zostawiamy wartośc ustawiona przy konfiguracji
+	- ExecutionCap - okresla moc procesora  jaką moze uzywac maszyna wirtualna w procentach mocy hosta Zostawiamy 100% z racji dużego zasobu pozostałej mocy hosta,
+	- PAE/NX - opcja pozwala na uruchamianie systemów operacyjnych, które wymagają wsparcia dla technologii PAE (Physical Address Extension -umozliwia korzystanie z wiekszej ilosci ramu ) i NX (No eXecute - zapobieganie overflow), do instalacji DEbiana obydwie te funkcje nie beda potrzebne
+	- Nested VT-x/AMD-V Opcja umożliwiające odpalanie maszyn wirtualnych wewnątrz maszyny wirtualnej, opcja nie będzie przez nas wykorzystywana, jak równiez nie jest wspierana przez mój komputer.
+-  Acceleration
+	- Paravirtualization interface-  to opcja wirtualizacji, która umożliwia systemowi operacyjnemu  w maszynie wirtualnej korzystanie z zoptymalizowanego interfejsu komunikacji między systemem operacyjnym a programem, który pozwala na uruchomienie maszyny wirtualnej. Ma następujące opcje:none (opcja wyłączenia wirtualizacji), default (opcja domyslna wybierana przez system), legacy (starsza, kompatybilna wirtualizacja z wersjami kernela systemów operacyjnych), , minimal (minimalna ilość funkcji i cech wymaganych do pracy ze systemami opartymi na jądrze Linux) , hyper-v( wirtualizacji firmy Microsoft,bardziejprzydata dla windowsa), KVM (wirtualizacja, która pozwala na uruchomienie wielu systemów operacyjnych wirtualnych na jednym fizycznym serwerze) Wybieramy opcje default, gdzie system wybierze domyślny dla Debiana system.
+	- Nested Paging - Pozwala na przyspieszenie operacji na pamięci wirtualnej poprzez zastosowanie stronicowania pamięci,wirtualizator nie musi przetwarzać wszystkich odwołań do pamięci przez hypervisor. Z racji takich cech zostawiamy włączone
+
+Display:
+- Screen 
+	- Video memmory, ustalenie pamięci ram wykorzystywanej dla procesora graficznego (gpu), zostawiamy wartość domyślną z racji nie używania desktopu
+	- Monitor count, ustalenie wirtualnych monitorów, dla braku desktopu, jeden wystarcza
+	- Scale factor, zwiększenie rozmiaru wyświetlania okien, opcja 100% oznacza ze ekran jest taki sam jak hosta
+	- Graphic Controller - umożliwia wyświetlanie obrazu maszyny wirtualnej
+		Opcje: VBoxVGA(standardowy kontroler graficzny, rozdzielczości do 2560x1600 pikseli.), VMSVGA(nowszy kontroler graficzny rozdzielczości do 2560x1600 pikseli), VBoxSVGA(kontroler graficzny, który działa tylko z systemami operacyjnymi, które obsługują sterowniki SVGA, ), Brak - brak okna. Zostawiamy VMSGA, z racji lepszej wydajnosci.
+	- Akceleracja 3D - Opcja włączenia widoku 3D, bez desktopu brak użycia, zostawiamy wyłączoen
+- Remote Display - Możliwosc podłączenia zdalnego monitora, dane do wpisania Server port, Metody autoryzacji (wewnętrzna i zewnętrzna, brak), czas na autoryzacje, opcja możłiwości wielu połączeń, całośc możliwosci podłączenia zdalnego zostawiamy wyłaczone, z racji braku desktopu.
+- Recording - możliwość ustawienia nagrywania 
+		opcje: rodzaj nagrywania(audio,wideo, i to i to), folder zapisywania nagrań , ustawienie rozdzielczości nagrywania, ustawienie klatkażu nagrywania, ustawienie jakosci nagrywania audio i video, opcja wybrania ekranu do nagrywania.
+		Z racji braku desktopu, nie uzywamy zadnej funkcji nagrywania
+
+Storage
+
+- Controller: IDE - standard komunikacji z dyskiem optycznym 
+	- wybór dysku optycznego, spośród primary i secondary, primary słóża do bootowania, drugie do pozostałych czynności, wybieramy secondary.	
+	Na dysk jest możliwośc wgrania systemu w pliku ISO, w naszym przypadku wykonamy to pozniej.
+	Opcja libe cd/dvd pozwala na odpalenie systemu bez instalowania go na dysku, nie używamy, gdyż w tej opcji nie możliwe jest zapisanie danych po restracie systemu
+- Controller SATA - standard komunikacj z dyskami twardym, zmiany jego nazwy, zmianaa standard komunikacji, wybieramy najpoularniejszy AHCI,
+	- Dysk. vdi - istnieje tu możliwośc wyboru portu podłączenia dysku, ustalenia czy jest HDD oraz czy jest Hot-pluggable, czyli czy można go odłączać w czasie działania systemu. Nasz dysk uznajemy za nie SSD, a z racji instalacji systemu, nie dajemy mu opcji odłączania. Podłaczony zostaje do wejścia 0, bez znaczenia numer od 1 do 30.
+		Opcja Hosit I/O Cache na użycie pamięci cache dysku hosta do przyspieszenia operacji wejścia-wyjścia na dysku wirtualnym.
+
+Audio
+ Opcja podłączenia audio:
+	- Host Audio Driver - ustawienie sterownika dziwęku, zalezne od posiadanego sprzeru, wybieramy domyślny	
+	- Audio controller - urządzenie emulowane przez program wirtualizacyjny, do obsługi dzwięku, zostawiamy domyślen ICH AC97
+	Funkcja umożliwienia wejścia i wyjścia audio przez maszyne, wszystkie opcji z racji desktopu wyłączamy
+
+Network
+Karty sieciowe(od 1 do 4)
+Ustawienie NAT komputer sluży za router dla maszyny wirtualnej,
+Inna opcja, Bridge adapter, maszyna wirtualna zachowuje się jak zwykly komputer
+	 Wewntrzna sieć, komunkacja wewnatrz komputera
+	Host network - komununikacja tylko z komputerem	
+	Brak karty sieciowej
+Adapter type - wybór karty sieciowej - IntelPRO/1000MT Desktop - obecnie najczęsciej używany, dla naszego użycia bez znaczenia
+Możliwosc wpisandnia adres MAc
+Możliwośc odpiecia "fizycznego " karty sieciowej
+
+Serial ports,
+Możliwośc podłączenia urządzeń przez porty, wybór złącznm IRQ, Adres portu wejścia/wyjscia, oraz jego tryb pracy
+
+USB 
+Wybór standardu portów USB
+Konieczne do podłączenia m.in. klawiatury,
+Opcje: USB 1.1/2.20/3.0 , wybieramy ocpje z 1.1 z racji korzystania tylko z klawiatury
+
+Shared folders
+Możliwośc dzielenia folderów przez komputer i maszynę wirtualną, do wymiany plików, w naszym przypadku nie używane
+
+User Interface,
+Wybór przestrzeni dla użytkownika, rozmiar okna, pełny ekran, zostawiamy normalne okno systemu, z opcją włączenia pełnego ekranu.
+
+
+
+
+
+Odpalenie maszyny wirtualnej:
+Poprzez przycisk start;
+Opcje startu: łącznego, bez interfejsu graficznego, lub rozdzielnego. Wybieramy rodzielny, aby w przyszłości móc odłączyć interferjs graficzny
+
+Poprzez ustawienia Device -> Optical drives, wybieramy plik Debiana ISO
+Przez ustawienia machine, restartujemy system. Natstępnie klikamy f12 na komputerze, a następnie przycisk c do ustelenia pliku CD do odpalenia systemu
+
+BIoS DEBIANA
+- Instalacja graficzna (Żaden szanujący się administrator Linuxa nie używa systemu graficznego)
+- Instalacja zwykla
+- Opcje zaawansowe 
+		- Instalacja ekspercka - możliwości cofania, więcej opcji wyboru
+-  Rescue mode - Tryb odzyskiwania danych, przy awarii (uruchomienie tylko w pamieci)
+- Automatyczna instalacja ( z plikiem ustawienem)
+- Ustawienie  ( opcje z syntezatorem mowy)
+- Instalacja z dużym kontrstem
+- Pomoc
+- Instalacja z syntezatorem mowy
+
+
+Wybieramy instalacje zwykla:
+1) Wybieramy język - programistycznie angielski 
+2) Wybieramy kraj , aby odnaleźć polskę wybieramy opcję other,Eurupa, a następnie Poland
+3) Wybieramy odmiane jezyka klawiatury - najlepiej USA, (brak polskich znakow, ktore moga byc nierozponawalne) oraz rodzaju klawiatury - American English
+
+System ładuje do pamieci podstawowe środowisko instalacyjne
+
+4)WYbór nazwy hosta, zostawiamy domyślne debian (bez znaczenia)
+5)Wybór nazwy domeny, przy pracy w środowisku domenowym.
+6)Hasło użytkownika root - dla cwiczenia ustawiamy najprostsze hasło - "1"
+7)Ponownie wpisujemy haslo do potwierdzenia
+8)Podajemy Imie i Nazwisko nowego użytkownika - "Jan Kowalski"
+9)Ustawiamy login nowego użytkownika - user
+10)Ustawienie hasla dla nowego uzytwnika i nastepnie wpisujemy jeszce raz celem potwierdzenia - "2"
+
+Partycjonowanie dysku
+Opcje guided
+	Entire disk
+	- wszystkie pliki na jeden dysk (rekomendowane dla nowych uzytkownikow)
+	- Odzielne katalogi użytkowników ( łatwa reinstalacja systemu, bez utraty ich danych
+	Entire disk and set up LVM (Logical volume Menager -  umożliwia abstrakcyjne zarządzanie fizycznymi partycjami dyskowymi, dzięki czemu użytkownik może elastycznie zarządzać przestrzenią dyskową, tworząc i usuwając wirtualne partycje)
+	- Entire disk and set up encrypted LVM (to samo co powyższe z dodatkową szyfrowaniem
+Opcja manual (Ją wybieramy jako  szanujący się administratorzy Linuxa )
+	- Guided partitioning - powrót do poprzednich opcji
+	- Configure ISCSI volumes - Instalacja przez sieć
+	- Nasz dysk, który wcześniej stworzylismy (tą opcje wybieramy do dalszej konfiguracji)
+
+Potwierdzamy partycjonowanie dysku
+ Wybieramy pustą partycji
+ 	- Create a new partition (Ręczny podział pamięci, ją wybieramy jako  szanujący się administratorzy Linuxa )
+	- Automatically partition the free space (Automatyczny podział partycji)
+	- Show Cylinder/head/sector/information (Pokazuje obecny podział dysku)
+	Wybieramy nowy rozmiar partycji w gb lub procentach
+	 Ja wybieram na 2 GB na system operacyjny
+	Wybór rodzaju partycji:
+	- Primary (partycje primary są partycjami pierwszego poziomu i są używane jako podstawowe partycje startowe, na których można instalować systemy operacyjne. Maksymalnie na dysku można utworzyć cztery partycje primary lub trzy partycje primary i  partycje logical)
+	- Logical (partycje drugiego poziomu, które służą do tworzenia dodatkowych partycji na dysku, ponieważ partycje primary już zostały wykorzystane)
+
+	Położenie
+	-Beggining (Z racji szybszego odczytu z dysku)
+	-End
+		Rozmieszczenie partycji na dysku, w tym ich pozycja początkowa i końcowa ma wpływ  w przypadku dysków HDD na wydajność i szybkość odczytu i zapisu danych. W takim  przypadku  najlepiej umieszczać partycje początkowe na sektorach o niskich numerach, a partycje końcowe na sektorach o wysokich numerach, co pozwala na szybsze odczytywanie i zapisywanie danych.
+
+	Partition setting 
+	- Confirm
+	-Delete
+	Potwierdzamy podział dysku  w syystemie plików ext4 -  gdyż jest to  domyślny system plików dla większości dystrybucji Linuxa i innych zgodnych z Unix, który jest rozwinięciem poprzednich wersji systemów plików ext2 i ext3.
+
+Podział systemów plików:
+
+Ext4 - system plików dla systemów operacyjnych Linux i innych zgodnych z Unix, który jest rozwinięciem poprzednich wersji systemów plików Ext2 i Ext3.
+
+Ext - system plików dla systemów operacyjnych Linux, który był używany przed wprowadzeniem Ext2.
+
+Ext2 - system plików dla systemów operacyjnych Linux, który zastąpił wcześniejszy system plików Ext.
+
+btrfs - system plików dla systemów operacyjnych Linux, zaprojektowany z myślą o wydajności, niezawodności i skalowalności.
+
+JFS to system plików dla systemów Unix i zgodnych, który zapewnia wydajność i niezawodność dzięki mechanizmowi journalingu. Został opracowany przez IBM dla systemów AIX i OS/2, a następnie przeniesiony na systemy Linux.
+XFS - system plików dla systemów operacyjnych Linux, zaprojektowany z myślą o wydajności i skalowalności.
+
+FAT16 - system plików stosowany w starszych systemach operacyjnych Microsoft Windows, który obsługuje partycje do 2 GB.
+
+FAT32 - system plików stosowany w systemach operacyjnych Microsoft Windows, który obsługuje partycje większe niż 2 GB.
+
+Swap area - obszar na dysku twardym używany przez system operacyjny jako pamięć wirtualna.
+
+Physical volume for encryption - fizyczny wolumin służący do szyfrowania danych na dysku twardym.
+
+Physical volume for RAID - fizyczny wolumin używany w macierzach RAID do łączenia kilku dysków twardych w jedno logiczne urządzenie.
+
+Physical volume for LVM - fizyczny wolumin używany w systemie LVM (Logical Volume Manager) do zarządzania przestrzenią dyskową.
+
+Bootable flag to flaga partycji na dysku twardym, która wskazuje, czy dana partycja jest bootowalna. Oznaczenie partycji jako bootowalnej jest ważne w przypadku, gdy na dysku twardym jest zainstalowany system operacyjny, który musi zostać uruchomiony podczas rozruchu komputera. Bootable flag może być ustawiona tylko dla partycji typu Primary lub Logical, ale nie dla partycji typu 
+
+
+Tworzenie partycji swap
+
+Wybieramy pustą partycji
+Okreslamy jej pamiec na 1 GB, logical (nie bedzie ona służyła do obsługi systemu)
+Begging (co by był szybki dostep)
+Syste plików - swap - zgodnie z przeznaczeniem
+Bootable flag - off - nie służy do instalacji systemu
+
+Inne ustawienia na tym etapie
+Software RAID to metoda tworzenia macierzy RAID za pomocą oprogramowania zainstalowanego na serwerze. W odróżnieniu od sprzętowej macierzy RAID, w której kontroler RAID jest zainstalowany na płycie głównej lub w dedykowanym kontrolerze, w software RAID całość procesu odbywa się za pomocą oprogramowania.
+
+Logical Volume Manager (LVM) to narzędzie do zarządzania przestrzenią dyskową w systemach operacyjnych Unix i Linux. LVM umożliwia łączenie kilku dysków twardych w jedno logiczne urządzenie, a następnie tworzenie na nim partycji.
+
+Encrypted Volumes to zaszyfrowane woluminy, które zapewniają ochronę poufnych danych na dysku twardym przed nieautoryzowanym dostępem. Dostęp do danych jest możliwy tylko po podaniu hasła lub klucza szyfrującego.
+
+iSCSI Volumes to wirtualne dyski tworzone za pomocą protokołu iSCSI, który umożliwia udostępnianie pamięci masowej przez sieć. Wirtualne dyski iSCSI są wykorzystywane do przechowywania danych na serwerach zdalnych, co zapewnia większą elastyczność i skalowalność w porównaniu z fizycznymi dyskami.
+
+SCSI1 (0,0,0) (sda) to oznaczenie dysku twardego (sda) podłączonego do kontrolera SCSI zidentyfikowanego jako "SCSI1" oraz podłączonego do pierwszego portu (0,0,0) na kontrolerze SCSI.
+
+Kolejne kroki:
+- Undo changes to partitions - możliwośc cofnięcia zmian
+- FInish partitioning and write changes to disk - klikamy, przechodzimy dalej
+Nastepnie potwierdzamy zmiany i rozpoczyna się instalacja
+
+Konfiguracja obrazu dysk ( w przypadku posiadania innej plyty/nosnika z pakietami), w naszym przypadku odrzucamy
+Wybór lokalizacji do pobrania danych, najbliższe miejsce -> Poland -> ftp.task.gda.pl
+
+Dane do użycia Proxy, jeśli nie używamy tak jak w naszym przypadku to nie dodajemy i przechodzimy dalej.
+
+Zgoda na udział w rankingu pakietów, autorzy oceniają za pomoca tego przydatność konkretnych ich pakietów, w celu doboru ich przy instalacji "małej płyty", z racji testów, odrzucamy.
+
+Wybór oprogramowania
+- Debian desktop environemnt - wybieramy system bez grafiki - gdyż żaden szanujący się administrator Linuxa nie używa systemu graficznego
+- Standard system utilities - Standardowe narzędzia systemowe to zestaw programów, które są dostarczane z systemem operacyjnym i służą do zarządzania i konfiguracji systemu. Są to między innymi: terminal, menadżer pakietów, menadżer plików, narzędzia sieciowe, menedżer urządzeń, edytor tekstowy, narzędzia diagnostyczne, konsola ratunkowa, narzędzia do zarządzania systemem oraz narzędzia do monitorowania systemu.
+Kolejne systemy graficzne, których nie użyjemy:
+- GNOME to środowisko graficzne dla systemów Linux i innych zgodnych z Unix, zaprojektowane dla prostej i łatwej obsługi. Interfejs użytkownika GNOME składa się z panelu górnego i dolnego oraz menu głównego, a aplikacje można uruchamiać za pomocą docka.
+
+- Xfce to lekkie i szybkie środowisko graficzne dla systemów Linux i innych zgodnych z Unix, które zapewnia minimalny interfejs użytkownika i niskie wymagania sprzętowe. Xfce składa się z panelu górnego i dolnego, menu głównego i menedżera plików.
+
+- GNOME Flashback to tryb powrotu do klasycznego interfejsu użytkownika GNOME 2, który został zastąpiony przez GNOME 3. Tryb ten umożliwia użytkownikom korzystanie z tradycyjnego menu i panelu, co jest przydatne dla użytkowników, którzy wolą starszy styl interfejsu.
+
+- KDE Plasma to zaawansowane i kompleksowe środowisko graficzne dla systemów Linux i innych zgodnych z Unix, które zapewnia wiele funkcji i możliwości konfiguracji. Interfejs użytkownika KDE Plasma składa się z menu głównego, paneli, wirtualnych pulpitu i menedżera plików.
+- Cinnamon to środowisko graficzne dla systemu operacyjnego Linux, które jest oparte na bibliotece GTK+ i zostało zaprojektowane z  prostotą oraz intuicyjnym interfejsie użytkownika. Cinnamon składa się z menu głównego, panelu, menedżera plików i menedżera okien.
+
+- MATE to środowisko graficzne dla systemu operacyjnego Linux, które jest oparte na bibliotece GTK+ i jest kontynuacją projektu GNOME 2. MATE składa się z panelu, menu głównego, menedżera okien i menedżera plików.
+
+- LXDE to lekkie środowisko graficzne dla systemu operacyjnego Linux, które jest skupione na minimalnym zużyciu zasobów systemowych. LXDE składa się z panelu, menedżera plików i menu głównego.
+
+- LXQt to kolejne lekkie środowisko graficzne dla systemu operacyjnego Linux, które jest oparte na bibliotece Qt i zapewnia prosty interfejs użytkownika. LXQt składa się z panelu, menedżera okien, menedżera plików i menu głównego.
+
+- Web Server to oprogramowanie serwerowe, które umożliwia hostowanie stron internetowych i aplikacji webowych. 
+
+- SSH Server to serwer, który umożliwia zdalne logowanie do serwera z wykorzystaniem protokołu SSH (Secure Shell).
+
+Instalacja GRUB loader - Potwierdzamy
+Grub loader należy zainstalować na pierwszych sektorach dysku. Powinien również  być zainstalowany na partycji rozruchowej.  W przypadku instalacji wielu systemów operacyjnych na jednym komputerze, Grub pozwala na wybór systemu operacyjnego, który ma zostać uruchomiony podczas startu komputera.
+
+Wybieram żądany dysk, w naszym przypadku jedyny dostępny.
+
+System zainstalowany, wystarczy potwierdzić!
+
+SYstem sam się zrestartuje, nalezy wybrac Debiana i zalogować się.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+.
+
+
+	
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

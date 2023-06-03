@@ -1,0 +1,12 @@
+#!/bin/bash
+
+## 5. Wypisanie liczb przy pomocy pętli for
+
+for i in {10..1..-2}; do
+    echo $i
+done
+
+# korzystając z pętli for, iterujemy przez liczby od 10 do 1 z krokiem -2,
+# czyli co dwie liczby w dół (10 -> 8 -> 6 itd.).
+# wartość każdej liczby jest przypisywana do zmiennej "i". 
+# wypisujemy przy pomocy "echo". 

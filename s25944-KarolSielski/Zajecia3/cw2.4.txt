@@ -1,0 +1,15 @@
+Treść: Napisz skrypt, który dla każdego pliku w bieżącym katalogu, który ma rozszerzenie .c wykona taką komendę:
+cc (tu_nazwa_pliku) -o (tu_nazwa_pliku_bez_rozszerzenia)
+
+#!/bin/bash
+
+for i in *.c; do 
+filename="${i%.c}"
+cc "$i" -o "$filename"
+done 
+
+Rezultat:
+Działa
+"*.c" powoduje że skrypt iteruje po wszystkich plikach w katalogu z rozszerzeniem ".c"
+Komenda powoduje kompilacje pliku .c, "-o" wskazuje na to ze plik ma miec taka nazwe jaka jest podana jako argument.
+

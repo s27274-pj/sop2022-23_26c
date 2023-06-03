@@ -1,0 +1,95 @@
+Zadanie 2:
+Treść: Zobacz taką serię poleceń:
+
+Pierwsze polecenie:
+
+-----
+
+X=tekst
+echo $X
+bash
+echo $X
+
+-----
+
+Co się stało?
+Wyjaśnienie 
+1. Przypisanie do zmiennej X wartości 'tekst'
+2. Output wartości X w terminalu. Czyli pojawienie się w terminalu napisu 'teskt'
+3. Rozpoczynamy nowy proces bash'a komedą bash, dowiedziałem się tego z StackOverflow: 
+https://stackoverflow.com/questions/29125177/what-exactly-does-the-unix-bash-command-do-when-run-without-options
+
+| CYTAT |
+Pyt: What exactly does the Unix `bash` command do when run without options?
+
+Odp: The short answer is that when you type "bash" at a bash prompt, it starts a new bash process.
+
+Bash is a program that reads command and executes them. It can read them from a file, or you can type them from an interactive prompt.
+
+When you run a terminal, it's simply a window that runs bash in interactive mode, possibly reading some initialization code first. When you type "bash" at one of these prompts it simply starts another instance of the bash program (ie: another process), running "inside" the original bash program (process) running in the window. When you exit this new bash program, you will be returned to the original bash program where you can type more commands.
+
+The prompt may or may not be different based on a whole bunch of reasons, many of which can be fine-tuned with bash command line options. Even if the prompt looks the same, you are operating in a different process from the original bash.
+| KONIEC CYTATU |
+
+4. Następnie w nowym procesie bash'a próbujemy wywołać output wartości X. Ale nie udaje nam się to ponieważ
+w nowym procesie nic nie jest przypisane do tej wartości. Aby drugi raz wyprintował nam się 'tekst' potrzebne by było
+użycie komend takich jak export.
+
+
+
+Drugie polecenie:
+
+-----
+
+X=Tekst dłuższy
+echo $X
+
+-----
+
+Co się stało?
+Wyjaśnienie 
+1. Przypisanie do zmiennej X wartości: Tekst dluzszy (nie uzywajac cudzysłowów ani apostrofów)
+2. Skrypt nie wykonuje się, program próbuje czytać wyraz dluzszy jako komende, ponieważ nie jest oznaczone, że całe wyrażenie
+powinno być wzięte pod uwagę
+3. Użycie apostofów lub cudzysłowów rozwiązuje ten problem
+
+Rozwiązanie
+-----
+$X='Tekst dłuższy' (lub) "Tekst dłuższy"
+$echo $X
+Tekst dłuższy
+-----
+
+Trzecie polecenie: Jaka jest różnica między " a ' ?
+
+-----
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+----- 
+
+Co się stało?
+Wyjaśnienie:
+1 Przypisaliśmy do wartości X="Tekst 1"
+2 Przypisaliśmy do wartości Y="tekst: $X"
+3 Wywołujemy wartość "$Y"
+4 W terminalu pojawia nam się wartość tekst:Tekst 1
+5 Nadpisujemy zmienną Y wartością = 'tekst:$X'
+6 Wywołujemy wartość "$Y"
+7 W terminalu pojawia nam się wartość tekst:$X
+8 Nadpisujemy zmienną Y wartością = tekst:$X
+9 Wywołujemy wartość "$Y"
+10 W terminalu pojawia nam się wartość tekst:Tekst 1
+
+Odpowiedź
+"a" pozwala na wprowadzanie zmiennych jak i kmendt takich jak \t
+'a' bierze wszystko co znajduje się pomiędzy znakami jako część wartości i nie pozwala na obecność wartości np. $X czy komend
+takich jak np. \t
+
+

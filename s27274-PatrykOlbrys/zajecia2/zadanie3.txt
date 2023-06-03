@@ -1,0 +1,18 @@
+$PATH przechowuje listę ścieżek które przeszukuje powłoka kiedy wpiszemy jakąś komendę.
+Może się przydać kiedy chcę stworzyć jakąś swoją komendę w programie w jakimś miejscu,
+które nie jest uwzględnione w tej zmiennej
+
+$RANDOM przechowuje losową liczbę. Można użyć do programów, które potrzebują losowych liczb
+
+$PWD przechowuje obecną ścieżkę w której znajduje się wykonywany skrypt.
+
+$PS1 przechowuje wartość prompta gdy coś wpisujemy. Może się przydać kiedy będziemy
+chcieli zmienić jego wygląd
+
+$USER przechowuje nazwę obecnego użytkownika. Może się przydać do np.
+przywitania użytkownika w terminalu.
+
+$HOSTNAME nazwa hosta obecnej maszyny
+
+$OSTYPE przechowuje nazwę obecnego systemu operacyjnego
+

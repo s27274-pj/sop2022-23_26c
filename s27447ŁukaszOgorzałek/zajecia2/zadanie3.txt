@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Zmienne:
+
+	# PATH: Zmienna PATH zawiera listę katalogów, w których system operacyjny szuka
+# plików wykonywalnych, które można uruchomić z wiersza poleceń bez podawania 
+# ścieżki. 
+
+	# RANDOM: Zmienna RANDOM zawiera losową liczbę całkowitą od 0 do 32767. 
+# Ta zmienna może być przydatna w skryptach, które wymagają generowania losowych liczb.
+
+	# PWD: Zmienna PWD przechowuje bieżący katalog roboczy.
+# Można wykorzystać tę zmienną, aby wyświetlić bieżący katalog roboczy lub wykonywać 
+# operacje na plikach w bieżącym katalogu.
+
+	# PS1: Zmienna PS1 określa wzór wiersza poleceń wyświetlanego przed każdym poleceniem.
+# Zmienna ta pozwala na dostosowanie wyglądu wiersza poleceń 
+# i może zawierać specjalne sekwencje znaków, takie jak \u (aktualne nazwa użytkownika),
+# \h (nazwa hosta), \w (bieżący katalog roboczy), itp.
+
+	# USER: Zmienna USER przechowuje nazwę aktualnie zalogowanego użytkownika.
+
+	# HOSTNAME: Zmienna HOSTNAME przechowuje nazwę hosta, na którym jest uruchomiony system 
+# operacyjny.
+
+	# OSTYPE: Zmienna OSTYPE przechowuje nazwę systemu operacyjnego, na którym jest 
+# uruchomiony Bash. Ta zmienna może być przydatna w skryptach, które muszą wykonywać 
+# różne operacje w zależności od systemu operacyjnego.
+
+# Krótkie przykładowe skrypty z wykorzystaniem powyższych zmiennych:
+# (znaki nowej lini dla lepszej klarowności po uruchomieniu skryptu)
+
+	# wyświetlenie bieżącego katalogu roboczego i zawartości katalogu:
+
+echo "Bieżący katalog roboczy: $PWD"
+echo "Zawartość katalogu:"
+ls
+
+	# wyświetlenie nazwy użytkownika i nazwy hosta:
+
+printf "\n" 
+
+echo "Użytkownik: $USER"
+echo "Host: $HOSTNAME"
+
+	# wyświetlenie zawartości zmiennych środowiskowych PATH i OSTYPE::
+
+printf "\n"
+
+echo "Zmienna PATH: $PATH"
+echo "Typ systemu operacyjnego: $OSTYPE"
+
+
+

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+arg="$1"
+arg_len=${#arg}
+last_char="${arg:$arg_len-1}"
+first_char="${arg:0:1}"
+SOP="\e[32mSOP\e[0m"
+
+echo "Pierwszy znak z argumentu: ${first_char}";
+
+echo "Ostatni znak z argumentu: ${last_char}";
+
+echo -e "${SOP}! ${SOP} w imieniu prawa! ${SOP} w imieniu prawa!";

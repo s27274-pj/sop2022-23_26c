@@ -1,0 +1,64 @@
+Skrypt:
+
+X=tekst
+echo $X
+bash
+echo $X
+
+Wynik:
+tekst
+
+Wyjasnienie:
+ > przypisujemy wartosc "tekst" do zmiennej o nazwie X
+ > wypisujemy wartosc X w terminalu za pomoca echo, czyli wypisujemy "tekst"
+ > polecenie bash uruchamia powloke bash, co oznacza ze tworzymy, nowa sesje powloki
+a wszystkie zmiany stworzone w poprzedniej sesji sa niedostepne. 
+Dlatego przy "echo $X" nie otrzymamy nic, poniewaz do $X nie zostala przypisana w aktualnej sesji zadna wartosc.
+
+(najlatwiej jest to ogarnac wpisujac skrypt w terminal linia po lini)
+
+
+
+Skrypt:
+
+X=Tekst dluzszy
+echo $X
+
+Wynik:
+bash: dluzszy: nie znaleziono polecenia
+
+Wyjasnienie:
+Przypisujac wartosc do zmiennej X, tekst zawierajacy znaki biale nie zostaly ujety w cudzyslów. 
+Powloka Bash traktuje znaki biale jako seprarator, do wartosci X jest przypisana wartosc "Tekst",
+a pózniej "dluzszy" jest interpretowane jako nowe polecenie, które nie istnieje.
+Aby naprawic skrypt nalezy objac cala przypisywana wartosc w cudzyslów(' lub ").
+
+
+
+Skrypt:
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+Wynik:
+
+tekst:Tekst 1
+tekst:$X
+tekst:Tekst 1
+
+Wyjasnienie:
+
+> Y="tekst:$X" tutaj zostal uzyty podwójny cudzyslów co oznacza, ze zmienne w tym cudzyslowie
+najpierw zostana zamienione na ich wartosc przed wykonaniem operacji przypisania do zmiennej. 
+A wiec Y="tekst:$X" -> Y="tekst:Tekst 1", co oznacza ze zmienna Y przechowuje tekst "tekst:Tekst 1"
+> Y='tekst:$X'tutaj zostal uzyty pojedynczy cudzyslów co oznacza, ze wszystkie znaki w tym cudzyslowie
+sa traktowane jako zwykly tekst i nie sa w zaden sposób interprestowane. Zmienna Y bedzie miala wartosc tekst:$X, 
+poniewaz zmienna $X nie zostala rozwienieta/zinterpretowana, przez co nie zostala podmieniona ze jej wartosc.
+> Y=tekst:$X tutaj nie zostaly uzyte zadne cudzyslowy/apostrofy. 
+Tutaj w wartosci nie wystepuja zadne separatory lub znaki biale(wyjasnione w wczesniej), dzieki czemu tekst bedzie potraktowany tak samo
+jak w przypadku pierwszym. Czyli Y równa sie "tekst:Tekst 1".

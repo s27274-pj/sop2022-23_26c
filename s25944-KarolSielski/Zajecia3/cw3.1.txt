@@ -1,0 +1,20 @@
+Treść: Przygotuj skrypt z funkcją która będzie wypisywała tekst pokolorowany na zadany kolor. Niech funkcja ta przyjmuje dwa argumenty - tekst i kolor.
+Zobacz man console_codes oraz składnię komendy echo (lub przykład z poprzednich zajęć).
+
+#!/bin/bash
+
+function color() {
+	local text=$1
+	local color=$2
+	echo -e "\e[${color}m${text}\e[0m"
+}
+
+color "Lorem ipsum dolor sit amet, consectetur adipiscing elit." "31"
+
+Rezultat: 
+Działa, chociaż nie wiem czy chodziło Panu, ze funckja ma być wywoływana bezpośrednio z pozycji konsoli czy w skrypcie.
+W każdym razie jest także zawarte przykładowe wywołanie tej funkcji z przykładowymi argumentami.
+
+"-e" pozwala na interpretacje specjalnych znaków np. "\e" bez tego wyprintowało by po prostu "\e[${color}m${text}\e[0m"
+kod koloru zaczyna się "\e" a kończy literą "m". Na końcu pojawia się \e[0m czyli zakończenie kodu koloru zapobiega to 
+zmienianiu koloru kolejnym liniom 

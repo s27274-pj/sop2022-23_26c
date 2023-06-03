@@ -1,0 +1,14 @@
+#ignore .idea directory
+.idea/
+
+#ignore .pdf files
+*.pdf
+
+#ignore binary files
+*.exe
+*.bin
+*.dat
+
+#ignore text sample files
+*.txt
+

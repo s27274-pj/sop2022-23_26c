@@ -1,0 +1,35 @@
+Zadanie 4:
+Treść:
+Wykonaj komendę ls -l w podpowłoce i przypisz ją do zmiennej X.
+
+Wyświetl zawartość tej zmiennej.
+
+Spraw, aby nie było różnicy (co najwyżej kolorki) między zwykłym wykonaniem komendy:
+
+-----
+
+ls -l
+
+-----
+
+a wypisaniem zawartości zmiennej X. Nie będzie dobrego rezultatu gdy zrobimy tak:
+
+-----
+
+echo $X
+
+-----
+
+Zastanów się dlaczego.
+
+Rozwiązanie:
+-----
+
+X = $(ls - l)
+echo "$X"
+
+-----
+
+ODP: Dzięki "" jest zachowane specjalne formatowanie tekstu takie jak znaki nowej lini, whitespaces itd
+Bez tego shell traktuje każdą linijkę jako nowy argument i wrzuca to do tej samej lini, poniewaz nie ma zachowanego 
+formatowania tesktu

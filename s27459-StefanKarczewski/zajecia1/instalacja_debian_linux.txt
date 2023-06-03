@@ -1,0 +1,207 @@
+# Przygotowania
+
+## Obraz Instalacyjny Debiana
+
+Zaczynam od przygotowania obrazu instalacyjnego Debiana. Na stronie https://www.debian.org/download z pierwszego widocznego linka pobieram obraz .iso Debian 11 netinst.
+
+## Obrazy Instalacyjne Typu Netinst
+
+Obrazy instalacyjne typu netinst polegają na tym, że większość komponentów systemu pobieramy z internetu w trakcie instalacji.
+Plusem takiego rozwiązania jest, że taki obraz zajmuje ledwo 400MB. Wszystko, czego będziemy potrzebować w trakcie lub po instalacji możemy pobrać sami. Jeśli mamy dostatecznie szybkie połączenie z internetem, netinst będzie zazwyczaj wygodniejszym wyborem.
+Z drugiej strony, jeśli wiemy, że na docelowej maszynie nie będziemy mieli dostępu do internetu, lub będzie on bardzo wolny, instalacja z obrazu netinst może zająć bardzo długo. Lepiej wtedy pobrać pełen obraz. Można go dostać nawigując na stronę https://www.debian.org/CD/http-ftp i wybierając odpowiednią architekturę pod sekcją DVD. Ja pracuję na procesorze AMD, więc wybrałbym architekturę amd64 (to samo tyczy się procesorów Intela). Wersja DVD zawiera pełen obraz instalacyjny.
+
+## VirtualBox
+
+Ze strony https://www.virtualbox.org/wiki/Downloads pobieram najnowszą wersję instalatora VirtualBoxa na Windowsa. Instalator zapyta o doinstalowanie Pythona oraz paru innych komponentów. Akceptuję wszystko i przechodzę dalej. Uruchamiam VirtualBox Manager.
+
+## Tworzenie Nowej Maszyny Wirtualnej
+
+Klikam przycisk "New". W oknie tworzenia nowej maszyny przechodzę w "Expert Mode" klikając przycisk na dole. Pozwoli mi on lepiej skonfigurować maszynę od samego początku.
+
+Ustawiam nazwę maszyny, wybieram katalog w którym będzie przechowywana i wybieram pobrany wcześniej obraz instalacyjny Debiana.
+
+Zaznaczam "Skip Unattended Install". Jest to tryb, w którym VirtualBox automatycznie instaluje system, ale ja z niego nie skorzystam.
+
+### Dobór Ilości Zasobów Maszyny
+
+W dokumentacji Debiana możemy znaleźć sekcję o wymaganiach sprzętowych: https://www.debian.org/releases/stable/i386/ch03s04.en.html. Będę instalował Debiana ze środowiskiem graficznym KDE Plasma, więc muszę też pamiętać o jego wymaganiach. Szukając pomocy w internecie można znaleźć odpowiedź na StackOverflow: https://unix.stackexchange.com/questions/359051/what-are-the-system-requirements-for-kde#359642. Wymagania KDE Plasma prawie pokrywają się z wymaganiami Debiana. Jako, że mam dostępne trochę więcej zasobów na swoim komputerze i chcę mieć całkiem płynne środowisko, zdecydowałem się na 4GB RAMu, 6 wątków CPU i 20GB miejsca na dysku.
+
+#### Typy Plików Dysków Twardych:
+
+- VDI - Domyślny format przy tworzeniu maszyn w VirtualBoxie. Jego plusem jest, że będzie najlepiej współpracował z VBoxem, bo jest jego natywnym formatem. Trudniejsze potem może być przeniesienie naszej maszyny na inny wirtualizator.
+- VHD - Format wbudowany w system Windows. Może nam się przydać, jeśli będziemy chcieli użyć natywnego Hyper-V lub łatwo przenieść naszą maszynę na Azure Cloud.
+- VMDK - Popularny, otwarty format wykorzystywany również w oprogramowaniu VMWare.
+- HDD - Format dysków maszyn wirtualnych w oprogramowaniu Parallels. Może być dla nas przydatny, jeśli chcemy potem używać naszej maszyny wirtualnej na Macach lub takowy otworzyć.
+- QCOW - Format dysków używany w oprogramowaniu QEMU.
+- QED - Format, który również był używany w QEMU. Teraz uznawany jest za przestarzały, i trzymany jest jedynie dla zachowania kompatybilności wstecznej.
+
+Jako, że nie planuję przenosić swojej maszyny na inne oprogramowanie ani nie potrzebuję żadnych specjalnych funkcji, zdecydowałem się na domyślny format VDI.
+
+Opcja "Pre-allocate Full Size" pozwala z góry zająć określoną ilość miejsca (rozmiar dysku) na dysku naszej maszyny. Potrafi to nieznacznie zwiększyć wydajność, lecz tutaj nie będziemy potrzebowali takiej funkcjonalności. Pozostawiam ją wyłączoną.
+
+### Po Utworzeniu Maszyny
+
+Klikam "Finish". Maszyna jest już gotowa do uruchomienia, lecz zanim ją wystartuję przejrzę wszystkie ustawienia (przycisk "Settings"). Wspomogę się dokumentacja VirtualBoxa: https://www.virtualbox.org/manual/ch03.html.
+
+#### General
+
+Ustawienia w zakładce "Basic" to to samo, co ustawiłem na początku kreatora maszyny, więc nie muszę już ich ruszać.
+
+W zakładce "Advanced" mogę ustawić gdzie będą zapisywały się snapshoty (migawki) maszyny. Domyślny katalog jest w porządku. Opcje "Shared Clipboard" oraz "Drag'n'Drop" pozostawiam wyłączone, ponieważ nie przydadzą mi się przy procesie instalacji.
+
+W zakładce "Description" mogę opisać swoją maszynę. Może to być przydatne, jeśli przygotowuję jakąś maszynę do wykonywania konkretnego zadania lub w celach demonstracyjnych.
+
+W ostatniej zakładce, czyli "Disk Encryption" mogę włączyć szyfrowanie dysku. Mam do dyspozycji dwa typy szyfrów oraz hasło. Szyfrowanie może być przydatne, jeśli udostępniamy naszą maszynę innym osobom i nie chcemy pozwolić na niepożądany dostęp. Mi ta opcja się nie przyda, ponieważ tworzę jedynie prostą maszynę do testowania.
+
+#### System
+
+W zakładce "Motherboard" mogę skonfigurować jak będzie wyglądała wirtualna płyta główna maszyny. Suwak z pamięcią to ten sam parametr, który ustawiłem wcześniej. W sekcji "Boot Order" odznaczam "Floppy" ponieważ nie będę używał dyskietek. "Optical" pozostawiam nad "Hard Disk". Maszyna za pierwszym razem wystartuje z płyty, aby zainstalować z niej system. "Chipset" pozostawiam na domyślnym ustawieniu, ponieważ z tego co wyczytałem w internecie, chipset ICH9 istnieje jako kompatybilność z systemami MacOS, więc nie jest mi potrzebny. Opcję "TPM" również pozostawiam na domyślnym "None", ponieważ nie będę go potrzebował. Włączyłbym TPM, gdybym instalował Windows 11, który go wymaga. "Pointing Device" też zostawię na domyślnym "USB Tablet". Ta metoda jest polecana jako najpłynniejsza i najprostsza dla maszyn wirtualnych. Opcję "Enable I/O APIC" pozostawiam włączoną, ponieważ jest wymagana, aby używać więcej niż jednego rdzenia procesora. "Enable Hardware Clock in UTC Time" zostawiam włączony, ponieważ systemy UNIXowe raczej preferują taki format zegara systemowego. "Enable EFI" pozostawiam wyłączone - będę korzystał z klasycznego BIOSa. Włączyłbym EFI, gdybym instalował np. Windowsa. "Secure Boot" dostępny jest tylko przy włączonym EFI i sprawia on, że proces uruchamiania systemu jest bezpieczniejszy.
+
+W zakładce "Processor" mogę ustawić ile wątków mojego procesora będzie dostępne dla maszyny wirtualnej. Ustawiałem to już w kreatorze maszyny, więc pozostawiam tak jak jest. "Execution Cap" pozwala ustawić maksymalne użycie przydzielonych wątków. Ta opcja może się przydać, jeśli przydzielamy maszynie większość (lub wszystkie) wątki procesora, aby nie przeciążyć hosta, bo on wciąż potrzebuje zasoby aby maszyna wirtualna dobrze działała. Opcja "PAE" włącza wsparcie dla rozszerzenia przestrzeni adresów pamięci. Nie będzie mi ono potrzebne, lecz może okazać się przydatne przy używaniu 32-bitowych procesorów lub przy instalacji pewnych systemów (np. Ubuntu Server). "Nested VT-x/AMD-v" pozwala na uruchamianie zagnieżdżonych maszyn wirtualnych. Moja maszyna jest za mała, żeby bawić się w coś takiego, więc nie potrzebuję tej opcji.
+
+W zakładce "Acceleration" możemy wybrać interfejs parawirtualizacji. Będę instalował Debiana, więc wybiorę "KVM", aby system mógł skorzystać z benefitów parawirtualizacji. Opcję "Enable Nested Paging" zostawiam zaznaczone. Maszyna będzie miała bardziej bezpośredni dostęp do funkcji procesora, co pozytywnie wpłynie na wydajność.
+
+#### Display
+
+W zakładce "Screen" ustawiam jak ma zachowywać się ekran podłączony do maszyny. "Video Memory" ustawiam na maksymalną dla mnie wartość 128MB, bo środowisko KDE Plasma może być całkiem wymagające w kwestii pamięci wideo. "Monitor Count" pozostawiam na 1, bo nie potrzebuję ich więcej. "Scale Factor" pozostawiam na domyślnym 100%. Ta opcja mogłaby okazać się przydatną, gdybyśmy chcieli mieć monitor małej rozdzielczości, ale widzieć go w większym oknie. "Graphics Controller" pozostawiam na opcji "VMSVGA" - jest ona domyślna dla maszyn z Linuxem i będzie najlepiej się dla niego sprawdzała. Włączam "Enable 3D Acceleration", ponieważ będę chciał skorzystać z tej funkcji, aby moje środowisko działało płynniej (Plasma jest wymagająca).
+
+W zakładce "Remote Display" mogę pozwolić na połączenie się z wyświetlaczem mojej maszyny z innych komputerów. Nie będę korzystał z tej opcji.
+
+W zakładce "Recording" mogę włączyć automatyczne nagrywanie ekranu mojej maszyny. Może się to okazać przydatne w przypadku nagrywania różnego rodzaju filmów instruktażowych. Byłaby to prawdopodobnie całkiem wydajna opcja w porównaniu z nagrywarkami ekranu, które mogę włączyć na moim hoście, lecz nie będzie mi ona potrzebna.
+
+#### Storage
+
+Na kontrolerze IDE mam już skonfigurowany obraz iso z instalacją Debiana, który wybrałem na początku kreatora maszyny.
+
+Na kontrolerze SATA jest zamontowany dysk, który również utworzyłem na początku. Mogę tu dodawać, usuwać i modyfikować dyski.
+
+#### Audio
+
+Opcja "Host Audio Driver" ustawia którego sterownika dźwięku używa VBox do odtwarzania audio na systemie hosta. Zostawiam na "Default", żeby była ona wybierana automatycznie. Default też pozwala na prostsze przenoszenie maszyn między systemami, bo nie trzeba go zmieniać za każdym razem. "Audio Controller" pozwala ustawić konkretny typ karty dźwiękowej, który będzie emulowany. "ICH AC97" wydaje się dobrym defaultem, więc nie będę go zmieniał. Inne opcje prawdopodobnie przydałyby się gdybym uruchamiał stare systemy, które wspierają tylko te konkretne karty dźwiękowe. "Enable Audio Output" pozostawiam włączone, aby słyszeć dźwięk z maszyny wirtualnej. Nie przewiduję, że będę używał mikrofonu w VM, więc "Enable Audio Input" pozostawiam wyłączone.
+
+#### Network
+
+W tej zakładce mogę skonfigurować adaptery sieciowe oraz ich typy. Pozostawiam włączony "Adapter 1", a reszta powinna być domyślnie wyłączona. Pozostawiam "Attached to" na "NAT", ponieważ jest ona najprostszym sposobem na korzystanie z sieci systemu hosta w VM. Zapewni to też pewną warstwę bezpieczeństwa, ponieważ żaden serwis uruchomiony na maszynie hosta nie będzie dostępny w VM i vice-versa.
+
+W opcjach zaawansowanych mogę ustawić "Adapter Type", jeśli wiem że system, którego będę używał go (nie) wspiera. Ustawię tutaj "PCnet-FAST III", ponieważ według dokumentacji VirtualBoxa jest on wspierany na praktycznie każdym systemie. Domyślny wybór "Intel PRO/1000 MT" pozostawiłbym, gdybym instalował Windowsa. Pole "MAC Address" pozwala ustawić konkretny adres MAC maszyny. VBox generuje adresy w przestrzeni "080027", dzięki czemu system oraz urządzenia w sieci mogą łatwo określić, że jest on maszyną wirtualną. Opcja "Cable Connected" dosłownie podłącza/odłącza kabel sieciowy od maszyny. Mogę tą opcję przełączać, kiedy maszyna będzie już włączona. Klikając w "Port Forwarding" otwiera się okno, w którym mogę skonfigurować przekierowane porty w sieci NAT. Może okazać się to przydatne, gdybym chciał łączyć się do np. serwera SSH lub FTP włączonego w maszynie wirtualnej.
+
+#### Serial Ports
+
+W tej zakładce mogę włączyć porty szeregowe. Mogą być one przydatne do zabawy ze starszymi technologiami, które wymagają tego typu połączenia. Nie będę robił niczego takiego, więc wszystkie 4 porty pozostawiam wyłączone.
+
+#### USB
+
+W tej zakładce mogę skonfigurować kontroler USB maszyny. Nie przewiduję, że będę potrzebował czegoś więcej niż USB 2.0, więc pozostawię domyślnie wybraną opcję. Użyłbym USB 3.0, gdybym tworzył maszynę do bardziej wymagających zadań, gdzie potrzebowałbym np. kopiować dużo danych z zewnętrznych dysków.
+
+W sekcji "Device Filters" mogę ustawić, które urządzenia podłączone do hosta będą automatycznie podłączane do VM przy jej starcie. Nie potrzebuję niczego tu dodawać, ale byłoby to przydatne w sytuacji, gdzie miałbym np. dwie klawiatury - jedną dla systemu hosta, a drugą dedykowaną dla gościa.
+
+#### Shared Folders
+
+W tej zakładce mogę zamontować katalogi z systemu hosta bezpośrednio do maszyny wirtualnej. Może to być przydatne, jeśli mam jakiś katalog z projektami, dokumentami lub innymi przydatnymi również w VM plikami.
+
+#### User Interface
+
+W tej zakładce mogę ustawić jakie opcje będą dostępne w interfejsie VirtualBoxa przy włączonej maszynie. Domyślne opcje mi odpowiadają, ale zależnie od systemu niektóre z nich mogą być niedostępne lub nieprzydatne.
+
+# Instalacja Debiana
+
+Będę korzystał z dokumentacji Debiana: https://www.debian.org/releases/stable/i386/ch06.en.html
+
+Klikam "Start" aby uruchomić maszynę. Wybieram "Install", aby instalator wystartował w trybie startowym.
+
+## Podstawowe Ustawienia
+
+Wybieram język angielski instalatora. W Locale Wybieram "other" -> "Europe" -> "Poland" i "United State - en_US.UTF-8". Keymap wybieram "Polish", aby móc wpisywać polskie znaki.
+
+Po chwili trafiam na ekran, gdzie ustawiam hostname. Jest to nazwa, która będzie widoczna dla innych komputerów w sieci. Zostawię domyślny hostname "debian". Na ekranie z wyborem domeny pozostawiam pustą wartość, ponieważ nie będę łączył żadnych komputerów w sieć.
+
+## Konta Użytkowników
+
+W następnym kroku muszę wybrać kasło roota. Jest to konto o najwyższych uprawnieniach ("administratora"). Powinno mieć ono silne hasło, ponieważ dostęp do niego daje dostęp do każdego innego konta w systemie. W niektórych przypadkach może być nawet przydatne wyłączenie konta roota w celu zwiększenia bezpieczeństwa. Przygotowuję maszynę do testowania i nauki, więc ustawię tutaj hasło, aby móc korzystać z roota.
+
+Następny krok to ustawianie konta użytkownika. Będzie ono miało normalne uprawnienia, więc z niego będę korzystał na codzień. Jako full name podaję "Stefan". "Username" ustawiam na to samo, tylko z małej litery, ponieważ nazwy użytkowników mogą zawierać tylko małe litery i cyfry. Dla swojego użytkownika też ustawiam bezpieczne hasło.
+
+## Podział Przestrzeni Dyskowej
+
+W następnym kroku należy podzielić przestrzeń dyskową na partycje. W trybie "Guided" instalator pomoże mi podzielić dysk w popularny sposób. Jest to dobra opcja, kiedy nie potrzebujemy żadnych bajerów ani nie mamy specjalnych wymagań, lecz ja chcę mieć 100% kontroli nad tym, jak dysk będzie finalnie podzielony. Wybieram tryb "Manual", aby samemu móc skonfigurować wszystkie parametry.
+
+Wybieram do podzielenia dysk "sda", który przydzieliłem do maszyny na samym początku. Odpowiadam "Yes" na pytanie o stworzeniu nowej tablicy partycji. Pojawiło mi się nieprzydzielone miejsce "FREE SPACE". Wchodzę w nie, aby je podzielić.
+
+Mam możliwość manualnego stworzenia nowej partycji, automatycznego przydzielenia domyślnego miejsca lub pokazania informacji dysku. Druga opcja (automatycznego podzielenia) stworzy mi partycję systemową oraz 1GB partycję swap. Chcę stworzyć większą partycję swap, więc skorzystam z opcji "Create a new partition" i zrobię to manualnie.
+
+Kreator prosi mnie o podanie rozmiaru partycji. Chcę przydzielić 4GB dysku na przestrzeń swap i resztę na dysk systemowy. Zacznę więc od stworzenia partycji swap typu "primary" na końcu tablicy partycji.
+
+### Partycje Podstawowe Vs Logiczne
+
+Na jednym dysku mogę mieć maksymalnie 4 partycje typu "primary". Jeśli chciałbym stworzyć więcej niż 4 partycje na dysku, musiałbym stworzyć 3 partycje "primary" i resztę tworzyć jako "logical". Jako, że będę miał tylko jedną partycję, wybieram typ "primary".
+
+### Systemy Plików
+
+Przechodzę teraz do "Partition settings". W opcji "Use as" mogę wybrać jaki system plików będzie na tej partycji:
+
+- Domyślna opcja ext4 to domyślny system plików dla większości Linuxowych systemów
+- ext3 jest poprzednikiem ext3 i również jest popularną opcją.
+- Według dokumentacji Debiana ext2 jest używany domyślnie dla partycji /boot jeśli ją skonfigurujemy
+- btrfs jest współczesnym systemem plików dla Linuxa, który ma zaawansowane funkcje i dodatkowe zabezpieczenia przed utratą danych
+- jfs podobno używa mniej CPU w porównaniu z innymi Linuxowymi systemami plików i pozwala na ustawienie wielu optymalizacji, aby przyspieszyć go jeszcze bardziej
+- xfs jest szczególnie przydany, kiedy używamy go między wieloma fizycznymi dyskami
+- fat16 i fat32 są prostymi systemami plików stworzonymi przez Microsoft, ale ich głównym ograniczeniem jest mały maksymalny rozmiar pliku (4GB), więc spotyka się je raczej na przenośnych mediach (np. pendrive)
+- swap area to partycja, która pozwala na rozszerzenie pamięci RAM, ale zamiast wydzielać pod niej stałej ilości miejsca można stworzyć swapfile
+
+### Inne Opcje Partycji
+
+Dla partycji swap wybieram typ "swap area" oraz "Bootable flag" zostawiam na "off".
+
+Wybieram "Done setting up the partition" i tworzę nową partycję typu "Primary" na pozostałym miejscu na dysku (w moim przypadku 17.5GB). Dla partycji systemowej wybieram domyślny typ ext4, bo jest on najbardziej uniwersalną opcją instalując Linuxa.
+
+"Mount Point" określa gdzie będzie zamontowana partycja. Jako, że to partycja systemowa, zostawiam domyślną wartość "/".
+
+"Mount Options" pozwala wybrać dodatkowe opcje przy montowaniu dysku. Niektóre z nich mogą zabezpieczyć dane (np. ro, nodev, noexec), włączyć przydziały miejsca dla użytkowników (usrquota, grpquota) lub korzystać z innych zaawansowanych opcji. Na partycji systemowej nie będę potrzebował żadnych opcji, ale jakbym montował np. zewnętrzne dyski z danymi które będę tylko czytał użyłbym "ro" lub gdyby system był dostępny dla wielu użytkowników, mógłbym skorzystać z "usrquota".
+
+"Label" określa jak będzie nazwana partycja. Ustawienie labelów jest przydatne jak mamy sporo partycji. Ustawiam "debian" jako label swojej partycji systemowej.
+
+"Reserved blocks" pozwala zarezerwować pewną przestrzeń tylko i wyłącznie dla roota systemu. Domyślna wartość "5%" zostawi nam paręset megabajtów na wszelki wypadek, gdybyśmy musieli naprawić coś przy zapełnionym dysku.
+
+"Typical usage" ustawia pewne parametry partycji zależnie od jej użycia. Partycja ustawiona jako "news" będzie miała mniejsze bloki niż standardowe, co jest lepszym rozwiązaniem dla dużej ilości małych plików. Tryby "largefile" oraz "largefile4" przydazą się dla np. serwerów operujących na dużych plikach. Ja pozostanę przy domyślnej opcji "standard".
+
+"Bootable flag" ustawia informację, że na tej partycji znajduje się system operacyjny. Ustawię go na "on", aby BIOS wiedział, że może z niej uruchomić system.
+
+### Podsumowanie
+
+Finalnie skończyłem z 17.5GB partycją systemową ext4 oraz partycję typu swap o rozmiarze 4GB. Wybieram "Finish partitioning and write changes to disk". Na kolejnym ekranie mam ostatnie potwierdzenie przed zapisaniem wprowadzonych zmian na dysku. Ten krok istnieje, aby móc jeszcze raz sprawdzić, czy na pewno nie usuniemy w ten sposób niczego ważnego. Wybieram "Yes" aby przejść dalej.
+
+## Konfiguracja Menedżera Pakietów
+
+Po chwili czekania dostaję pytanie o przeskanowanie obrazu instalacyjnego. Mam obraz netinst, więc nie będę miał na nim żadnych dodatkowych pakietów do instalacji. Wybieram "No" aby przejść dalej.
+
+W kolejnym kroku muszę skonfigurować manager pakietów. Pierwsza opcja to wybranie z jakiego serwera będą pobierane pakiety. Wchodzę w "Poland" i wybieram "ftp.task.gda.pl", bo to serwer pakietów, który znajduje się na Politechnice Gdańskiej, a mam do niej ledwo parę kilometrów, więc pakiety powinny pobierać się szybko.
+
+W tym momencie spotkałem się z problemem, gdzie żaden serwer pakietów nie odpowiadał. Było to spowodowane tym, że mam włączony VPN na hoście.
+
+Mogę też ustawić proxy do dostępu do internetu. W mojej sieci nie jest to potrzebne, więc pozostawiam te pole puste i przechodzę dalej.
+
+Po chwili otrzymuję pytanie, czy chciałbym wziąć udział w badaniach popularności pakietów. Pomaga ono określić jakie pakiety powinny być na pierwszej płycie z pełnymi instalatorami systemu. Wybieram "Yes" i przechodzę dalej.
+
+## Wybór Funkcji Systemu
+
+Instalator uruchomił teraz "tasksel", który pozwala wybrać komponenty systemu. Domyślnie zaznaczone jest środowisko graficzne GNOME, lecz ja zmienię je na KDE Plasma. Można zainstalować wiele różnych środowisk i przełączać się między nimi, ale nie jest mi to potrzebne. Opcja "web server" zainstaluje serwer Apache, za pomocą którego możemy hostować różne serwisy internetowe. Opcja "SSH server" zainstaluje openssh, który pozwoli nam postawić serwer SSH, do którego możemy łączyć się z innych maszyn. "Standard system utilities" pozostawiam zaznaczone, bo posiada ono na pewno przydatne narzędzia potrzebne do pracy.
+
+## Instalacja Bootloadera
+
+Po dłuższej chwili pojawia się okno z pytaniem, czy zainstalować GRUBa. Aby system mógł wystartować, potrzebuję jakiegoś bootloadera, więc wybieram "Yes". Wybieram partycję /dev/sda1, ponieważ to moja partycja systemowa i jako jedyna ma ustawioną flagę "bootable".
+
+## Finalizacja
+
+Skończyłem instalację, wybieram "Continue". Maszyna się automatycznie zrestartuje. Trafiam do GRUBa, gdzie mogę wybrać który system się uruchomi. Domyślną opcją jest Debian. Bez wybrania konkretnego systemu włączy się on automatycznie po 5 sekundach.
+
+# Po Instalacji
+
+Uruchamiam system i loguję się do niego hasłem użytkownika, które ustawiłem na początku instalacji.
+
+Ustawię swojego użytkownika tak, aby mógł korzystać z `sudo`, by nie musieć logować się na roota za każdym razem wykonując jakieś administracyjne zadania. Otwieram terminal i wpisuję `su -`. Wpisuję hasło roota. Następnie wpisuję `visudo`, aby edytować plik z zasadami dostępu do sudo. Na końcu pliku dopisuję `stefan ALL=(ALL) ALL`, zapisuję plik i wychodzę z niego. `visudo` pilnuje, żeby nie zrobić błędów w tym pliku, więc nie powinno być żadnych problemów, jeśli nie zgłosi mi błędów. Mogę już wyjść z konta roota i programy wymagające dostępu do konta roota uruchamiać za pomocą `sudo`.
+
+Upewniam się, że menadżer pakietów (apt) ma informacje o najnowszych wersjach pakietów: `sudo apt update`. Następnie aktualizuję zainstalowane pakiety: `sudo apt upgrade`. Teraz powinienem mieć najbardziej aktualne wersje pakietów na swoim systemie.
+
+Doinstaluję również kilka przydatnych programów, których na pewno będę jeszcze używał: `sudo apt install vim htop neofetch`.
+
+Zainstaluję też VirtualBox Guest Additions korzystając z poradnika znalezionego w internecie: https://www.pragmaticlinux.com/2021/09/install-the-virtualbox-guest-additions-in-debian-11-bullseye/. Najpierw instaluję potrzebne pakiety: `sudo apt install build-essential dkms linux-headers-$(uname -r)`. Następnie z menu VirtualBoxa "Devices" wybieram "Insert Guest Additions CD Image". Montuję płytę, wchodzę do katalogu z nią i otwieram w nim terminal. Wykonuję komendę `sudo sh ./VBoxLinuxAdditions.run`. Uruchamiam ponownie maszynę aby załadować zainstalowane moduły.

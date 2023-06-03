@@ -1,0 +1,7 @@
+#!/bin/bash
+
+X=$(ls -l)
+echo "$X" # bez cudzyslowa shell dzieli string X na argumenty za pomoca IFS
+          # Internal Field Separator ktory domyslnie rodzdzielal bedzie rowniez
+          # po znaku nowej lini ( tez spacja i tab ) to sprawia ze znaki biale
+          # sa widoczne jako spacja.  

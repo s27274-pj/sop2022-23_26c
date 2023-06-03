@@ -1,0 +1,4 @@
+#!/bin/bash
+for file in "$PWD"/*; do  #iterates over every file in the present directory
+	echo "Patrzcie Państwo, oto plik: $file";
+done

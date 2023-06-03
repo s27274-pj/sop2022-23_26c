@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ $# -ge 1 ]; then  # '$#' is the number of arguments, '-ge' means 'greater or equal'
+	echo "$1"  # '$1' is the first parameter
+else
+	echo "Nie podano argumentow"
+fi

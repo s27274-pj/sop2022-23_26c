@@ -1,0 +1,26 @@
+X=tekst
+echo $X
+bash
+echo $X
+
+Komenda bash otwiera podpowłokę, więc reszta programu nie ma dostepu do poprzednich zmiennych
+
+X=Tekst dłuższy
+echo $X
+
+Jeżeli nie użyjemy '' albo "" czyli nie określimy całej zmiennej, tylko pierwsza część jest zapisana jako zmienna,
+druga jej część zostaje zinterpretowana jako komenda wyrzucając błąd:
+./cwiczenie2.sh: line 2: $'dłuższy\r': command not found
+
+X="Tekst 1"
+Y="tekst:$X"
+echo "$Y"
+Y='tekst:$X'
+echo "$Y"
+Y=tekst:$X
+echo "$Y"
+
+X="Tekst 1" zapisuje cały String do zmiennej
+Y="tekst:$X" zapisuje String "tekst:" oraz dodaje do niego zmienną X poprzez odwołanie $X
+Y='tekst:$X' zapisuje w zmiennej Y "tekst:$X" zapisując $X jako tekst, nie jako wywołanie zmiennej
+Y=tekst:$X działa analogicznie do: Y="tekst:$X"

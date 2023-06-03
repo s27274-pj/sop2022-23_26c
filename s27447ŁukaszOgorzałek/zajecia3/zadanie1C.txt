@@ -1,0 +1,56 @@
+#!/bin/bash
+
+## 3. Skrypt zmieniający rozszerzenie pliku
+
+## A) Metoda uniwersalna - dopasowanie do wyrażenia regularnego:
+
+script_name=$(basename "$0")
+
+if [[ ! $script_name =~ \.sh$ ]]; then
+    mv "$0" "${0}.sh"
+    script_name="${script_name}.sh"
+fi
+
+# wypisanie nazwy skryptu
+echo "Nazwa skryptu: $script_name"
+
+
+# na początku przypisujemy nazwę skryptu do zmiennej 
+#("$0" przechowuje ścieżkę bieżącego skryptu, a funkcja "basename" usuwa ścieżkę, 
+# pozostawiając samą nazwę skryptu.)
+
+# przy pomocy instrukcji warunkowej sprawdzamy, czy nazwa skryptu nie kończy się
+# na .sh (dopasowanie do wyrażenia regularnego).
+# jeśli warunek jest spełniony, zmieniamy nazwę bieżącego skryptu i aktualizujemy
+# zmienną "script_name". 
+
+## B) Porównanie ostatnich trzech liter:
+
+script_name=$(basename "$0")
+extension=${script_name: -3}
+
+if [[ $extension != ".sh" ]]; then
+    mv "$0" "${0}.sh"
+    script_name="${script_name}.sh"
+fi
+
+echo "Nazwa skryptu: $script_name"
+
+# podobnie jak w A), tutaj jednak wykorzystujemy zmienną "extension", która przechowuje
+# ostatnie trzy znaki nazwy skryptu, a następnie porównujemy tę zmienną do ciągu ".sh".
+
+## C) Mechanizm Bash do wyciągania części napisów:
+
+script_name=$(basename "$0")
+extension=${script_name##*.}
+
+if [[ $extension != "sh" ]]; then
+    mv "$0" "${0}.sh"
+    script_name="${script_name}.sh"
+fi
+
+echo "Nazwa skryptu: $script_name"
+
+# skrypt ten wygląda bardzo podobnie do B), jednak w tym przypadku używamy wbudowanego mechanizmu,
+# który do zmiennej "extension" przypisze tylko to, co znajduje się po kropce (usunie wszystko,
+# co zapisaliśmy we wzorcu, czyli "*.").

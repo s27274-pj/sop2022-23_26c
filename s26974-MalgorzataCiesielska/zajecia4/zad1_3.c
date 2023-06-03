@@ -8,17 +8,17 @@ int main(int argc, char** argv) {
 	int i;
 	for (i = 1; i <= height; i++) {
 		int j = 0;
-		while (j < spaces) {
+		while (j < spaces) {  /*first prints however many spaces necessary*/
 			printf(" ");
 			j++;
 		}
 		j = 0;
-		while (j < stars) {
+		while (j < stars) {  /*then prints however many lines necessary*/
 			printf("*");
 			j++;
 		}
 		spaces--;
-		stars += 2;
+		stars += 2;  /*each row has two more stars than the one before*/
 		printf("\n");
 	}
 	return 0;

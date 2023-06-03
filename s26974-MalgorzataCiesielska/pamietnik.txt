@@ -45,3 +45,10 @@ Sporo o procesach. Była to dla mnie pierwsza podczas tych zajęć kompletnie no
 Było sporo googlowania i zastanawiania się co i dlaczego nie działa, w szczególności przy zadaniu z chat-em, 
 jednak myślę, że udało mi się w miarę opanować temat (oczywiście tylko na podstawowym poziomie i na pewno sporo minie zanim w pełni
 osiądą te wszystkie nowe informacje :)).
+
+----------------------------------------------------------
+
+2023-05-20
+Moj kochany pamietniczku na dzisiejszych zajeciach nauczyłam sie:
+O socketach i sygnałach, bardzo dużo nowego materiału, nienajłatwiejszego do przyswojenia, ale za to bardzo ciekawego.
+Poznanie jak takie rzeczy działają od podstaw pozwala zyskać nową perspektywę na programowanie i jest to bardzo rozwijające :)

@@ -17,3 +17,13 @@ Na zajęciach nauczyłem się:
 - obsługiwania pętli
 - tworzenia oraz wykorzystania tablic
 - tworzenia funkcji do wielokrotnego wykorzystywania
+
+
+22.04.2023
+
+Na zajęciach nauczyłem się:
+- pisać programy w jezyku C w standardach C90, C99
+- kompilować programy dbając o poprawnośc kodu
+- obsługiwać wczytywanie plików i manipulację danymi z nich
+- używania wskaźników
+- implementacji dynamicznego przydziału pamięci oraz jej zwalniania

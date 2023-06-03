@@ -40,7 +40,7 @@ void connectToServer(int clientSocket, struct sockaddr_in serverAddress) {
 char* formRequest(char* data) {
     char* request;
     int requestLength;
-    requestLength = 13 + strlen(data);
+    requestLength = 13*sizeof(char) + strlen(data);
     request = (char*)calloc(requestLength, sizeof(char));
     if (request == NULL) {
         error("Error, failed to allocate memory");
@@ -66,11 +66,13 @@ void sendRequest(int clientSocket) {
     }
     memcpy(filename, buffer, (int)strlen(buffer)-1);
     request = formRequest(filename);
-    n = write(clientSocket, request, sizeof(request)); 
+    printf("Sending request: %s\n", request);
+    n = write(clientSocket, request, strlen(request)); 
+    printf("%d\n", n);
     if (n < 0) {
         error("Error, failed to write to socket");
     }
-    printf("Request sent to server\n")
+    printf("Request sent to server\n");
 }
 
 int main(int argc, char *argv[]) {

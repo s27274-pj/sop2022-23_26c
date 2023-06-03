@@ -10,6 +10,11 @@ typedef struct Node {
 /* Funkcja do dodawania elementu na koniec listy */
 void append(Node** headRef, int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
+	if (newNode == NULL) {
+		perror("Failed to allocate memory for new node.\n");
+		exit(1);
+    }
+	
     newNode->data = data;
     newNode->next = NULL;
 

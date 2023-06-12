@@ -87,6 +87,8 @@ int main() {
     }
 
     printf("%s", "cos");
+        
+    free(head);
 
     return 0;
 }

@@ -26,7 +26,7 @@ struct node* addAtBeg(struct node* head, int data) {
     tej pamięci nie udało się zarezerwować */
         
     temp->prev = NULL;
-    /* ^ ustawiamy część prev na NULL*/
+    /* ^ ustawiamy część prev na NULL */
         
     temp->data = data;
     /* ^ ustawiamy część data na takie dane
@@ -51,6 +51,13 @@ struct node* addAtBeg(struct node* head, int data) {
 
 int main() {
 
+    struct node* ptr;
+    /* ^ Deklarujemy pointer ptr */
+
+    struct node *tail = malloc(sizeof(struct node));
+    /* ^ Rezerwuję pamięć dla nowego node'a i tworzę wskaźnik,
+    który na niego wskazuje */
+
     struct node *head = malloc(sizeof(struct node));
     /* ^ Rezerwuję pamięć dla nowego node'a i tworzę wskaźnik,
     który na niego wskazuje */
@@ -61,8 +68,6 @@ int main() {
     }
     /* ^ Sprawdzamy czy udało się zaalokować pamięć */
 
-    struct node* ptr;
-    /* ^ Deklarujemy pointer ptr */
 
     head->prev = NULL;
     /* ^ To część node'a która wskazuje na poprzedniego.
@@ -75,20 +80,23 @@ int main() {
     /* ^ Narazie mamy tylko jeden node więc też ustawiamy część wskazującą
     na następny na NULL */
 
-    head = NULL;
-    /* ^ Wartość pointera head ustawiamy na NULL */
     
-    head = addAtBeg(head, 34);
+    tail = addAtBeg(head, 34);
 
-    ptr = head;
+    ptr = tail;
     while(ptr != NULL) {
         printf("%d ", ptr->data);
         ptr = ptr->next;
     }
 
-    printf("%s", "cos");
-        
     free(head);
+    free(tail);
+    /* ^ Stworzyliśmy dwa nody i zwolniliśmy dla
+    nich obu pamięć */
+    head = NULL;
+    /* ^ Wartość pointera head ustawiamy na NULL */
+    tail = NULL;
+    /* ^ Wartość pointera tail ustawiamy na NULL */
 
     return 0;
 }

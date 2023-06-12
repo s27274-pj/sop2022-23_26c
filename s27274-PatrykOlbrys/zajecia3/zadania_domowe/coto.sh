@@ -7,7 +7,7 @@ if [[ $# == 0 ]]; then
 elif [[ $# -ge 2 ]]; then
 # -ge Greater or equal
   echo "Podaj tylko jeden argument!"
-elif [[ "$arg" =~ ^[0-9][0-9]-[0-9][0-9][0-9]$ ]]; then
+elif [[ "$arg" =~ ^[0-9]{2}-[0-9]{3}$ ]]; then
   echo "kod pocztowy"
 elif [[ "$arg" =~ ^[A-PR-UWZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż]+$ ]]; then
   echo "imię"

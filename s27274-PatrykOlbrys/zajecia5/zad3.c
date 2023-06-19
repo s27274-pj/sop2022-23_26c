@@ -35,9 +35,6 @@ int main(int argc, char **argv) {
         default:
             /* Rodzic */
 
-            waitpid(p, &status, 0);
-            /* ^ Rodzic czeka na dziecko */
-
             for (i = 0; i <= arg1; i++) {
                 sum += i;
             }

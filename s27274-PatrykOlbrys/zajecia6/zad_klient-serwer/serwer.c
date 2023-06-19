@@ -6,21 +6,21 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define PORT_NO 32265
+#define PORT_NO 32222
 
-void error(char *message)
+void error(char *msg)
 {
-    perror(message);
+    perror(msg);
     exit(1);
 }
 
-void shutdownsrv(int signum)
+void exit(int signum)
 {
     printf("\nExiting...\n");
     exit(0);
 }
 
-void logsrv(char *filename, struct sockaddr_in cli_addr)
+void log(char *filename, struct sockaddr_in cli_addr)
 {
     FILE *fp;
     char adr[INET_ADDRSTRLEN];
@@ -54,7 +54,7 @@ int main()
         error("ERROR on binding");
 
     listen(sockfd, 5);
-    signal(SIGINT, shutdownsrv);
+    signal(SIGINT, exit);
 
     while (1)
     {
@@ -77,7 +77,7 @@ int main()
         filename = malloc(filename_len * sizeof(char));
         strncpy(filename, buffer, filename_len);
 
-        logsrv(filename, cli_addr);
+        log(filename, cli_addr);
 
         printf("reading from: %s (file length): %d\n", filename, filename_len);
 
